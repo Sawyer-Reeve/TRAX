@@ -6,6 +6,6 @@ public class Schedule {
 	
 	public Schedule(Times times, Stations[] stations) {
 		this.times=times;
-		this.stations=stations;/
-	}
+		this.stations=stations;
+	}*/
 }
