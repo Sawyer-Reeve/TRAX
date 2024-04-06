@@ -3,12 +3,10 @@ package trax;
 public class Station {
 	int ID;
 	String stationName;
-	RailLine line;
 	
-	public Station(int id, String name, RailLine line) {
+	public Station(int id, String name) {
 		this.ID=id;
 		this.stationName=name;
-		this.line = line;
 	}
 	
 	public int getID() {
@@ -17,7 +15,6 @@ public class Station {
 	public String getStationName() {
 		return stationName;
 	}
-	public RailLine getRailLine() {
-		return line;
-	}
+	
+
 }

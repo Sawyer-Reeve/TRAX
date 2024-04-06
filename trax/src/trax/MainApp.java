@@ -6,11 +6,9 @@ import java.util.Arrays;
 public class MainApp {
 
 	public static void main(String[] args) {
-		//initializing
-	/*	RailLine BlueLine = new RailLine("Blue Line",);
-		RailLine RedLine = new RailLine("Red Line",);
-		RailLine GreenLine = new RailLine("Green Line",);
-		RailLine FrontRunner = new RailLine("FrontRunner",);*/
+		//initializing, adding all the rail strings, then we can just use an iterator to generate an ID number,
+		
+	
 		
 		//Blue Line Stations
 		ArrayList<String> BlueStations = new ArrayList<String>(Arrays.asList("Salt Lake Central Station",
@@ -38,6 +36,8 @@ public class MainApp {
 				"Crescent View Station",
 				"Kimballs Lane Station",
 				"Draper Town"));
+		
+		//Red Line Stations
 		ArrayList<String> RedStations = new ArrayList<String>(Arrays.asList("U. Of U. Medical Center Station",
 				"Fort Douglas Station University South Campus Station",
 				"Stadium Station",
@@ -63,7 +63,45 @@ public class MainApp {
 				"5600 W Old Bingham Hwy Station",
 				"South Jordan Parkway Station",
 				"Daybreak Parkway Station"));
-			
+		
+		//Green Line Stations
+		ArrayList<String> GreenStations = new ArrayList<String>(Arrays.asList("West Valley Central Station",
+				"Decker Lake Station",
+				"Redwood Junction Station",
+				"River Trail Station",
+				"Central Pointe Station",
+				"Ballpark Station",
+				"900 South Station",
+				"600 South Station",
+				"Courthouse Station",
+				"Gallivan Plaza Station",
+				"City Center Station",
+				"Temple Square Station",
+				"Arena Station",
+				"North Temple Bridge/Guadalupe",
+				"Jackson/Euclid Station",
+				"Fairpark Station",
+				"Power Station",
+				"1940 W North Temple Station",
+				"Airport Station"));
+		
+		//FrontRunner Stations
+		ArrayList<String> FrontRunner = new ArrayList<String>(Arrays.asList("Ogden Station",
+				"Roy Station",
+				"Clearfield Station",
+				"Layton Station",
+				"Farmington Station",
+				"Woods Cross Station",
+				"North Temple Station",
+				"Salt Lake Central Station",
+				"Murray Central Station",
+				"South Jordan Station",
+				"Draper Station",
+				"Lehi Station",
+				"American Fork Station",
+				"Vineyard Station",
+				"Orem Central Station",
+				"Provo Central Station"));
 	}
 	
 	
