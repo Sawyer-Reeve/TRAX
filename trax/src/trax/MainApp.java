@@ -146,6 +146,18 @@ public class MainApp {
 		for (Station s:FrontRunnerStations) {
 			System.out.println(s.toString());
 		}
+		System.out.println();
+		
+		
+		
+		//TODO: write this to a text file, it is our vertices for frontRunner
+		
+		System.out.println(FrontRunnerStations.size());//our vertices
+		System.out.println(FrontRunnerStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
+		for (int i=0;i<FrontRunnerStations.size()-1;i++) {
+			System.out.println(FrontRunnerStations.get(i).getID() + " " + FrontRunnerStations.get(i+1).getID());
+			
+		}
 		
 		
 	}
