@@ -37,6 +37,7 @@ public class MainApp {
 				"Kimballs Lane Station",
 				"Draper Town"));
 		
+		//iterates through and assigns an ID number for each Station and adds it to the list
 		ArrayList<Station> BlueLineStations = new ArrayList<Station>();
 		int count = 100;
 		for (String s : BlueStationsStrings) {
@@ -44,6 +45,14 @@ public class MainApp {
 			BlueLineStations.add(station);
 			count++;
 		}
+		
+		System.out.println(BlueLineStations.size());//our vertices
+		System.out.println(BlueLineStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
+		for (int i=0;i<BlueLineStations.size()-1;i++) {
+			System.out.println(BlueLineStations.get(i).getID() + " " + BlueLineStations.get(i+1).getID());
+		}
+		System.out.println();
+		
 		
 		
 		
@@ -78,9 +87,23 @@ public class MainApp {
 		count = 200;
 		for (String s : RedStationsStrings) {
 			Station station = new Station(count, s);
-			BlueLineStations.add(station);
+			RedLineStations.add(station);
 			count++;
 		}
+		
+		//TODO: write to text file, still need weights
+
+		System.out.println(RedLineStations.size());//our vertices
+		System.out.println(RedLineStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
+		for (int i=0;i<RedLineStations.size()-1;i++) {
+			System.out.println(RedLineStations.get(i).getID() + " " + RedLineStations.get(i+1).getID());
+		}
+		System.out.println();
+		
+		
+		
+		
+		
 		
 		//Green Line Stations
 		ArrayList<String> GreenStationsStrings = new ArrayList<String>(Arrays.asList("West Valley Central Station",
@@ -111,6 +134,20 @@ public class MainApp {
 			count++;
 		}
 		
+		//TODO: write to text file, still need weights
+		
+		System.out.println(GreenLineStations.size());//our vertices
+		System.out.println(GreenLineStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
+		for (int i=0;i<GreenLineStations.size()-1;i++) {
+			System.out.println(GreenLineStations.get(i).getID() + " " + GreenLineStations.get(i+1).getID());
+		}
+		System.out.println();
+		
+		
+		
+		
+		
+		
 		
 		
 		//FrontRunner Stations
@@ -139,6 +176,11 @@ public class MainApp {
 			FrontRunnerStations.add(station);
 			count++;	
 		}
+		
+		
+		
+		
+		//end of initialization for the Stations
 		
 		
 		
