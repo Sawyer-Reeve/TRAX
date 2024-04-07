@@ -46,12 +46,7 @@ public class MainApp {
 			count++;
 		}
 		
-		System.out.println(BlueLineStations.size());//our vertices
-		System.out.println(BlueLineStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
-		for (int i=0;i<BlueLineStations.size()-1;i++) {
-			System.out.println(BlueLineStations.get(i).getID() + " " + BlueLineStations.get(i+1).getID());
-		}
-		System.out.println();
+		
 		
 		
 		
@@ -91,15 +86,6 @@ public class MainApp {
 			count++;
 		}
 		
-		//TODO: write to text file, still need weights
-
-		System.out.println(RedLineStations.size());//our vertices
-		System.out.println(RedLineStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
-		for (int i=0;i<RedLineStations.size()-1;i++) {
-			System.out.println(RedLineStations.get(i).getID() + " " + RedLineStations.get(i+1).getID());
-		}
-		System.out.println();
-		
 		
 		
 		
@@ -133,15 +119,6 @@ public class MainApp {
 			GreenLineStations.add(station);
 			count++;
 		}
-		
-		//TODO: write to text file, still need weights
-		
-		System.out.println(GreenLineStations.size());//our vertices
-		System.out.println(GreenLineStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
-		for (int i=0;i<GreenLineStations.size()-1;i++) {
-			System.out.println(GreenLineStations.get(i).getID() + " " + GreenLineStations.get(i+1).getID());
-		}
-		System.out.println();
 		
 		
 		
@@ -190,18 +167,37 @@ public class MainApp {
 		}
 		System.out.println();
 		
+		//for printing to txt file
+		printLinearRailGraphs(BlueLineStations);
+		System.out.println();
+
+		//for printing to txt file
+		printLinearRailGraphs(RedLineStations);
+		System.out.println();
+
+		//for printing to txt file
+		printLinearRailGraphs(GreenLineStations);
+		System.out.println();
+
+		//for printing to txt file
+		printLinearRailGraphs(FrontRunnerStations);
 		
 		
-		//TODO: write this to a text file, it is our vertices for frontRunner
+	}
+
+	/**
+	 * prints a linear graph with a provided station list
+	 * @param stations
+	 */
+	private static void printLinearRailGraphs(ArrayList<Station> stations) {
 		
-		System.out.println(FrontRunnerStations.size());//our vertices
-		System.out.println(FrontRunnerStations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
-		for (int i=0;i<FrontRunnerStations.size()-1;i++) {
-			System.out.println(FrontRunnerStations.get(i).getID() + " " + FrontRunnerStations.get(i+1).getID());
+		//TODO: add functionality to write it to a text file
+		System.out.println(stations.size());//our vertices
+		System.out.println(stations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
+		for (int i=0;i<stations.size()-1;i++) {
+			System.out.println(stations.get(i).getID() + " " + stations.get(i+1).getID());
 			
 		}
-		
-		
 	}
 	
 	
