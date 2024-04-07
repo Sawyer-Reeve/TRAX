@@ -11,7 +11,7 @@ public class MainApp {
 	
 		
 		//Blue Line Stations
-		ArrayList<String> BlueStations = new ArrayList<String>(Arrays.asList("Salt Lake Central Station",
+		ArrayList<String> BlueStationsStrings = new ArrayList<String>(Arrays.asList("Salt Lake Central Station",
 				"Old Greektown Station",
 				"Planetarium Station",
 				"Arena Station",
@@ -37,8 +37,18 @@ public class MainApp {
 				"Kimballs Lane Station",
 				"Draper Town"));
 		
+		ArrayList<Station> BlueLineStations = new ArrayList<Station>();
+		int count = 100;
+		for (String s : BlueStationsStrings) {
+			Station station = new Station(count, s);
+			BlueLineStations.add(station);
+			count++;
+		}
+		
+		
+		
 		//Red Line Stations
-		ArrayList<String> RedStations = new ArrayList<String>(Arrays.asList("U. Of U. Medical Center Station",
+		ArrayList<String> RedStationsStrings = new ArrayList<String>(Arrays.asList("U. Of U. Medical Center Station",
 				"Fort Douglas Station University South Campus Station",
 				"Stadium Station",
 				"900 East Station",
@@ -64,8 +74,16 @@ public class MainApp {
 				"South Jordan Parkway Station",
 				"Daybreak Parkway Station"));
 		
+		ArrayList<Station> RedLineStations = new ArrayList<Station>();
+		count = 200;
+		for (String s : RedStationsStrings) {
+			Station station = new Station(count, s);
+			BlueLineStations.add(station);
+			count++;
+		}
+		
 		//Green Line Stations
-		ArrayList<String> GreenStations = new ArrayList<String>(Arrays.asList("West Valley Central Station",
+		ArrayList<String> GreenStationsStrings = new ArrayList<String>(Arrays.asList("West Valley Central Station",
 				"Decker Lake Station",
 				"Redwood Junction Station",
 				"River Trail Station",
@@ -85,8 +103,18 @@ public class MainApp {
 				"1940 W North Temple Station",
 				"Airport Station"));
 		
+		ArrayList<Station> GreenLineStations = new ArrayList<Station>();	
+		count=300;
+		for (String s : GreenStationsStrings) {
+			Station station = new Station(count, s);
+			GreenLineStations.add(station);
+			count++;
+		}
+		
+		
+		
 		//FrontRunner Stations
-		ArrayList<String> FrontRunner = new ArrayList<String>(Arrays.asList("Ogden Station",
+		ArrayList<String> FrontRunnerStrings = new ArrayList<String>(Arrays.asList("Ogden Station",
 				"Roy Station",
 				"Clearfield Station",
 				"Layton Station",
@@ -102,7 +130,27 @@ public class MainApp {
 				"Vineyard Station",
 				"Orem Central Station",
 				"Provo Central Station"));
+		
+		
+		ArrayList<Station> FrontRunnerStations = new ArrayList<Station>();	
+		count=400;
+		for (String s : FrontRunnerStrings) {
+			Station station = new Station(count, s);
+			FrontRunnerStations.add(station);
+			count++;	
+		}
+		
+		
+		
+		//print example
+		for (Station s:FrontRunnerStations) {
+			System.out.println(s.toString());
+		}
+		
+		
 	}
+	
+	
 	
 	
 
