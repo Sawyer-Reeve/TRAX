@@ -53,6 +53,21 @@ public class RailLine {
 		return stationArray;
 	}
 	
+	/**
+	 * prints a linear graph in txt file form with a provided station list
+	 * @param stations ArrayList of each station
+	 */
+	public void printLinearRailGraphs() {
+		
+		//TODO: add functionality to write it to a text file + Merge with other graphs, or just do it manually
+		System.out.println(this.stations.size());//our vertices
+		System.out.println(this.stations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
+		for (int i=0;i<this.stations.size()-1;i++) {
+			System.out.println(stations.get(i).getID() + " " + stations.get(i+1).getID());
+			
+		}
+	}
+	
 	
 
 	

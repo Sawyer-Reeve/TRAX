@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import edu.princeton.cs.algs4.DijkstraUndirectedSP;
-
+import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 
 public class MainApp {
@@ -22,6 +22,7 @@ public class MainApp {
 	private static ArrayList<Station> allStationsList;
 	
     public static void main(String[] args) throws IOException {
+    	
     	RailInitialization();
     	new MainGUIframe();
          
@@ -218,55 +219,34 @@ public class MainApp {
 
 
     			System.out.println(railIDs.keySet());
+    			System.out.println();
 
     			for (String s : allStationsStrings()) {
     				System.out.println(s);
     			}
-
-
-    			/*		
-    			//print example
-    			for (Station s:FrontRunnerStations) {
-    				System.out.println(s.toString());
-    			}
-    			System.out.println();
-
-
-    			//for printing to txt file
-    			printLinearRailGraphs(BlueLineStations);
     			System.out.println();
 
     			//for printing to txt file
-    			printLinearRailGraphs(RedLineStations);
+    			BlueLine.printLinearRailGraphs();
     			System.out.println();
 
     			//for printing to txt file
-    			printLinearRailGraphs(GreenLineStations);
+    			RedLine.printLinearRailGraphs();
     			System.out.println();
 
     			//for printing to txt file
-    			printLinearRailGraphs(FrontRunnerStations);
+    			GreenLine.printLinearRailGraphs();
+    			System.out.println();
 
-    			 */
+    			//for printing to txt file
+    			FrontRunner.printLinearRailGraphs();
+
+    			 
 
     }
 
     
-    /**
-	 * prints a linear graph in txt file form with a provided station list
-	 * @param stations ArrayList of each station
-	 */
-	@SuppressWarnings("unused")
-	private static void printLinearRailGraphs(ArrayList<Station> stations) {
-		
-		//TODO: add functionality to write it to a text file + Merge with other graphs, or just do it manually
-		System.out.println(stations.size());//our vertices
-		System.out.println(stations.size()-1);//edges, since the lines themselves are linear its just vertices-1;
-		for (int i=0;i<stations.size()-1;i++) {
-			System.out.println(stations.get(i).getID() + " " + stations.get(i+1).getID());
-			
-		}
-	}
+    
 	
 	public static RailLine getBlueLine() {
 		return BlueLine;
@@ -318,12 +298,14 @@ public class MainApp {
 		
 	}
 	
-	public static HashMap<String,Station> getStationMap(){
+	public static HashMap<String,Station> getStationHashMap(){
 		return stationHashMap;
 	}
 	
-	public static void route(Station start, Station destination, EdgeWeightedGraph G ) {
+	//need to add graph, pathTo returns an iterable<Edge>, this method doesn't necessarily need to return that, as we can
+	//do any adjustments(turn into string) to that in the method
+	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G ) {
 		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
-		graph.pathTo(destination.getID());
+		return graph.pathTo(destination.getID());
 	}
 }

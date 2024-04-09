@@ -19,6 +19,7 @@ public class MainControlPanel extends JPanel implements ActionListener{
 	JComboBox<String> startDropDownMenu;
 	JComboBox<String> destinationDropDownMenu;
 	
+	//current panel
 	MainControlPanel(){
 		this.setVisible(true);
 		this.setPreferredSize(new Dimension(400,800));
@@ -132,8 +133,10 @@ public class MainControlPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==submitButton) {
-			Station start =MainApp.getStationMap().get(startDropDownMenu.getSelectedItem());
-			Station destination = MainApp.getStationMap().get(destinationDropDownMenu.getSelectedItem());
+			Station start =MainApp.getStationHashMap().get(startDropDownMenu.getSelectedItem());
+			Station destination = MainApp.getStationHashMap().get(destinationDropDownMenu.getSelectedItem());
+			/*Graph g = new File("src/Resources/Graph.txt/");//doesnt exist yet
+			route(start,destination, G);*/
 			
 		}
 		
