@@ -4,14 +4,19 @@ package trax;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class MainApp {
-	
+
+	private static HashMap<Integer,String> railIDs;
+	private static RailLine GreenLine;
+	private static RailLine BlueLine;
+	private static RailLine RedLine;
+	private static RailLine FrontRunner;
 	
     public static void main(String[] args) throws IOException {
     	RailInitialization();
     	new MainGUIframe();
-    	
          
     }
     
@@ -23,10 +28,13 @@ public class MainApp {
 		
     			//RailLines are initialized here(without the lists) in order to allow me to assign each of them to the stations 
     			//when they are created
-    			RailLine GreenLine = new RailLine("Green Line");
-    			RailLine BlueLine = new RailLine("Blue Line");
-    			RailLine RedLine = new RailLine("Red Line");
-    			RailLine FrontRunner = new RailLine("FrontRunner");
+    			railIDs = new HashMap<Integer,String>();
+    			GreenLine = new RailLine("Green Line");
+    			BlueLine = new RailLine("Blue Line");
+    			RedLine = new RailLine("Red Line");
+    			FrontRunner = new RailLine("FrontRunner");
+    			
+    			
     			
     			
     			//Blue Line Stations
@@ -62,6 +70,7 @@ public class MainApp {
     					for (String s : BlueStationsStrings) {
     						Station station = new Station(count, s, BlueLine);
     						BlueLineStations.add(station);
+    						railIDs.put(count, s);
     						count++;
     					}
     			
@@ -74,7 +83,8 @@ public class MainApp {
     			
     			//Red Line Stations
     			ArrayList<String> RedStationsStrings = new ArrayList<String>(Arrays.asList("U. Of U. Medical Center Station",
-    					"Fort Douglas Station University South Campus Station",
+    					"Fort Douglas Station",
+    					"University South Campus Station",
     					"Stadium Station",
     					"900 East Station",
     					"Trolley Station",
@@ -104,6 +114,7 @@ public class MainApp {
     			for (String s : RedStationsStrings) {
     				Station station = new Station(count, s, RedLine);
     				RedLineStations.add(station);
+    				railIDs.put(count, s);
     				count++;
     			}
     			
@@ -138,6 +149,7 @@ public class MainApp {
     			for (String s : GreenStationsStrings) {
     				Station station = new Station(count, s, GreenLine);
     				GreenLineStations.add(station);
+    				railIDs.put(count, s);
     				count++;
     			}
     			
@@ -172,6 +184,7 @@ public class MainApp {
     			for (String s : FrontRunnerStrings) {
     				Station station = new Station(count, s, FrontRunner);
     				FrontRunnerStations.add(station);
+    				railIDs.put(count, s);
     				count++;	
     			}
     			
@@ -189,6 +202,8 @@ public class MainApp {
     			System.out.println(GreenLine);
     			System.out.println(FrontRunner);
     			
+    			
+    			System.out.println(railIDs.keySet());
     			
     			
     	/*		
@@ -223,6 +238,7 @@ public class MainApp {
 	 * prints a linear graph in txt file form with a provided station list
 	 * @param stations ArrayList of each station
 	 */
+	@SuppressWarnings("unused")
 	private static void printLinearRailGraphs(ArrayList<Station> stations) {
 		
 		//TODO: add functionality to write it to a text file + Merge with other graphs, or just do it manually
@@ -232,5 +248,21 @@ public class MainApp {
 			System.out.println(stations.get(i).getID() + " " + stations.get(i+1).getID());
 			
 		}
+	}
+	
+	public static RailLine getBlueLine() {
+		return BlueLine;
+	}
+	
+	public static RailLine getRedLine() {
+		return RedLine;
+	}
+	
+	public static RailLine getGreenLine() {
+		return GreenLine;
+	}
+	
+	public static RailLine getFrontRunner() {
+		return FrontRunner;
 	}
 }

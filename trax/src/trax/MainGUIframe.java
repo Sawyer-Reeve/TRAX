@@ -1,7 +1,6 @@
 package trax;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
  * this might not have needed to be its own class, but I did have a couple of other classes previously for separate panels
  * before I condensed them
  */
+@SuppressWarnings({ "serial" })
 public class MainGUIframe extends JFrame{
 	
 	MainGUIframe(){
@@ -26,19 +26,17 @@ public class MainGUIframe extends JFrame{
 	        this.setResizable(false);
 	        this.setTitle("Sup, World (Swing)");
 	        this.setContentPane(panel);
-	        panel.setLayout(new BorderLayout());
 	        
 	        MainControlPanel main = new MainControlPanel();
-	        panel.add(main,BorderLayout.WEST);
+	        panel.add(main);
 	        
 	        //TODO: Better Map Image?
 	        ImageIcon background=new ImageIcon("src/Resources/TRAX MAP.png"); // can probably use a better image for this, this is just what I made up real quick
 	        Image img=background.getImage();
-	        Image temp=img.getScaledInstance(700,800,Image.SCALE_SMOOTH); //scales the image, can be set to SCALE_FAST if its slow
+	        Image temp=img.getScaledInstance(790,800,Image.SCALE_SMOOTH); //scales the image, can be set to SCALE_FAST if its slow
 	        background=new ImageIcon(temp);
 	        JLabel backgroundlabel = new JLabel();
-	        backgroundlabel.setHorizontalAlignment(JLabel.CENTER); //these two center the image
-	        backgroundlabel.setVerticalAlignment(JLabel.CENTER);
+	        backgroundlabel.setSize(new Dimension(800,800));
 	        panel.add(backgroundlabel);
 	        backgroundlabel.setIcon(background);
 	        

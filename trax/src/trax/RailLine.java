@@ -1,7 +1,6 @@
 package trax;
 import java.util.ArrayList;
 
-import edu.princeton.cs.algs4.Edge;
 
 //Im not sure if this was supposed to be a class for individual lines between two stations, or entire lines like green,red,blue
 public class RailLine {
@@ -45,7 +44,7 @@ public class RailLine {
 		
 	}
 	
-	/*//was going to be used to call the arrays for the combo boxes
+
 	public String[] getStationArray() {
 		String[] stationArray = new String[stations.size()];
 		for (int i=0;i<stations.size();i++) {
@@ -53,7 +52,7 @@ public class RailLine {
 		}
 		return stationArray;
 	}
-	*/
+	
 	
 
 	
