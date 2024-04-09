@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class MainGUIframe extends JFrame{
 	
 	MainGUIframe(){
-	       //JLabel label = new JLabel("Look at me, I'm a heckin' GUI!");
 	        JPanel panel = new JPanel(); //container panel, 
 	        
 	        this.setSize(1200, 800);
@@ -24,7 +23,7 @@ public class MainGUIframe extends JFrame{
 	        this.setLocationRelativeTo(null); // centers frame
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //closes program instead of hiding
 	        this.setResizable(false);
-	        this.setTitle("Sup, World (Swing)");
+	        this.setTitle("TRAX Ride-Assist");
 	        this.setContentPane(panel);
 	        
 	        MainControlPanel main = new MainControlPanel();

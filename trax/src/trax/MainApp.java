@@ -4,15 +4,22 @@ package trax;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import edu.princeton.cs.algs4.DijkstraUndirectedSP;
+
+import edu.princeton.cs.algs4.EdgeWeightedGraph;
 
 public class MainApp {
 
 	private static HashMap<Integer,String> railIDs;
+	private static HashMap<String,Station> stationHashMap;
 	private static RailLine GreenLine;
 	private static RailLine BlueLine;
 	private static RailLine RedLine;
 	private static RailLine FrontRunner;
+	private static ArrayList<Station> allStationsList;
 	
     public static void main(String[] args) throws IOException {
     	RailInitialization();
@@ -34,9 +41,12 @@ public class MainApp {
     			RedLine = new RailLine("Red Line");
     			FrontRunner = new RailLine("FrontRunner");
     			
+    			allStationsList = new ArrayList<Station>();
+    			stationHashMap = new HashMap<String,Station>();
     			
     			
     			
+
     			//Blue Line Stations
     			ArrayList<String> BlueStationsStrings = new ArrayList<String>(Arrays.asList("Salt Lake Central Station",
     					"Old Greektown Station",
@@ -63,24 +73,21 @@ public class MainApp {
     					"Crescent View Station",
     					"Kimballs Lane Station",
     					"Draper Town"));
-    					
-    					//iterates through and assigns an ID number for each Station and adds it to the list
-    					ArrayList<Station> BlueLineStations = new ArrayList<Station>();
-    					int count = 100;
-    					for (String s : BlueStationsStrings) {
-    						Station station = new Station(count, s, BlueLine);
-    						BlueLineStations.add(station);
-    						railIDs.put(count, s);
-    						count++;
-    					}
-    			
-    			
-    			
-    			
-    			
-    			
-    			
-    			
+
+    			//iterates through and assigns an ID number for each Station and adds it to the list
+    			ArrayList<Station> BlueLineStations = new ArrayList<Station>();
+    			int count = 100;
+    			for (String s : BlueStationsStrings) {
+    				Station station = new Station(count, s, BlueLine);
+    				BlueLineStations.add(station);
+    				railIDs.put(count, s);
+    				stationHashMap.put(s,station);
+    				
+    				count++;
+    			}
+
+
+
     			//Red Line Stations
     			ArrayList<String> RedStationsStrings = new ArrayList<String>(Arrays.asList("U. Of U. Medical Center Station",
     					"Fort Douglas Station",
@@ -108,21 +115,22 @@ public class MainApp {
     					"5600 W Old Bingham Hwy Station",
     					"South Jordan Parkway Station",
     					"Daybreak Parkway Station"));
-    			
+
     			ArrayList<Station> RedLineStations = new ArrayList<Station>();
     			count = 200;
     			for (String s : RedStationsStrings) {
     				Station station = new Station(count, s, RedLine);
     				RedLineStations.add(station);
     				railIDs.put(count, s);
+    				stationHashMap.put(s,station);
     				count++;
     			}
-    			
-    			
-    			
-    			
-    			
-    			
+
+
+
+
+
+
     			//Green Line Stations
     			ArrayList<String> GreenStationsStrings = new ArrayList<String>(Arrays.asList("West Valley Central Station",
     					"Decker Lake Station",
@@ -143,23 +151,24 @@ public class MainApp {
     					"Power Station",
     					"1940 W North Temple Station",
     					"Airport Station"));
-    			
+
     			ArrayList<Station> GreenLineStations = new ArrayList<Station>();	
     			count=300;
     			for (String s : GreenStationsStrings) {
     				Station station = new Station(count, s, GreenLine);
     				GreenLineStations.add(station);
     				railIDs.put(count, s);
+    				stationHashMap.put(s,station);
     				count++;
     			}
-    			
-    			
-    			
-    			
-    			
-    			
-    			
-    			
+
+
+
+
+
+
+
+
     			//FrontRunner Stations
     			ArrayList<String> FrontRunnerStrings = new ArrayList<String>(Arrays.asList("Ogden Station",
     					"Roy Station",
@@ -177,43 +186,52 @@ public class MainApp {
     					"Vineyard Station",
     					"Orem Central Station",
     					"Provo Central Station"));
-    			
-    			
+
+
     			ArrayList<Station> FrontRunnerStations = new ArrayList<Station>();	
     			count=400;
     			for (String s : FrontRunnerStrings) {
     				Station station = new Station(count, s, FrontRunner);
     				FrontRunnerStations.add(station);
     				railIDs.put(count, s);
+    				stationHashMap.put(s,station);
     				count++;	
     			}
-    			
+
     			FrontRunner.add(FrontRunnerStations);
     			BlueLine.add(BlueLineStations);
     			GreenLine.add(GreenLineStations);
     			RedLine.add(RedLineStations);
-    			
-    			
+    			allStationsList.addAll(FrontRunnerStations);
+    			allStationsList.addAll(BlueLineStations);
+    			allStationsList.addAll(GreenLineStations);
+    			allStationsList.addAll(RedLineStations);
+
+
     			//end of initialization for the Stations and rails
-    			
+
     			//--------------------------------------PRINT STATEMENTS--------------------------------------------------------
     			System.out.println(BlueLine);
     			System.out.println(RedLine);
     			System.out.println(GreenLine);
     			System.out.println(FrontRunner);
-    			
-    			
+
+
     			System.out.println(railIDs.keySet());
-    			
-    			
-    	/*		
+
+    			for (String s : allStationsStrings()) {
+    				System.out.println(s);
+    			}
+
+
+    			/*		
     			//print example
     			for (Station s:FrontRunnerStations) {
     				System.out.println(s.toString());
     			}
     			System.out.println();
-    			
-    			
+
+
     			//for printing to txt file
     			printLinearRailGraphs(BlueLineStations);
     			System.out.println();
@@ -228,11 +246,11 @@ public class MainApp {
 
     			//for printing to txt file
     			printLinearRailGraphs(FrontRunnerStations);
-    			
-    	*/
+
+    			 */
 
     }
-    
+
     
     /**
 	 * prints a linear graph in txt file form with a provided station list
@@ -264,5 +282,48 @@ public class MainApp {
 	
 	public static RailLine getFrontRunner() {
 		return FrontRunner;
+	}
+	
+	//uses hashset to remove duplicate stations
+	public static String[] allStationsStrings() {
+		
+		//joins all Station strings into single arraylist
+		ArrayList<String> allStationsStrings = new ArrayList<String>();
+		allStationsStrings.addAll(Arrays.asList(GreenLine.getStationArray()));
+		allStationsStrings.addAll(Arrays.asList(BlueLine.getStationArray()));
+		allStationsStrings.addAll(Arrays.asList(RedLine.getStationArray()));
+		allStationsStrings.addAll(Arrays.asList(GreenLine.getStationArray()));
+		
+		//removes duplicates
+		HashSet<String> allStationsSet = new HashSet<String>();
+		for (String s : allStationsStrings) {
+			allStationsSet.add(s);
+		}
+		//re-adds to lists and sorts by alphabetical order
+		allStationsStrings.clear();
+		allStationsStrings.addAll(allStationsSet);
+		Collections.sort(allStationsStrings, String.CASE_INSENSITIVE_ORDER);
+		
+		
+		int array_size = allStationsSet.size();
+		String[] stationsArray = new String[array_size];
+		
+		int i=0;
+		for (String s : allStationsStrings) {
+			stationsArray[i] = s;
+			i++;
+		}
+		
+		return stationsArray;
+		
+	}
+	
+	public static HashMap<String,Station> getStationMap(){
+		return stationHashMap;
+	}
+	
+	public static void route(Station start, Station destination, EdgeWeightedGraph G ) {
+		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
+		graph.pathTo(destination.getID());
 	}
 }

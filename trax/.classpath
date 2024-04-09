@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/CS2420_Module1Test/lib/algs4.jar"/>
+	<classpathentry kind="lib" path="/Users/sawyerreeve/eclipse-workspace/CS2420_Module1Test/lib/algs4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
