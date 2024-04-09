@@ -1,5 +1,7 @@
 package trax;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -167,6 +169,7 @@ public class MainApp {
 		}
 		System.out.println();
 		
+		
 		//for printing to txt file
 		printLinearRailGraphs(BlueLineStations);
 		System.out.println();
@@ -182,12 +185,11 @@ public class MainApp {
 		//for printing to txt file
 		printLinearRailGraphs(FrontRunnerStations);
 		
-		
 	}
 
 	/**
 	 * prints a linear graph with a provided station list
-	 * @param stations
+	 * @param stations ArrayList of each station
 	 */
 	private static void printLinearRailGraphs(ArrayList<Station> stations) {
 		
