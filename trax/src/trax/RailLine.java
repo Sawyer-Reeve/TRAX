@@ -44,6 +44,10 @@ public class RailLine {
 		
 	}
 	
+	public void add(Station s) {
+		stations.add(s);
+	}
+	
 
 	public String[] getStationArray() {
 		String[] stationArray = new String[stations.size()];

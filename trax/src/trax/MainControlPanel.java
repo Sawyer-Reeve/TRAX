@@ -138,6 +138,8 @@ public class MainControlPanel extends JPanel implements ActionListener{
 			/*Graph g = new File("src/Resources/Graph.txt/");//doesnt exist yet
 			route(start,destination, G);*/
 			
+			//do whatever draw methods we want here, can be set in another class
+			
 		}
 		
 	}
