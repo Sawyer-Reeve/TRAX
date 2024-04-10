@@ -144,22 +144,23 @@ public class MainControlPanel extends JPanel implements ActionListener{
 		if (e.getSource()==submitButton) {
 			Station start =MainApp.getStationHashMap().get(startDropDownMenu.getSelectedItem());
 			Station destination = MainApp.getStationHashMap().get(destinationDropDownMenu.getSelectedItem());
-			In in = new In(new File("src/Resources/Graph.txt/"));
+			In in = new In(new File("src/Resources/GraphSawyer.txt/"));
 			
 			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
 			ArrayList<Integer> path = new ArrayList<Integer>();
 			String s;
+			Integer secondStation=null;
 			for (Edge a : MainApp.route(start,destination, g)) {
 				s = a.toString();
 				String[] parts = s.split("-");
-				Integer part1 = Integer.parseInt(parts[0]);
+				secondStation = Integer.parseInt(parts[0]);
 				String[] parts2 = parts[1].split("\\s+");
-				Integer part2 = Integer.parseInt(parts2[0]);
+				Integer firstStation = Integer.parseInt(parts2[0]); // takes the second half of the xx-xx string, only prints at end
 				total_time += Double.parseDouble(parts2[1]);
-				path.add(part1);
-				path.add(part2);
+				path.add(firstStation);
 				System.out.print(s);
 			}
+			path.add(secondStation);
 			System.out.println();
 			System.out.println(path);
 			System.out.println("Estimated time: " + total_time);
