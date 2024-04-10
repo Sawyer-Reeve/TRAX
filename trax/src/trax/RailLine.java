@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class RailLine {
 	
 	String name;
-	Schedule schedule;//TODO: add schedule info/getters
+	Schedule schedule;
 	ArrayList<Station> stations;
 	
 	/**

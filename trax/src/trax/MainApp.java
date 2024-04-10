@@ -45,6 +45,8 @@ public class MainApp {
     			allStationsList = new ArrayList<Station>();
     			stationHashMap = new HashMap<String,Station>();
     			
+    		
+    			
     			
     			
 
@@ -77,7 +79,7 @@ public class MainApp {
 
     			//iterates through and assigns an ID number for each Station and adds it to the list
     			ArrayList<Station> BlueLineStations = new ArrayList<Station>();
-    			int count = 100;
+    			int count = 0;
     			for (String s : BlueStationsStrings) {
     				Station station = new Station(count, s, BlueLine);
     				BlueLineStations.add(station);
@@ -118,7 +120,7 @@ public class MainApp {
     					"Daybreak Parkway Station"));
 
     			ArrayList<Station> RedLineStations = new ArrayList<Station>();
-    			count = 200;
+    			
     			for (String s : RedStationsStrings) {
     				Station station = new Station(count, s, RedLine);
     				RedLineStations.add(station);
@@ -154,7 +156,7 @@ public class MainApp {
     					"Airport Station"));
 
     			ArrayList<Station> GreenLineStations = new ArrayList<Station>();	
-    			count=300;
+    			
     			for (String s : GreenStationsStrings) {
     				Station station = new Station(count, s, GreenLine);
     				GreenLineStations.add(station);
@@ -171,12 +173,13 @@ public class MainApp {
 
 
     			//FrontRunner Stations
-    			ArrayList<String> FrontRunnerStrings = new ArrayList<String>(Arrays.asList("Ogden Station",
+    			ArrayList<String> FrontRunnerStrings = new ArrayList<String>(Arrays.asList(
+    				/*	"Ogden Station",
     					"Roy Station",
     					"Clearfield Station",
     					"Layton Station",
     					"Farmington Station",
-    					"Woods Cross Station",
+    					"Woods Cross Station", */
     					"North Temple Station",
     					"Salt Lake Central Station",
     					"Murray Central Station",
@@ -184,13 +187,14 @@ public class MainApp {
     					"Draper Station",
     					"Lehi Station",
     					"American Fork Station",
-    					"Vineyard Station",
-    					"Orem Central Station",
-    					"Provo Central Station"));
+    					"Vineyard Station"
+    					//"Orem Central Station",
+    					//"Provo Central Station"//not included in current map
+    					));
 
 
     			ArrayList<Station> FrontRunnerStations = new ArrayList<Station>();	
-    			count=400;
+    			
     			for (String s : FrontRunnerStrings) {
     				Station station = new Station(count, s, FrontRunner);
     				FrontRunnerStations.add(station);
@@ -212,6 +216,9 @@ public class MainApp {
     			//end of initialization for the Stations and rails
 
     			//--------------------------------------PRINT STATEMENTS--------------------------------------------------------
+    			
+    			
+    		
     			System.out.println(BlueLine);
     			System.out.println(RedLine);
     			System.out.println(GreenLine);
@@ -240,9 +247,7 @@ public class MainApp {
 
     			//for printing to txt file
     			FrontRunner.printLinearRailGraphs();
-
-    			 
-
+	
     }
 
     
@@ -300,6 +305,10 @@ public class MainApp {
 	
 	public static HashMap<String,Station> getStationHashMap(){
 		return stationHashMap;
+	} 
+	
+	public static HashMap<Integer,String> getRailIdHashmap(){
+		return railIDs;
 	}
 	
 	//need to add graph, pathTo returns an iterable<Edge>, this method doesn't necessarily need to return that, as we can
