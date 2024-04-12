@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import edu.princeton.cs.algs4.DijkstraUndirectedSP;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
+import edu.princeton.cs.algs4.SET;
+import edu.princeton.cs.algs4.ST;
 
 public class MainApp {
-	//TODO Convert Hashmaps to Symbol Tables
-	private static HashMap<Integer,String> railIDs; 
-	private static HashMap<String,Station> stationHashMap;
+	private static ST<Integer,String> railIDs; 
+	private static ST<String,Station> stationHashMap;
 	//private static SymbolTable<Integer,Station> railIDTable;
 	private static RailLine GreenLine;
 	private static RailLine BlueLine;
@@ -37,14 +36,14 @@ public class MainApp {
 		
     			//RailLines are initialized here(without the lists) in order to allow me to assign each of them to the stations 
     			//when they are created
-    			railIDs = new HashMap<Integer,String>();
+    			railIDs = new ST<Integer,String>();
     			GreenLine = new RailLine("Green Line");
     			BlueLine = new RailLine("Blue Line");
     			RedLine = new RailLine("Red Line");
     			FrontRunner = new RailLine("FrontRunner");
     			
     			allStationsList = new ArrayList<Station>();
-    			stationHashMap = new HashMap<String,Station>();
+    			stationHashMap = new ST<String,Station>();
     			
     		
     			
@@ -228,7 +227,7 @@ public class MainApp {
     			System.out.println(FrontRunner);
 
 
-    			System.out.println(railIDs.keySet());
+    			System.out.println(railIDs.keys());
     			System.out.println();
 
     			for (String s : allStationsStrings()) {
@@ -284,13 +283,17 @@ public class MainApp {
 		allStationsStrings.addAll(Arrays.asList(GreenLine.getStationArray()));
 		
 		//removes duplicates
-		HashSet<String> allStationsSet = new HashSet<String>();
+		SET<String> allStationsSet = new SET<String>();
 		for (String s : allStationsStrings) {
 			allStationsSet.add(s);
 		}
 		//re-adds to lists and sorts by alphabetical order
 		allStationsStrings.clear();
-		allStationsStrings.addAll(allStationsSet);
+		
+		for (String s :allStationsSet) {
+			allStationsStrings.add(s);
+		}
+		
 		Collections.sort(allStationsStrings, String.CASE_INSENSITIVE_ORDER);
 		
 		
@@ -307,11 +310,11 @@ public class MainApp {
 		
 	}
 	
-	public static HashMap<String,Station> getStationHashMap(){
+	public static ST<String,Station> getStationHashMap(){
 		return stationHashMap;
 	} 
 	
-	public static HashMap<Integer,String> getRailIdHashmap(){
+	public static ST<Integer,String> getRailIdHashmap(){
 		return railIDs;
 	}
 	

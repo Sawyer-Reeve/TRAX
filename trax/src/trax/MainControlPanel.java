@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,7 +13,6 @@ import javax.swing.JPanel;
 
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
-import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.In;
 
 /**
@@ -66,8 +64,8 @@ public class MainControlPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==submitButton) {
-			Station start =MainApp.getStationHashMap().get(startDropDownMenu.getSelectedItem()); //starting station
-			Station destination = MainApp.getStationHashMap().get(destinationDropDownMenu.getSelectedItem());//ending station
+			Station start =MainApp.getStationHashMap().get((String)startDropDownMenu.getSelectedItem()); //starting station
+			Station destination = MainApp.getStationHashMap().get((String)destinationDropDownMenu.getSelectedItem());//ending station
 			In in = new In(new File("src/Resources/GraphSawyer.txt/"));
 			
 			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
@@ -91,7 +89,7 @@ public class MainControlPanel extends JPanel implements ActionListener{
 				System.out.print(s);
 			}
 			
-			path.add(secondStation);//this is added after the loop, because each station appears twice in the iterable 69-68 68-67 67-66 etc..
+			//path.add(secondStation);//this is added after the loop, because each station appears twice in the iterable 69-68 68-67 67-66 etc..
 			System.out.println();
 			System.out.println(path);//debugging display
 			System.out.println("Estimated time: " + total_time);
