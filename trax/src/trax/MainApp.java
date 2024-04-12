@@ -12,8 +12,8 @@ import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 
 public class MainApp {
-
-	private static HashMap<Integer,String> railIDs;
+	//TODO Convert Hashmaps to Symbol Tables
+	private static HashMap<Integer,String> railIDs; 
 	private static HashMap<String,Station> stationHashMap;
 	//private static SymbolTable<Integer,Station> railIDTable;
 	private static RailLine GreenLine;
@@ -24,7 +24,7 @@ public class MainApp {
 	
     public static void main(String[] args) throws IOException {
     	
-    	RailInitialization();
+    	RailInitialization(); //below method, initializes all of the rail lines
     	new MainGUIframe();
          
     }
@@ -50,7 +50,7 @@ public class MainApp {
     			
     			
     			
-
+    			//TODO: Can have strings be taken from an input for all the station lines
     			//Blue Line Stations
     			ArrayList<String> BlueStationsStrings = new ArrayList<String>(Arrays.asList("Salt Lake Central Station",
     					"Old Greektown Station",
@@ -78,7 +78,8 @@ public class MainApp {
     					"Kimballs Lane Station",
     					"Draper Town"));
 
-    			//iterates through and assigns an ID number for each Station and adds it to the list
+    			//iterates through and assigns an ID number for each Station and adds it to the the list
+    			//as well as adding them to a hashmap
     			ArrayList<Station> BlueLineStations = new ArrayList<Station>();
     			int count = 0;
     			for (String s : BlueStationsStrings) {
@@ -203,11 +204,12 @@ public class MainApp {
     				stationHashMap.put(s,station);
     				count++;	
     			}
-
+    			//here we're just adding the list of stations to each RailLine object
     			FrontRunner.add(FrontRunnerStations);
     			BlueLine.add(BlueLineStations);
     			GreenLine.add(GreenLineStations);
     			RedLine.add(RedLineStations);
+    			//and then just adding them to a list of all stations	
     			allStationsList.addAll(FrontRunnerStations);
     			allStationsList.addAll(BlueLineStations);
     			allStationsList.addAll(GreenLineStations);
@@ -271,7 +273,7 @@ public class MainApp {
 		return FrontRunner;
 	}
 	
-	//uses hashset to remove duplicate stations
+	//uses hashset to remove duplicate stations, is then fed into the drop down menus
 	public static String[] allStationsStrings() {
 		
 		//joins all Station strings into single arraylist
@@ -313,8 +315,7 @@ public class MainApp {
 		return railIDs;
 	}
 	
-	//need to add graph, pathTo returns an iterable<Edge>, this method doesn't necessarily need to return that, as we can
-	//do any adjustments(turn into string) to that in the method
+	//this routing method takes in a start, destination, and graph and uses djikstras method to find the shortest route
 	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G ) {
 		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
 		return graph.pathTo(destination.getID());
