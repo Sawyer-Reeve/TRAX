@@ -25,7 +25,7 @@ public class MainControlPanel extends JPanel implements ActionListener{
 	JButton submitButton;
 	JComboBox<String> startDropDownMenu;
 	JComboBox<String> destinationDropDownMenu;
-	Double total_time=0.0;
+	
 	
 	//panel with directions
 	MainControlPanel(){
@@ -73,6 +73,7 @@ public class MainControlPanel extends JPanel implements ActionListener{
 			ArrayList<Integer> path = new ArrayList<Integer>();
 			String s;
 			Integer secondStation=null;
+			Double total_time=0.0;
 			//the following loop iterates through each edge in the created shortest route;
 			//because the edge is returned as an iterable with 3 numbers, we use the split method to seperate all three
 			//numbers, it is returned as xx-yy z, where xx is the second station, yy is the first, and z is the edge weight
@@ -88,9 +89,9 @@ public class MainControlPanel extends JPanel implements ActionListener{
 				total_time += Double.parseDouble(parts2[1]);
 				path.add(firstStation);
 				System.out.print(s);
-			}
+			}	
 			
-			//path.add(secondStation);//this is added after the loop, because each station appears twice in the iterable 69-68 68-67 67-66 etc..
+			path.add(secondStation);//this is added after the loop, because each station appears twice in the iterable 69-68 68-67 67-66 etc..
 			System.out.println();
 			System.out.println(path);//debugging display
 			System.out.println("Estimated time: " + total_time);
