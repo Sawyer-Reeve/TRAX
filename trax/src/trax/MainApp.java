@@ -1,7 +1,6 @@
 package trax;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,12 +10,12 @@ import java.util.HashSet;
 import edu.princeton.cs.algs4.DijkstraUndirectedSP;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
-import edu.princeton.cs.algs4.In;
 
 public class MainApp {
 
 	private static HashMap<Integer,String> railIDs;
 	private static HashMap<String,Station> stationHashMap;
+	//private static SymbolTable<Integer,Station> railIDTable;
 	private static RailLine GreenLine;
 	private static RailLine BlueLine;
 	private static RailLine RedLine;
