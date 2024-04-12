@@ -16,7 +16,8 @@ import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.In;
 
 /**
- * I just mocked this up as a refresher, don't feel bad deleting all of it if you want to start from scratch
+ * MainControlPanel is the left side of the GUI that controls the drop down menu's and displays
+ * @author sawyerreeve + Chris Darnell
  */
 @SuppressWarnings("serial")
 public class MainControlPanel extends JPanel implements ActionListener{

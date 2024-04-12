@@ -11,6 +11,10 @@ import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.ST;
 
+/**
+ * Main running application that initializes the rails, and calles the GUI methods
+ * @author sawyerreeve + Chris Darnell
+ */
 public class MainApp {
 	private static ST<Integer,String> railIDs; 
 	private static ST<String,Station> stationHashMap;
