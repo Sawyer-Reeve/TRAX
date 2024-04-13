@@ -1,6 +1,8 @@
 package trax;
 import java.util.ArrayList;
 
+import edu.princeton.cs.algs4.Queue;
+
 
 public class RailLine {
 	
@@ -27,6 +29,15 @@ public class RailLine {
 	}
 	
 	/**
+	 * Empty constructor with name
+	 * @param line name of this RailLine
+	 */
+	RailLine(RailLines line) {
+		this.name = line.name();
+		this.stations = new ArrayList<Station>();
+	}
+	
+	/**
 	 * @return list of stations
 	 */
 	public ArrayList<Station> getStations(){
@@ -39,7 +50,11 @@ public class RailLine {
 	 */
 	public void add(ArrayList<Station> stationlist) {
 		stations.addAll(stationlist);
-		
+	}
+	
+	public void add(Queue<Station> stations) {
+		for (Station s : stations)
+			this.stations.add(s);
 	}
 	
 	public void add(Station s) {
@@ -70,9 +85,6 @@ public class RailLine {
 		}
 	}
 	
-	
-
-	
 	public String getName() {
 		return name;
 	}
@@ -84,9 +96,6 @@ public class RailLine {
 			s += a.toString() + "\n";
 		}
 		return s;
-	}
-	
-	
-	
+	}	
 }
 

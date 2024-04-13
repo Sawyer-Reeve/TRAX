@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.Queue;
 
 /**
  * Methods for reading text files with configuration data
- * @author chrisdarnell
+ * @author sawyerreeve + Chris Darnell
  */
 public class FileIO {
 	private static In stationList = new In("src/Resources/stationList.txt");
