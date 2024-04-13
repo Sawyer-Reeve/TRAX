@@ -1,0 +1,88 @@
+BLUE_LINE
+Salt Lake Central Station
+Old Greektown Station
+Planetarium Station
+Arena Station
+Temple Square Station
+City Center Station
+Gallivan Plaza Station
+Courthouse Station
+600 South Station
+900 South Station
+Ballpark Station
+Central Pointe Station
+Millcreek Station
+Meadowbrook Station
+Murray North Station
+Murray Central Station
+Fashion Place West Station
+Midvale Fort Union Station
+Midvale Center Station
+Historic Sandy Station
+Sandy Expo Station
+Sandy Civic Center Station
+Crescent View Station
+Kimballs Lane Station
+Draper Town
+###
+
+RED_LINE
+U. Of U. Medical Center Station
+Fort Douglas Station
+University South Campus Station
+Stadium Station
+900 East Station
+Trolley Station
+Library Station
+Courthouse Station
+600 South Station
+900 South Station
+Ballpark Station
+Central Pointe Station
+Millcreek Station
+Meadowbrook Station
+Murray North Station
+Murray Central Station
+Fashion Place West Station
+Bingham Junction Station
+Historic Gardner Station
+West Jordan City Center Station
+2700 W Sugar Factory Rd Station
+Jordan Valley Station
+4800 W Old Bingham Hwy Station
+5600 W Old Bingham Hwy Station
+South Jordan Parkway Station
+Daybreak Parkway Station
+###
+
+GREEN_LINE
+Decker Lake Station
+Redwood Junction Station
+River Trail Station
+Central Pointe Station
+Ballpark Station
+900 South Station
+600 South Station
+Courthouse Station
+Gallivan Plaza Station
+City Center Station
+Temple Square Station
+Arena Station
+North Temple Bridge/Guadalupe
+Jackson/Euclid Station
+Fairpark Station
+Power Station
+1940 W North Temple Station
+Airport Station
+###
+
+FRONTRUNNER
+North Temple Station
+Salt Lake Central Station
+Murray Central Station
+South Jordan Station
+Draper Station
+Lehi Station
+American Fork Station
+Vineyard Station
+###

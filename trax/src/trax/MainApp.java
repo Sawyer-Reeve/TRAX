@@ -8,6 +8,7 @@ import java.util.Collections;
 import edu.princeton.cs.algs4.DijkstraUndirectedSP;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
+import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.ST;
 
@@ -49,40 +50,12 @@ public class MainApp {
     			allStationsList = new ArrayList<Station>();
     			stationHashMap = new ST<String,Station>();
     			
-    		
-    			
-    			
-    			
-    			//TODO: Can have strings be taken from an input for all the station lines
-    			//Blue Line Stations
-    			ArrayList<String> BlueStationsStrings = new ArrayList<String>(Arrays.asList("Salt Lake Central Station",
-    					"Old Greektown Station",
-    					"Planetarium Station",
-    					"Arena Station",
-    					"Temple Square Station",
-    					"City Center Station",
-    					"Gallivan Plaza Station",
-    					"Courthouse Station",
-    					"600 South Station",
-    					"900 South Station",
-    					"Ballpark Station",
-    					"Central Pointe Station",
-    					"Millcreek Station",
-    					"Meadowbrook Station",
-    					"Murray North Station",
-    					"Murray Central Station",
-    					"Fashion Place West Station",
-    					"Midvale Fort Union Station",
-    					"Midvale Center Station",
-    					"Historic Sandy Station",
-    					"Sandy Expo Station",
-    					"Sandy Civic Center Station",
-    					"Crescent View Station",
-    					"Kimballs Lane Station",
-    					"Draper Town"));
 
+    			//Blue Line Stations
     			//iterates through and assigns an ID number for each Station and adds it to the the list
     			//as well as adding them to a hashmap
+    			
+    			Queue<String> BlueStationsStrings = FileIO.getStationList(RailLines.BLUE_LINE);
     			ArrayList<Station> BlueLineStations = new ArrayList<Station>();
     			int count = 0;
     			for (String s : BlueStationsStrings) {
@@ -95,35 +68,8 @@ public class MainApp {
     			}
 
 
-
-    			//Red Line Stations
-    			ArrayList<String> RedStationsStrings = new ArrayList<String>(Arrays.asList("U. Of U. Medical Center Station",
-    					"Fort Douglas Station",
-    					"University South Campus Station",
-    					"Stadium Station",
-    					"900 East Station",
-    					"Trolley Station",
-    					"Library Station",
-    					"Courthouse Station",
-    					"600 South Station",
-    					"900 South Station",
-    					"Ballpark Station",
-    					"Central Pointe Station",
-    					"Millcreek Station",
-    					"Meadowbrook Station",
-    					"Murray North Station",
-    					"Murray Central Station",
-    					"Fashion Place West Station",
-    					"Bingham Junction Station",
-    					"Historic Gardner Station",
-    					"West Jordan City Center Station",
-    					"2700 W Sugar Factory Rd Station",
-    					"Jordan Valley Station",
-    					"4800 W Old Bingham Hwy Station",
-    					"5600 W Old Bingham Hwy Station",
-    					"South Jordan Parkway Station",
-    					"Daybreak Parkway Station"));
-
+    			// Red Line Stations
+    			Queue<String> RedStationsStrings = FileIO.getStationList(RailLines.RED_LINE);
     			ArrayList<Station> RedLineStations = new ArrayList<Station>();
     			
     			for (String s : RedStationsStrings) {
@@ -135,31 +81,8 @@ public class MainApp {
     			}
 
 
-
-
-
-
-    			//Green Line Stations
-    			ArrayList<String> GreenStationsStrings = new ArrayList<String>(Arrays.asList("West Valley Central Station",
-    					"Decker Lake Station",
-    					"Redwood Junction Station",
-    					"River Trail Station",
-    					"Central Pointe Station",
-    					"Ballpark Station",
-    					"900 South Station",
-    					"600 South Station",
-    					"Courthouse Station",
-    					"Gallivan Plaza Station",
-    					"City Center Station",
-    					"Temple Square Station",
-    					"Arena Station",
-    					"North Temple Bridge/Guadalupe",
-    					"Jackson/Euclid Station",
-    					"Fairpark Station",
-    					"Power Station",
-    					"1940 W North Temple Station",
-    					"Airport Station"));
-
+    			// Green Line Stations
+    			Queue<String> GreenStationsStrings = FileIO.getStationList(RailLines.GREEN_LINE);
     			ArrayList<Station> GreenLineStations = new ArrayList<Station>();	
     			
     			for (String s : GreenStationsStrings) {
@@ -170,34 +93,9 @@ public class MainApp {
     				count++;
     			}
 
-
-
-
-
-
-
-
+    			
     			//FrontRunner Stations
-    			ArrayList<String> FrontRunnerStrings = new ArrayList<String>(Arrays.asList(
-    				/*	"Ogden Station",
-    					"Roy Station",
-    					"Clearfield Station",
-    					"Layton Station",
-    					"Farmington Station",
-    					"Woods Cross Station", */
-    					"North Temple Station",
-    					"Salt Lake Central Station",
-    					"Murray Central Station",
-    					"South Jordan Station",
-    					"Draper Station",
-    					"Lehi Station",
-    					"American Fork Station",
-    					"Vineyard Station"
-    					//"Orem Central Station",
-    					//"Provo Central Station"//not included in current map
-    					));
-
-
+    			Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);
     			ArrayList<Station> FrontRunnerStations = new ArrayList<Station>();	
     			
     			for (String s : FrontRunnerStrings) {
