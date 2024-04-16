@@ -23,7 +23,7 @@ Sandy Expo Station
 Sandy Civic Center Station
 Crescent View Station
 Kimballs Lane Station
-Draper Town
+Draper Town Center
 ###
 
 RED_LINE
@@ -56,6 +56,7 @@ Daybreak Parkway Station
 ###
 
 GREEN_LINE
+West Valley Central Station
 Decker Lake Station
 Redwood Junction Station
 River Trail Station
@@ -68,7 +69,7 @@ Gallivan Plaza Station
 City Center Station
 Temple Square Station
 Arena Station
-North Temple Bridge/Guadalupe
+North Temple Station
 Jackson/Euclid Station
 Fairpark Station
 Power Station

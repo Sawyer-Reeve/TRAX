@@ -1,6 +1,6 @@
 package trax;
 
-public class Station {
+public class Station implements Comparable<Station>{
 	
 	int ID;
 	String stationName;
@@ -27,6 +27,11 @@ public class Station {
 	@Override
 	public String toString() {
 		return "ID:" + getID() + " | Line: " + line.getName() + " | " + stationName ;
+	}
+
+	@Override
+	public int compareTo(Station o) {
+		return this.getStationName().compareTo(o.getStationName());
 	}
 	
 	

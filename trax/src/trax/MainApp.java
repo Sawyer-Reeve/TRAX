@@ -17,15 +17,15 @@ import edu.princeton.cs.algs4.ST;
  * @author sawyerreeve + Chris Darnell
  */
 public class MainApp {
-	private static ST<Integer,String> railIDs; 
-	private static ST<String,Station> stationSymbolTable;
-	//private static SymbolTable<Integer,Station> railIDTable;
+	private static ST<Integer,String> ID_StationName_ST; 
+	private static ST<String,Station> Name_Station_ST;
+	private static ST<Integer,Station> ID_Station_ST;
 	private static RailLine GreenLine;
 	private static RailLine BlueLine;
 	private static RailLine RedLine;
 	private static RailLine FrontRunner;
 //	private static ArrayList<Station> allStationsList;
-//	private static Station[] allStations;
+	private static Station[] allStations;
 	
     public static void main(String[] args) throws IOException {
     	
@@ -40,7 +40,8 @@ public class MainApp {
 		
     			//RailLines are initialized here(without the lists) in order to allow me to assign each of them to the stations 
     			//when they are created
-    			railIDs = new ST<Integer,String>();
+    			ID_StationName_ST = new ST<Integer,String>();
+    			ID_Station_ST = new ST<Integer,Station>();
     			
 //    			GreenLine = new RailLine("Green Line");
 //    			BlueLine = new RailLine("Blue Line");
@@ -53,7 +54,7 @@ public class MainApp {
     			FrontRunner = new RailLine(RailLines.FRONTRUNNER);
     			
 //    			allStationsList = new ArrayList<Station>();
-    			stationSymbolTable = new ST<String,Station>();
+    			Name_Station_ST = new ST<String,Station>();
     			
 
     			//Blue Line Stations
@@ -68,8 +69,9 @@ public class MainApp {
     				Station station = new Station(count, s, BlueLine);
 //    				BlueLineStations.add(station);
     				BlueLineStations.enqueue(station);
-    				railIDs.put(count, s);
-    				stationSymbolTable.put(s,station);
+    				ID_StationName_ST.put(count, s);
+    				Name_Station_ST.put(s,station);
+    				ID_Station_ST.put(count,station);
     				
     				count++;
     			}
@@ -83,8 +85,9 @@ public class MainApp {
     				Station station = new Station(count, s, RedLine);
 //    				RedLineStations.add(station);
     				RedLineStations.enqueue(station);
-    				railIDs.put(count, s);
-    				stationSymbolTable.put(s,station);
+    				ID_StationName_ST.put(count, s);
+    				Name_Station_ST.put(s,station);
+    				ID_Station_ST.put(count,station);
     				count++;
     			}
 
@@ -98,8 +101,9 @@ public class MainApp {
     				Station station = new Station(count, s, GreenLine);
 //    				GreenLineStations.add(station);
     				GreenLineStations.enqueue(station);
-    				railIDs.put(count, s);
-    				stationSymbolTable.put(s,station);
+    				ID_StationName_ST.put(count, s);
+    				Name_Station_ST.put(s,station);
+    				ID_Station_ST.put(count,station);
     				count++;
     			}
 
@@ -113,8 +117,9 @@ public class MainApp {
     				Station station = new Station(count, s, FrontRunner);
 //    				FrontRunnerStations.add(station);
     				FrontRunnerStations.enqueue(station);
-    				railIDs.put(count, s);
-    				stationSymbolTable.put(s,station);
+    				ID_StationName_ST.put(count, s);
+    				Name_Station_ST.put(s,station);
+    				ID_Station_ST.put(count,station);
     				count++;	
     			}
     			//here we're just adding the list of stations to each RailLine object
@@ -123,22 +128,12 @@ public class MainApp {
     			GreenLine.add(GreenLineStations);
     			RedLine.add(RedLineStations);
     			
-    			//and then just adding them to a list of all stations	
-    			
-    			// XXX Is this even needed? Doesn't look like its used
-//    			allStationsList.addAll(FrontRunnerStations);
-//    			allStationsList.addAll(BlueLineStations);
-//    			allStationsList.addAll(GreenLineStations);
-//    			allStationsList.addAll(RedLineStations);
-
-//    			allStations = new Station[BlueLineStations.size() + RedLineStations.size() 
-//    					+ GreenLineStations.size() + FrontRunnerStations.size()];
 
     			//end of initialization for the Stations and rails
 
     			//--------------------------------------PRINT STATEMENTS--------------------------------------------------------
     			
-    			System.out.println(BlueLine);
+    		/*	System.out.println(BlueLine);
     			System.out.println(RedLine);
     			System.out.println(GreenLine);
     			System.out.println(FrontRunner);
@@ -166,7 +161,7 @@ public class MainApp {
 
     			//for printing to txt file
     			FrontRunner.printLinearRailGraphs();
-    		
+    		*/
     }
 
     
@@ -192,48 +187,58 @@ public class MainApp {
 	public static String[] allStationsStrings() {
 		
 		//joins all Station strings into single arraylist
-		ArrayList<String> allStationsStrings = new ArrayList<String>();
-		allStationsStrings.addAll(Arrays.asList(GreenLine.getStationArray()));
-		allStationsStrings.addAll(Arrays.asList(BlueLine.getStationArray()));
-		allStationsStrings.addAll(Arrays.asList(RedLine.getStationArray()));
-		allStationsStrings.addAll(Arrays.asList(GreenLine.getStationArray()));
+		Queue<String> strings = new Queue<String>();
+		
+		for (String s : BlueLine.getStationArray()) {
+			strings.enqueue(s);
+		}
+		for (String s : RedLine.getStationArray()) {
+			strings.enqueue(s);
+		}
+		for (String s : GreenLine.getStationArray()) {
+			strings.enqueue(s);
+		}
+		for (String s : FrontRunner.getStationArray()) {
+			strings.enqueue(s);
+		}
+
 		
 		//removes duplicates
 		SET<String> allStationsSet = new SET<String>();
-		for (String s : allStationsStrings) {
+		for (String s : strings) {
 			allStationsSet.add(s);
 		}
-		//re-adds to lists and sorts by alphabetical order
-		allStationsStrings.clear();
-		
-		for (String s :allStationsSet) {
-			allStationsStrings.add(s);
-		}
-		
-		Collections.sort(allStationsStrings, String.CASE_INSENSITIVE_ORDER);
-		
-		
+
 		int array_size = allStationsSet.size();
 		String[] stationsArray = new String[array_size];
 		
 		int i=0;
-		for (String s : allStationsStrings) {
+		for (String s : allStationsSet) {
 			stationsArray[i] = s;
 			i++;
 		}
-		
+		Arrays.sort(stationsArray);
 		return stationsArray;
 		
 	}
 	
-	public static ST<String,Station> getStationHashMap(){
-		return stationSymbolTable;
+	public static ST<String,Station> getName_Station_ST(){
+		return Name_Station_ST;
 	} 
 	
-	public static ST<Integer,String> getRailIdHashmap(){
-		return railIDs;
+	public static ST<Integer,String> getID_StationName_ST(){
+		return ID_StationName_ST;
 	}
 	
+	
+	public static ST<Integer,Station> getID_Station_ST(){
+		return ID_Station_ST;
+	}
+	
+	public static Station[] getAllStations() {
+		return allStations;
+	}
+
 	//this routing method takes in a start, destination, and graph and uses djikstras method to find the shortest route
 	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G ) {
 		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
