@@ -32,7 +32,10 @@ public class MainControlPanel extends JPanel implements ActionListener{
 	Double total_time=0.0;
 	
 	
-	//panel with directions
+	
+	/**
+	 * panel constructor
+	 */
 	MainControlPanel(){
 		this.setVisible(true);
 		this.setPreferredSize(new Dimension(300,800));
@@ -125,7 +128,21 @@ public class MainControlPanel extends JPanel implements ActionListener{
 					path.enqueue(firstStation);//debug display
 					System.out.print(s);
 				}	
-			
+				System.out.println("Transfer :" + transfer_station);
+				System.out.println(MainApp.getID_Station_ST().get(transfer_station));
+				System.out.println(start);
+				//checks to see if the algorithm is attempting to transfer at the start and very end by comparing station names
+				if (transfer_station != -1) {
+					if (start.getStationName().equals(MainApp.getID_Station_ST().get(transfer_station).getStationName())) {
+						transfer_station = -1;
+						total_time -= 1.1;
+					}
+					else if (destination.getStationName().equals(MainApp.getID_Station_ST().get(transfer_station).getStationName())){
+						transfer_station = -1;
+						total_time -= 1.1;
+					}
+				}
+				System.out.println("Transfer after checks: " + transfer_station);
 
 				
 				path.enqueue(secondStation);//this is added after the loop, because each station appears twice in the iterable 69-68 68-67 67-66 etc..
@@ -156,6 +173,13 @@ public class MainControlPanel extends JPanel implements ActionListener{
 
 		
 	}
+	/**
+	 * provideDirections displays a a text box of various text, depending on if there are transfers within the route that
+	 * need to be taken
+	 * @param start 
+	 * @param destination
+	 * @param transfer_station
+	 */
 	private void provideDirections(Station start, Station destination, int transfer_station) {
 		StringBuilder sb = new StringBuilder();
 

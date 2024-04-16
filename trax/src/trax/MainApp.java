@@ -24,7 +24,6 @@ public class MainApp {
 	private static RailLine BlueLine;
 	private static RailLine RedLine;
 	private static RailLine FrontRunner;
-//	private static ArrayList<Station> allStationsList;
 	private static Station[] allStations;
 	
     public static void main(String[] args) throws IOException {
@@ -42,19 +41,13 @@ public class MainApp {
     			//when they are created
     			ID_StationName_ST = new ST<Integer,String>();
     			ID_Station_ST = new ST<Integer,Station>();
-    			
-//    			GreenLine = new RailLine("Green Line");
-//    			BlueLine = new RailLine("Blue Line");
-//    			RedLine = new RailLine("Red Line");
-//    			FrontRunner = new RailLine("FrontRunner");
+    			Name_Station_ST = new ST<String,Station>();
     			
     			GreenLine = new RailLine(RailLines.GREEN_LINE);
     			BlueLine = new RailLine(RailLines.BLUE_LINE);
     			RedLine = new RailLine(RailLines.RED_LINE);
     			FrontRunner = new RailLine(RailLines.FRONTRUNNER);
     			
-//    			allStationsList = new ArrayList<Station>();
-    			Name_Station_ST = new ST<String,Station>();
     			
 
     			//Blue Line Stations
@@ -62,12 +55,10 @@ public class MainApp {
     			//as well as adding them to a hashmap
     			
     			Queue<String> BlueStationsStrings = FileIO.getStationList(RailLines.BLUE_LINE);
-//    			ArrayList<Station> BlueLineStations = new ArrayList<Station>();
     			Queue<Station> BlueLineStations = new Queue<>();
     			int count = 0;
     			for (String s : BlueStationsStrings) {
     				Station station = new Station(count, s, BlueLine);
-//    				BlueLineStations.add(station);
     				BlueLineStations.enqueue(station);
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
@@ -79,11 +70,9 @@ public class MainApp {
 
     			// Red Line Stations
     			Queue<String> RedStationsStrings = FileIO.getStationList(RailLines.RED_LINE);
-//    			ArrayList<Station> RedLineStations = new ArrayList<Station>();
     			Queue<Station> RedLineStations = new Queue<>();
     			for (String s : RedStationsStrings) {
     				Station station = new Station(count, s, RedLine);
-//    				RedLineStations.add(station);
     				RedLineStations.enqueue(station);
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
@@ -94,12 +83,10 @@ public class MainApp {
 
     			// Green Line Stations
     			Queue<String> GreenStationsStrings = FileIO.getStationList(RailLines.GREEN_LINE);
-//    			ArrayList<Station> GreenLineStations = new ArrayList<Station>();	
     			Queue<Station> GreenLineStations = new Queue<>();
     			
     			for (String s : GreenStationsStrings) {
     				Station station = new Station(count, s, GreenLine);
-//    				GreenLineStations.add(station);
     				GreenLineStations.enqueue(station);
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
@@ -109,13 +96,11 @@ public class MainApp {
 
     			
     			//FrontRunner Stations
-    			Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);
-//    			ArrayList<Station> FrontRunnerStations = new ArrayList<Station>();	
+    			Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);	
     			Queue<Station> FrontRunnerStations = new Queue<>();
     			
     			for (String s : FrontRunnerStrings) {
     				Station station = new Station(count, s, FrontRunner);
-//    				FrontRunnerStations.add(station);
     				FrontRunnerStations.enqueue(station);
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
@@ -183,7 +168,10 @@ public class MainApp {
 		return FrontRunner;
 	}
 	
-	//uses hashset to remove duplicate stations, is then fed into the drop down menus
+	/**
+	 * used to return an array of unique strings for the drop down menu displays
+	 * @return array of unique strings
+	 */
 	public static String[] allStationsStrings() {
 		
 		//joins all Station strings into single arraylist
@@ -222,24 +210,44 @@ public class MainApp {
 		
 	}
 	
+	/**
+	 * @return the Name-Station Symbol Table
+	 */
 	public static ST<String,Station> getName_Station_ST(){
 		return Name_Station_ST;
 	} 
 	
+	/**
+	 * @return the ID-Station Name Symbol Table
+	 */
 	public static ST<Integer,String> getID_StationName_ST(){
 		return ID_StationName_ST;
 	}
 	
 	
+	/**
+	 * @return the ID-Station Symbol Table
+	 */
 	public static ST<Integer,Station> getID_Station_ST(){
 		return ID_Station_ST;
 	}
 	
+	/**
+	 * @return an array of all station objects
+	 */
 	public static Station[] getAllStations() {
 		return allStations;
 	}
 
-	//this routing method takes in a start, destination, and graph and uses djikstras method to find the shortest route
+	
+	/**
+	 * route uses Dijkstras algorithm to find the shortest path between two points on a weighted graph,
+	 * in this case the weight graph is the trax map with the weights representing the times between points
+	 * @param start starting point
+	 * @param destination ending point
+	 * @param G provided edge weighted graph
+	 * @return iterable Edge objects that represent the lowest weighted path
+	 */
 	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G ) {
 		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
 		return graph.pathTo(destination.getID());
