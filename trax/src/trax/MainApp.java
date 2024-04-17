@@ -13,7 +13,7 @@ import edu.princeton.cs.algs4.ST;
 
 /**
  * Main running application that initializes the rails, and calles the GUI methods
- * @author sawyerreeve + Chris Darnell
+ * @author sawyerreeve + chrisdarnell
  */
 public class MainApp {
 	private static ST<Integer,String> ID_StationName_ST; 

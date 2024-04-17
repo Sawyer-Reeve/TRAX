@@ -33,7 +33,7 @@ public class RailLine {
 	 * @param line name of this RailLine
 	 */
 	RailLine(RailLines line) {
-		this.name = line.name();
+		this.name = line.getName();
 		this.stations = new ArrayList<Station>();
 	}
 	
