@@ -1,5 +1,7 @@
 package trax;
 
+import java.awt.Point;
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
 
@@ -9,6 +11,7 @@ import edu.princeton.cs.algs4.Queue;
  */
 public class FileIO {
 	private static In stationList = new In("src/Resources/stationList.txt");
+	private static In stationCoordList = new In("src/Resources/pointLocations.txt");
 
 	/**
 	 * Creates a Queue with string names from the stationList.txt text file
@@ -30,5 +33,27 @@ public class FileIO {
 			}
 		}
 		return stations;
+	}
+	
+	public static Queue<Point> getCoordList(RailLines railLine){
+		int x;
+		int y;
+		Queue<Point> coordinates = new Queue<>();
+		while (stationCoordList.hasNextLine()) {
+			String nextLine = stationCoordList.readLine();
+			if (nextLine.equals(railLine.name())) {
+				String[] coords = new String[2];
+				nextLine = stationCoordList.readLine();
+				while (stationCoordList.hasNextLine() & !nextLine.equals("###")) {
+					coords = nextLine.split(",");
+					x = Integer.parseInt(coords[0]);
+					y = Integer.parseInt(coords[1]);
+					coordinates.enqueue(new Point(x,y));
+					nextLine = stationCoordList.readLine();
+				} 
+				break;
+			}
+		}
+		return coordinates;
 	}
 }

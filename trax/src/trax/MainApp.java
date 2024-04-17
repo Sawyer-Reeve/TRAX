@@ -1,8 +1,9 @@
 package trax;
 
 
+import java.awt.Point;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Arrays; //used to sort an array in alphabetical order
 import edu.princeton.cs.algs4.DijkstraUndirectedSP;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
@@ -53,6 +54,7 @@ public class MainApp {
     			//as well as adding them to a hashmap
     			
     			Queue<String> BlueStationsStrings = FileIO.getStationList(RailLines.BLUE_LINE);
+    			Queue<Point> BlueStationCoords = FileIO.getCoordList(RailLines.BLUE_LINE);
     			Queue<Station> BlueLineStations = new Queue<>();
     			int count = 0;
     			for (String s : BlueStationsStrings) {
@@ -61,6 +63,7 @@ public class MainApp {
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
+    				station.setPoint(BlueStationCoords.dequeue());
     				
     				count++;
     			}
@@ -68,6 +71,7 @@ public class MainApp {
 
     			// Red Line Stations
     			Queue<String> RedStationsStrings = FileIO.getStationList(RailLines.RED_LINE);
+    			Queue<Point> RedStationCoords = FileIO.getCoordList(RailLines.RED_LINE);
     			Queue<Station> RedLineStations = new Queue<>();
     			for (String s : RedStationsStrings) {
     				Station station = new Station(count, s, RedLine);
@@ -75,12 +79,14 @@ public class MainApp {
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
+    				station.setPoint(RedStationCoords.dequeue());
     				count++;
     			}
 
 
     			// Green Line Stations
     			Queue<String> GreenStationsStrings = FileIO.getStationList(RailLines.GREEN_LINE);
+    			Queue<Point> GreenStationCoords = FileIO.getCoordList(RailLines.GREEN_LINE);
     			Queue<Station> GreenLineStations = new Queue<>();
     			
     			for (String s : GreenStationsStrings) {
@@ -89,12 +95,14 @@ public class MainApp {
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
+    				station.setPoint(GreenStationCoords.dequeue());
     				count++;
     			}
 
     			
     			//FrontRunner Stations
-    			Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);	
+    			Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);
+    			Queue<Point> FrontRunnerCoords = FileIO.getCoordList(RailLines.FRONTRUNNER);
     			Queue<Station> FrontRunnerStations = new Queue<>();
     			
     			for (String s : FrontRunnerStrings) {
@@ -103,6 +111,7 @@ public class MainApp {
     				ID_StationName_ST.put(count, s);
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
+    				station.setPoint(FrontRunnerCoords.dequeue());
     				count++;	
     			}
     			//here we're just adding the list of stations to each RailLine object

@@ -4,7 +4,10 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -27,6 +30,7 @@ public class MainControlPanel extends JPanel implements ActionListener{
 	JComboBox<String> startDropDownMenu;
 	JComboBox<String> destinationDropDownMenu;
 	JTextArea directions;
+	JLabel pinLabel;
 	JLabel timelabel;
 	Double total_time=0.0;
 	
@@ -87,6 +91,8 @@ public class MainControlPanel extends JPanel implements ActionListener{
 		try {	
 
 			if (e.getSource()==submitButton) {
+				
+			}
 				Station start = MainApp.getName_Station_ST().get((String)startDropDownMenu.getSelectedItem()); //starting station
 				Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());//ending station
 
@@ -116,20 +122,18 @@ public class MainControlPanel extends JPanel implements ActionListener{
 					
 					s = a.toString();
 					String[] parts = s.split("-");
-					secondStation = Integer.parseInt(parts[0]);
+					firstStation = Integer.parseInt(parts[0]);
 					String[] parts2 = parts[1].split("\\s+");
-					firstStation = Integer.parseInt(parts2[0]); // takes the first half of the xx-xx string
+					secondStation = Integer.parseInt(parts2[0]); // takes the first half of the xx-xx string
 					
 					if (Double.parseDouble(parts2[1]) == 1.1) { //transfers are given a weight of 1.1
 						transfer_station = firstStation;
 					}
 					total_time += Double.parseDouble(parts2[1]);
 					path.enqueue(firstStation);//debug display
-					System.out.print(s);
+					System.out.print(s + " ");
 				}	
-				System.out.println("Transfer :" + transfer_station);
-				System.out.println(MainApp.getID_Station_ST().get(transfer_station));
-				System.out.println(start);
+				path.enqueue(secondStation);
 				//checks to see if the algorithm is attempting to transfer at the start and very end by comparing station names
 				if (transfer_station != -1) {
 					if (start.getStationName().equals(MainApp.getID_Station_ST().get(transfer_station).getStationName())) {
@@ -141,7 +145,9 @@ public class MainControlPanel extends JPanel implements ActionListener{
 						total_time -= 1.1;
 					}
 				}
-				System.out.println("Transfer after checks: " + transfer_station);
+				//debugging path
+			/*	
+				System.out.println("Transfer Station: " + transfer_station);
 
 				
 				path.enqueue(secondStation);//this is added after the loop, because each station appears twice in the iterable 69-68 68-67 67-66 etc..
@@ -152,18 +158,15 @@ public class MainControlPanel extends JPanel implements ActionListener{
 				for (Integer i : path) {
 					System.out.println(	MainApp.getID_Station_ST().get(i).getStationName());
 				}
-				
+				*/
 
 
 
 				provideDirections(start, destination, transfer_station);
 
-
-				//TODO: If we want we can add that pin functionality, I have no problem going through and getting
-				//all of the coordinates for each station, it wouldn't take too long and I can just add it as a
-				//class variable for Station
-
-			}
+			//TODO: add pin functionality, I dont even remember how to overlay images anymore ill be honest,
+				//we can get the coordinates from the start, destination, and transfer stations
+			
 
 		}
 		catch (IllegalArgumentException n) {
@@ -198,7 +201,4 @@ public class MainControlPanel extends JPanel implements ActionListener{
 		total_time=0.0;
 		
 	}
-
-	
-	
 }
