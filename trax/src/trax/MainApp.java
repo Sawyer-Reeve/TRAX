@@ -26,9 +26,9 @@ public class MainApp {
 	private static Station[] allStations;
 	
     public static void main(String[] args) throws IOException {
-    	
     	RailInitialization(); //below method, initializes all of the rail lines
     	new MainGUIframe();
+ 
          
     }
     
