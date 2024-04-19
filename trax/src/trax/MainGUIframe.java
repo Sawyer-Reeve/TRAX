@@ -8,11 +8,15 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -39,7 +43,7 @@ import edu.princeton.cs.algs4.Queue;
  * before I condensed them
  */
 @SuppressWarnings({ "serial" })
-public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
+public class MainGUIframe extends JFrame implements ActionListener,ItemListener,KeyListener{
 	JPanel panel;
 	JButton submitButton;
 	JComboBox<String> startDropDownMenu;
@@ -145,44 +149,58 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		imagePanel = new ImagePanel();
 		panel.add(imagePanel);
 		imagePanel.setPreferredSize(new Dimension(900,800));
-		//imagePanel.paintComponent(getGraphics());
-		//imagePanel.setBounds(400,0,900,800);
-/*
+		imagePanel.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Point p = imagePanel.getMousePosition();
+				int x = (int) p.getX();
+				int y = (int) p.getY();
+				System.out.println(x + " " + y);
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+
+		          
+			
+			});
 		        
-	        ImageIcon background=new ImageIcon("src/Resources/TRAX MAP.png"); 
-	        Image img=background.getImage();
-	        Image temp=img.getScaledInstance(790,800,Image.SCALE_SMOOTH); //scales the image, can be set to SCALE_FAST if its slow, must be less than 800 wide as 800+ pushes the image offscreen 
-	        background=new ImageIcon(temp);
-	        JLabel backgroundlabel = new JLabel();
-	        backgroundlabel.setBounds(400,0,900,800);
-	        imagePane.add(backgroundlabel,JLayeredPane.DEFAULT_LAYER);
-
-
-	        backgroundlabel.setIcon(background);
-
-	        //ImageIcon pin = new ImageIcon("src/Resources/Drop.png");
-	        Image pinimage = pin.getImage();
-	        Image temppin = pinimage;
-	        pin = new ImageIcon(temppin);
-	        startPinLabel = new JLabel();
-	        startPinLabel.setOpaque(true);
-	        
-	 
-
-	        startPinLabel.setIcon(pin);
-	        startPinLabel.setBounds(506,32,90,160);//default start location is the airport
-	        startPinLabel.setVisible(false);
-	       // imagePane.add(startPinLabel,JLayeredPane.PALETTE_LAYER);
-*/
-
-		     
-
-	    
-	        
-		//panel.setVisible(true);
+	
+			
+		
+		
+		
+		
+		
 	
 
 	}
+	
+	
 
 
 
@@ -335,6 +353,42 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 	    g2.dispose();
 	    return resizedImg;
 	}
+
+
+
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+
 
 
 }
