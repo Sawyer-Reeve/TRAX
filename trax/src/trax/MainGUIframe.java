@@ -117,7 +117,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	public void itemStateChanged(ItemEvent e) {
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
 			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
-			System.out.println(start.toString());
+			//System.out.println(start.toString());
 			imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
 			imagePanel.togglePin(1, true);
 
@@ -198,19 +198,26 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				total_time += Double.parseDouble(parts2[1]);
 				//System.out.print(s + " ");
 			}	
-			System.out.println(MainApp.getID_Station_ST().get(transfer_station).getStationName());
-			System.out.println(MainApp.getID_Station_ST().get(second_transfer_station).getStationName());
+		
+			
 			//checks to see if the algorithm is attempting to transfer at the start and very end by comparing station names
 			if (transfer_station != -1) {
 				if (start.getStationName().equals(MainApp.getID_Station_ST().get(transfer_station).getStationName())) {
+					System.out.println(MainApp.getID_Station_ST().get(transfer_station).getStationName());
 					transfer_station = -1;
 					total_time -= 1.1;
 				}
-				else if (destination.getStationName().equals(MainApp.getID_Station_ST().get(transfer_station).getStationName())){
-					transfer_station = -1;
-					total_time -= 1.1;
-				}
+				
 			}
+			if (second_transfer_station != -1) {
+				if (start.getStationName().equals(MainApp.getID_Station_ST().get(second_transfer_station).getStationName())) {
+					second_transfer_station = -1;
+					System.out.println(MainApp.getID_Station_ST().get(second_transfer_station).getStationName());
+					total_time -= 1.1;
+				}
+				
+			}
+			
 		
 			
 			provideDirections(start, destination, transfer_station,second_transfer_station);
