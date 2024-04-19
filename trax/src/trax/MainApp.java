@@ -46,7 +46,8 @@ public class MainApp {
     			BlueLine = new RailLine(RailLines.BLUE_LINE);
     			RedLine = new RailLine(RailLines.RED_LINE);
     			FrontRunner = new RailLine(RailLines.FRONTRUNNER);
-    			
+    			ID_StationName_ST.put(-1, null);
+    			ID_Station_ST.put(-1, null);
     			
 
     			//Blue Line Stations
