@@ -11,22 +11,16 @@ public class ImagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private String backgroundImg = "/Resources/TRAX MAP.png";
-	private String startPinImg = "/Resources/PinDrop.png";
+	private String startPinImg = "/Resources/PinDropGreen.png";
 	private String endPinImg = "/Resources/PinDropBlue.png";
-	private String transferPinImg = "/Resources/PinDropPurple.png";
+	private String transfer1PinImg = "/Resources/PinDropPurple.png";
+	private String transfer2PinImg = "/Resources/PinDropOrange.png";	
 	
-	private int x1 = 0;
-	private int y1 = 0;
-	private int x2 = 0;
-	private int y2 = 0;
-	private int x3 = 0;
-	private int y3 = 0;
+	private int[] x = new int[5];
+	private int[] y = new int[5];
+	private boolean[] pinEnabled = new boolean[5];
 	
-	private boolean pin1Enabled = false;
-	private boolean pin2Enabled = false;
-	private boolean pin3Enabled = true;
-	
-	private int scaleFactor = 40;
+	private int scaleFactor = 60;
 	
 	/**
 	 * Create the panel.
@@ -42,13 +36,16 @@ public class ImagePanel extends JPanel {
 		background.paintIcon(this,  g, 0, 0);
 		
         ImageIcon startPin = new ImageIcon(scaledImage(startPinImg, scaleFactor, -1));
-        if (pin1Enabled) startPin.paintIcon(this, g, x1, y1);
+        if (pinEnabled[1]) startPin.paintIcon(this, g, x[1], y[1]);
         
         ImageIcon endPin = new ImageIcon(scaledImage(endPinImg, scaleFactor, -1));
-        if (pin2Enabled) endPin.paintIcon(this, g, x2, y2);
+        if (pinEnabled[2]) endPin.paintIcon(this, g, x[2], y[2]);
         
-        ImageIcon transferPin = new ImageIcon(scaledImage(transferPinImg, scaleFactor, -1));
-        if (pin3Enabled) transferPin.paintIcon(this,  g, x3, y3);
+        ImageIcon transferPin1 = new ImageIcon(scaledImage(transfer1PinImg, scaleFactor, -1));
+        if (pinEnabled[3]) transferPin1.paintIcon(this,  g, x[3], y[3]);
+        
+        ImageIcon transferPin2 = new ImageIcon(scaledImage(transfer2PinImg, scaleFactor, -1));
+        if (pinEnabled[4]) transferPin2.paintIcon(this, g, x[4], y[4]);
         
 	}
 	
@@ -61,12 +58,8 @@ public class ImagePanel extends JPanel {
 	 * @param y
 	 */
 	public void setPinXY(int pin, int x, int y) {
-		x = x - scaleFactor + 20; y = y - scaleFactor + 7;
-		switch (pin) {
-			case 1: this.x1 = x; this.y1 = y; break;
-			case 2: this.x2 = x; this.y2 = y; break;
-			case 3: this.x3 = x; this.y3 = y; break;
-		}
+		x = x - scaleFactor + 30; y = y - scaleFactor + 9;
+		this.x[pin] = x; this.y[pin] = y;
 	}
 	
 	/**
@@ -75,12 +68,8 @@ public class ImagePanel extends JPanel {
 	 * 3 = transfer pin
 	 * @param pin
 	 */
-	public void enablePin(int pin) {
-		switch (pin) {
-			case 1: pin1Enabled = true; break;
-			case 2: pin2Enabled = true; break;
-			case 3: pin3Enabled = true; break;
-		}
+	public void togglePin(int pin, boolean val) {
+		pinEnabled[pin] = val;
 	}
 	
 	private Image scaledImage(String path, int x, int y) {

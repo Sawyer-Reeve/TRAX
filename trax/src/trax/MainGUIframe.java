@@ -119,12 +119,12 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
 			System.out.println(start.toString());
 			imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
-			imagePanel.enablePin(1);
+			imagePanel.togglePin(1, true);
 
 			// imagePanel.paintComponent(getGraphics());
 			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());
 			imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
-			imagePanel.enablePin(2);
+			imagePanel.togglePin(2, true);
 			// startPinLabel.setVisible(true);
 			// startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
 			// startPinLabel.setVisible(true);
@@ -215,7 +215,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			Station transfer2 = MainApp.getID_Station_ST().get(second_transfer_station);
 			if (transfer_station != -1) {
 				imagePanel.setPinXY(3,  transfer.getXcoord(), transfer.getYcoord());
-				imagePanel.enablePin(3);
+				imagePanel.togglePin(3, true);
 				
 			}
 			else {
@@ -223,7 +223,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			}
 			if (second_transfer_station !=-1) {
 				imagePanel.setPinXY(4, transfer2.getXcoord(), transfer2.getYcoord());
-				imagePanel.enablePin(4);
+				imagePanel.togglePin(4, true);
 			}
 			else {
 				//TODO: disable pin
