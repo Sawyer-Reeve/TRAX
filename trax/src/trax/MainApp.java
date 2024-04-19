@@ -4,6 +4,7 @@ package trax;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.Arrays; //used to sort an array in alphabetical order
+
 import edu.princeton.cs.algs4.DijkstraUndirectedSP;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
@@ -24,15 +25,14 @@ public class MainApp {
 	private static RailLine RedLine;
 	private static RailLine FrontRunner;
 	private static Station[] allStations;
+	static Integer total_time;
 	
     public static void main(String[] args) throws IOException {
     	RailInitialization(); //below method, initializes all of the rail lines
-    	new MainGUIframe();
- 
-         
+    	new MainGUIframe();  
     }
     
-    //TODO:not sure if this needs to be its own class or if it fits here
+    
     public static void RailInitialization() {
     	//initialization of railLines and stations with ID's
 		
@@ -125,14 +125,14 @@ public class MainApp {
     			//end of initialization for the Stations and rails
 
     			//--------------------------------------PRINT STATEMENTS--------------------------------------------------------
-    			
-    		/*	System.out.println(BlueLine);
+    /*			
+    			System.out.println(BlueLine);
     			System.out.println(RedLine);
     			System.out.println(GreenLine);
     			System.out.println(FrontRunner);
 
 
-    			System.out.println(railIDs.keys());
+    			//System.out.println(railIDs.keys());
     			System.out.println();
 
     			for (String s : allStationsStrings()) {
@@ -246,6 +246,10 @@ public class MainApp {
 	public static Station[] getAllStations() {
 		return allStations;
 	}
+	
+	public static Integer getTotal_Time() {
+		return total_time;
+	}
 
 	
 	/**
@@ -258,6 +262,7 @@ public class MainApp {
 	 */
 	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G ) {
 		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
+		total_time = (int) graph.distTo(destination.getID());
 		return graph.pathTo(destination.getID());
 	}
 }

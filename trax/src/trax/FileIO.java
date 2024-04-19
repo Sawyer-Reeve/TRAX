@@ -7,6 +7,7 @@ import edu.princeton.cs.algs4.Queue;
 
 /**
  * Methods for reading text files with configuration data
+ * 
  * @author sawyerreeve + Chris Darnell
  */
 public class FileIO {
@@ -28,14 +29,14 @@ public class FileIO {
 				while (stationList.hasNextLine() & !nextLine.equals("###")) {
 					stations.enqueue(nextLine);
 					nextLine = stationList.readLine();
-				} 
+				}
 				break;
 			}
 		}
 		return stations;
 	}
-	
-	public static Queue<Point> getCoordList(RailLines railLine){
+
+	public static Queue<Point> getCoordList(RailLines railLine) {
 		int x;
 		int y;
 		Queue<Point> coordinates = new Queue<>();
@@ -48,9 +49,9 @@ public class FileIO {
 					coords = nextLine.split(",");
 					x = Integer.parseInt(coords[0]);
 					y = Integer.parseInt(coords[1]);
-					coordinates.enqueue(new Point(x,y));
+					coordinates.enqueue(new Point(x, y));
 					nextLine = stationCoordList.readLine();
-				} 
+				}
 				break;
 			}
 		}
