@@ -10,7 +10,7 @@ public class ImagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private String backgroundImg = "/Resources/TRAX MAP.png";
+	private String backgroundImg = "/Resources/background.png";
 	private String startPinImg = "/Resources/PinDropGreen.png";
 	private String endPinImg = "/Resources/PinDropBlue.png";
 	private String transfer1PinImg = "/Resources/PinDropPurple.png";
@@ -34,6 +34,9 @@ public class ImagePanel extends JPanel {
 		super.paintComponent(g);
 		ImageIcon background = new ImageIcon(ImagePanel.class.getResource(backgroundImg));
 		background.paintIcon(this, g, 0, 0);
+		
+		ImageIcon testPath = new ImageIcon(ImagePanel.class.getResource("/Resources/Path/FR1.png"));
+		testPath.paintIcon(this, g, 0, 0);
 
 		ImageIcon startPin = new ImageIcon(scaledImage(startPinImg, scaleFactor, -1));
 		if (pinEnabled[1])
@@ -50,6 +53,7 @@ public class ImagePanel extends JPanel {
 		ImageIcon transferPin2 = new ImageIcon(scaledImage(transfer2PinImg, scaleFactor, -1));
 		if (pinEnabled[4])
 			transferPin2.paintIcon(this, g, x[4], y[4]);
+
 
 	}
 
