@@ -30,15 +30,15 @@ public class ImagePanel extends JPanel {
 		background.paintIcon(this,  g, 0, 0);
 		
 		ImageIcon pin = new ImageIcon(ImagePanel.class.getResource(pinImg));
-        Image image = pin.getImage();
-        Image temp = image.getScaledInstance(40, -1, Image.SCALE_SMOOTH);
-        ImageIcon scaledPin = new ImageIcon(temp);
-        scaledPin.paintIcon(this, g, x, y);
+		Image image = pin.getImage();		
+		Image temp = image.getScaledInstance(40, -1, Image.SCALE_SMOOTH);
+		ImageIcon scaledPin = new ImageIcon(temp);
+		scaledPin.paintIcon(this, g, x, y);
 	}
 	
 	public void setPinXY(int x, int y) {
-		this.x=x;
-		this.y=y;
+		this.x = x;
+		this.y = y;
 	}
 	
 }

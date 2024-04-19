@@ -2,6 +2,7 @@ package trax;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -69,7 +70,7 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 
 		main = new JPanel();
 		main.setPreferredSize(new Dimension(400,800));
-		main.setLayout(new BorderLayout());
+		main.setLayout(new FlowLayout());
 
 
 
