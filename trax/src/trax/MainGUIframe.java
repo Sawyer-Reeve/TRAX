@@ -1,6 +1,7 @@
 package trax;
 
 import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -61,7 +62,7 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		panel = new JPanel();
 		//panel.setPreferredSize(new Dimension(1200,800));
 		panel.setBounds(0,0,1200,800);
-		panel.setLayout(null);
+		panel.setLayout(new BorderLayout());
 
 
 
@@ -77,8 +78,8 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 
 
 		main = new JPanel();
-		main.setBounds(0,0,300,800);
-		main.setLayout(null);
+		main.setPreferredSize(new Dimension(400,800));
+		main.setLayout(new BorderLayout());
 		
 		//panel.add(main);
 
@@ -107,7 +108,7 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		startDropDownMenu.addItemListener(this);
 		destinationDropDownMenu = new JComboBox<String>(all);
 
-		
+		main.add(start);
 		main.add(destination);
 		main.add(startDropDownMenu);
 		main.add(destinationDropDownMenu);
@@ -115,8 +116,9 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		main.add(directionsLabel);
 		main.add(directions);
 		main.add(timelabel);
-		main.add(start);
-		panel.add(main);
+		
+		
+		panel.add(main,BorderLayout.WEST);
 		
 		start.setBounds(20, 0, 100, 30);
 		startDropDownMenu.setBounds(20, 30, 200, 30);
@@ -140,11 +142,9 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		//do map stuff below here, panel stuff above
 		imagePanel = new ImagePanel();
 		panel.add(imagePanel);
-		//imagePanel.paintComponent();
 		imagePanel.setPreferredSize(new Dimension(900,800));
-
+		//imagePanel.paintComponent(getGraphics());
 		//imagePanel.setBounds(400,0,900,800);
-		//imagePanel.repaint();
 /*
 		        
 	        ImageIcon background=new ImageIcon("src/Resources/TRAX MAP.png"); 
@@ -189,7 +189,7 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 			Station start = MainApp.getName_Station_ST().get((String)startDropDownMenu.getSelectedItem());
 			System.out.println(start.toString());
 			imagePanel.setPinXY(start.getXcoord(), start.getYcoord());
-			imagePanel.paintComponent(getGraphics());
+			//imagePanel.paintComponent(getGraphics());
 			//Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
 			//startPinLabel.setVisible(true);
 		//	startPinLabel.setLocation(start.getXcoord(), start.getYcoord());

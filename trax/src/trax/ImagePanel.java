@@ -25,7 +25,7 @@ public class ImagePanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		ImageIcon background = new ImageIcon(ImagePanel.class.getResource(backgroundImg));
-		background.paintIcon(this,  g, 400, 20);
+		background.paintIcon(this,  g, 0, 0);
 		
 		ImageIcon pin = new ImageIcon(ImagePanel.class.getResource(pinImg));
 		pin.paintIcon(this, g,  x, y);
