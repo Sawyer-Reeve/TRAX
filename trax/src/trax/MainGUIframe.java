@@ -108,6 +108,7 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		startDropDownMenu = new JComboBox<String>(all);
 		startDropDownMenu.addItemListener(this);
 		destinationDropDownMenu = new JComboBox<String>(all);
+		destinationDropDownMenu.addItemListener(this);
 
 		main.add(start);
 		main.add(destination);
@@ -189,14 +190,17 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
 			Station start = MainApp.getName_Station_ST().get((String)startDropDownMenu.getSelectedItem());
 			System.out.println(start.toString());
-			imagePanel.setPinXY(start.getXcoord(), start.getYcoord());
-			imagePanel.repaint();
+			imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
+			imagePanel.enablePin(1);
+			
 			//imagePanel.paintComponent(getGraphics());
 			Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
+			imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
+			imagePanel.enablePin(2);
 			//startPinLabel.setVisible(true);
 		//	startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
 		//	startPinLabel.setVisible(true);
-
+			imagePanel.repaint();
 		}
 	} 
 	//is is the action performed when the submit button is clicked
