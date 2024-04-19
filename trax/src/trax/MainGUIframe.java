@@ -1,7 +1,11 @@
 package trax;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -13,12 +17,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -38,6 +45,8 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 	JComboBox<String> startDropDownMenu;
 	JComboBox<String> destinationDropDownMenu;
 	JTextArea directions;
+	JLabel startPinLabel;
+	JLabel endPinLabel;
 	JLabel trasnferPinLabel;
 	JLabel timelabel;
 	JLabel directionsLabel;
@@ -64,12 +73,23 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		this.setTitle("TRAX Ride-Assist");
 		this.setContentPane(panel);
 		this.setVisible(true);
+		//this.setLayout(null);
 
 
 
 		main = new JPanel();
 		main.setPreferredSize(new Dimension(400,800));
 		main.setLayout(new BorderLayout());
+		
+		//panel.add(main);
+
+
+
+
+
+
+
+
 
 
 
@@ -87,7 +107,6 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		startDropDownMenu = new JComboBox<String>(all);
 		startDropDownMenu.addItemListener(this);
 		destinationDropDownMenu = new JComboBox<String>(all);
-		destinationDropDownMenu.addItemListener(this);
 
 		main.add(start);
 		main.add(destination);
@@ -107,13 +126,11 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		destinationDropDownMenu.setBounds(20, 120, 200, 30);
 		submitButton.setBounds(160, 160, 100, 30);
 		directionsLabel.setBounds(20,370,100,30);
-		directions.setBounds(20, 400, 250, 200);
-		timelabel.setBounds(30, 200, 200, 50);
-		timelabel.setPreferredSize(new Dimension(200,50));
+		timelabel.setBounds(20, 600, 200, 30);
 
 
 		
-		
+		directions.setBounds(20,400, 250, 200);
 		directions.setBackground(getBackground());
 		directions.setWrapStyleWord(true);
 		directions.setLineWrap(true);
@@ -136,7 +153,8 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 	        background=new ImageIcon(temp);
 	        JLabel backgroundlabel = new JLabel();
 	        backgroundlabel.setBounds(400,0,900,800);
-	       
+	        imagePane.add(backgroundlabel,JLayeredPane.DEFAULT_LAYER);
+
 
 	        backgroundlabel.setIcon(background);
 
@@ -144,8 +162,13 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 	        Image pinimage = pin.getImage();
 	        Image temppin = pinimage;
 	        pin = new ImageIcon(temppin);
+	        startPinLabel = new JLabel();
+	        startPinLabel.setOpaque(true);
 	        
 	 
+
+	        startPinLabel.setIcon(pin);
+	        startPinLabel.setBounds(506,32,90,160);//default start location is the airport
 	        startPinLabel.setVisible(false);
 	       // imagePane.add(startPinLabel,JLayeredPane.PALETTE_LAYER);
 */
@@ -167,10 +190,9 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 			System.out.println(start.toString());
 			imagePanel.setPinXY(start.getXcoord(), start.getYcoord());
 			//imagePanel.paintComponent(getGraphics());
-			Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
-			imagePanel.repaint();
+			//Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
 			//startPinLabel.setVisible(true);
-			//startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
+		//	startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
 		//	startPinLabel.setVisible(true);
 
 		}
@@ -204,6 +226,12 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 
 			for (Edge a : MainApp.route(start,destination, g)) { //calls the routing method from the main 
 				//which uses Dijkstras algorithm to find the shortest path
+
+				/*firstStation= a.either();
+						secondStation = a.other(firstStation);
+						total_time += a.weight();
+						path.enqueue(firstStation);
+						System.out.print(a.toString());*/
 
 				s = a.toString();
 				String[] parts = s.split("-");
