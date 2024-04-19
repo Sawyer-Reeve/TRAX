@@ -190,8 +190,9 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 			Station start = MainApp.getName_Station_ST().get((String)startDropDownMenu.getSelectedItem());
 			System.out.println(start.toString());
 			imagePanel.setPinXY(start.getXcoord(), start.getYcoord());
+			imagePanel.repaint();
 			//imagePanel.paintComponent(getGraphics());
-			//Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
+			Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
 			//startPinLabel.setVisible(true);
 		//	startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
 		//	startPinLabel.setVisible(true);
