@@ -1,7 +1,10 @@
 package trax;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -49,18 +52,16 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 	Double total_time=0.0;
 	JLabel start;
 	JLabel destination;
-	MainControlPanel main;
-	JLayeredPane imagePane;
+	JPanel main;
+	ImageIcon pin = new ImageIcon("src/resources/pinDrop.png");
+	ImagePanel imagePanel;
 	
 
 	MainGUIframe(){
-		// panel = new JPanel(); //container panel,
-		imagePane = new JLayeredPane();
-		imagePane.setSize(1200,800);
-		imagePane.setVisible(true);
-		// panel.setLayout(null);
-		//panel.setVisible(true);
-		// panel.setSize(1200,800);
+		panel = new JPanel();
+		//panel.setPreferredSize(new Dimension(1200,800));
+		panel.setBounds(0,0,1200,800);
+		panel.setLayout(null);
 
 
 
@@ -69,16 +70,17 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //closes program instead of hiding
 		this.setResizable(true);
 		this.setTitle("TRAX Ride-Assist");
-		this.setContentPane(imagePane);
+		this.setContentPane(panel);
 		this.setVisible(true);
-		this.setLayout(null);
-		this.setVisible(true);
+		//this.setLayout(null);
 
 
-		main = new MainControlPanel();
 
-		main.setVisible(true);
+		main = new JPanel();
 		main.setBounds(0,0,300,800);
+		main.setLayout(null);
+		
+		//panel.add(main);
 
 
 
@@ -97,6 +99,7 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		timelabel = new JLabel("Estimated Time: ");
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
+		directions = new JTextArea();
 
 
 
@@ -104,7 +107,17 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		startDropDownMenu.addItemListener(this);
 		destinationDropDownMenu = new JComboBox<String>(all);
 
-
+		
+		main.add(destination);
+		main.add(startDropDownMenu);
+		main.add(destinationDropDownMenu);
+		main.add(submitButton);
+		main.add(directionsLabel);
+		main.add(directions);
+		main.add(timelabel);
+		main.add(start);
+		panel.add(main);
+		
 		start.setBounds(20, 0, 100, 30);
 		startDropDownMenu.setBounds(20, 30, 200, 30);
 		destination.setBounds(20,90,100,30);
@@ -114,26 +127,25 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		timelabel.setBounds(20, 600, 200, 30);
 
 
-		directions = new JTextArea();
+		
 		directions.setBounds(20,400, 250, 200);
 		directions.setBackground(getBackground());
 		directions.setWrapStyleWord(true);
 		directions.setLineWrap(true);
 
-		main.add(start);
-		main.add(destination);
-		main.add(startDropDownMenu);
-		main.add(destinationDropDownMenu);
-		main.add(submitButton);
-		main.add(directionsLabel);
-		main.add(directions);
-		main.add(timelabel);
-		imagePane.add(main);
 
-		//do map stuff below here, panel stuff above
+		
 		
 
+		//do map stuff below here, panel stuff above
+		imagePanel = new ImagePanel();
+		panel.add(imagePanel);
+		//imagePanel.paintComponent();
+		imagePanel.setPreferredSize(new Dimension(900,800));
 
+		//imagePanel.setBounds(400,0,900,800);
+		//imagePanel.repaint();
+/*
 		        
 	        ImageIcon background=new ImageIcon("src/Resources/TRAX MAP.png"); 
 	        Image img=background.getImage();
@@ -146,29 +158,27 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 
 	        backgroundlabel.setIcon(background);
 
-	        ImageIcon pin = new ImageIcon("src/Resources/Drop.png");
+	        //ImageIcon pin = new ImageIcon("src/Resources/Drop.png");
 	        Image pinimage = pin.getImage();
 	        Image temppin = pinimage;
 	        pin = new ImageIcon(temppin);
 	        startPinLabel = new JLabel();
 	        startPinLabel.setOpaque(true);
-	        //startPinLabel.setSize(45,80);
+	        
+	 
 
 	        startPinLabel.setIcon(pin);
 	        startPinLabel.setBounds(506,32,90,160);//default start location is the airport
 	        startPinLabel.setVisible(false);
-	        imagePane.add(startPinLabel,JLayeredPane.PALETTE_LAYER);
-
+	       // imagePane.add(startPinLabel,JLayeredPane.PALETTE_LAYER);
+*/
 
 		     
 
-
-
-
-		this.revalidate();
-
-
-
+	    
+	        
+		//panel.setVisible(true);
+	
 
 	}
 
@@ -178,10 +188,12 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
 			Station start = MainApp.getName_Station_ST().get((String)startDropDownMenu.getSelectedItem());
 			System.out.println(start.toString());
-			Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
+			imagePanel.setPinXY(start.getXcoord(), start.getYcoord());
+			imagePanel.paintComponent(getGraphics());
+			//Station destination = MainApp.getName_Station_ST().get((String)destinationDropDownMenu.getSelectedItem());
 			//startPinLabel.setVisible(true);
-			startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
-			startPinLabel.setVisible(true);
+		//	startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
+		//	startPinLabel.setVisible(true);
 
 		}
 	} 
@@ -264,7 +276,7 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 
 
 			provideDirections(start, destination, transfer_station);
-			startPinLabel.setLocation(start.getXcoord(),start.getYcoord());
+			//startPinLabel.setLocation(start.getXcoord(),start.getYcoord());
 
 
 

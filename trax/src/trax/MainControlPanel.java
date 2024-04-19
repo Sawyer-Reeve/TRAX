@@ -27,7 +27,7 @@ import edu.princeton.cs.algs4.Queue;
  */
 @SuppressWarnings("serial")
 public class MainControlPanel extends JPanel /*implements ActionListener, ItemListener*/{
-
+/*
 	JButton submitButton;
 	JComboBox<String> startDropDownMenu;
 	JComboBox<String> destinationDropDownMenu;
@@ -36,14 +36,14 @@ public class MainControlPanel extends JPanel /*implements ActionListener, ItemLi
 	JLabel timelabel;
 	Double total_time=0.0;
 	
-	
+	*/
 	
 	/**
 	 * panel constructor
 	 */
 	MainControlPanel(){
 		this.setVisible(true);
-		this.setPreferredSize(new Dimension(300,800));
+		//this.setPreferredSize(new Dimension(300,800));
 		this.setLayout(null);
 		
 	}
