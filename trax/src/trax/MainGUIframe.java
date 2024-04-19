@@ -239,7 +239,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 
 
 	}
-	/**
+	/*
 	 * provideDirections displays a a text box of various text, depending on if there are transfers within the route that
 	 * need to be taken
 	 * @param start 
