@@ -27,6 +27,7 @@ public class MainApp {
 	
     public static void main(String[] args) throws IOException {
     	RailInitialization(); //below method, initializes all of the rail lines
+    	System.out.println();
     	new MainGUIframe();
  
          
