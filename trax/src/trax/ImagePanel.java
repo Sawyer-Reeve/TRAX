@@ -61,7 +61,7 @@ public class ImagePanel extends JPanel {
 	 * @param y
 	 */
 	public void setPinXY(int pin, int x, int y) {
-		x = x - scaleFactor; y = y - scaleFactor;
+		x = x - scaleFactor + 20; y = y - scaleFactor + 7;
 		switch (pin) {
 			case 1: this.x1 = x; this.y1 = y; break;
 			case 2: this.x2 = x; this.y2 = y; break;
