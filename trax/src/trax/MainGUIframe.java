@@ -172,8 +172,9 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				 * firstStation= a.either(); secondStation = a.other(firstStation); total_time
 				 * += a.weight(); path.enqueue(firstStation); System.out.print(a.toString());
 				 */
-
+				
 				s = a.toString();
+				
 				String[] parts = s.split("-");
 				firstStation = Integer.parseInt(parts[0]);
 				String[] parts2 = parts[1].split("\\s+");
@@ -189,7 +190,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				}
 
 				if (first_transfer = true && (Double.parseDouble(parts2[1]) == 1.1) && second_transfer == false) {
-					second_transfer_station = firstStation;
+					second_transfer_station = secondStation;
 					second_transfer = true;
 					total_time+=Double.parseDouble(parts2[1]);
 					continue;
@@ -197,6 +198,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				total_time += Double.parseDouble(parts2[1]);
 				//System.out.print(s + " ");
 			}	
+			System.out.println(MainApp.getID_Station_ST().get(transfer_station).getStationName());
+			System.out.println(MainApp.getID_Station_ST().get(second_transfer_station).getStationName());
 			//checks to see if the algorithm is attempting to transfer at the start and very end by comparing station names
 			if (transfer_station != -1) {
 				if (start.getStationName().equals(MainApp.getID_Station_ST().get(transfer_station).getStationName())) {
@@ -219,15 +222,14 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				
 			}
 			else {
-				//TODO: disable pin 
+				imagePanel.togglePin(4, false);
 			}
 			if (second_transfer_station !=-1) {
 				imagePanel.setPinXY(4, transfer2.getXcoord(), transfer2.getYcoord());
 				imagePanel.togglePin(4, true);
 			}
 			else {
-				//TODO: disable pin
-			}
+				imagePanel.togglePin(4, false);			}
 			imagePanel.repaint();
 
 
