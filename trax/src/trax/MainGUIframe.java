@@ -146,11 +146,10 @@ public class MainGUIframe extends JFrame implements ActionListener,ItemListener{
 
 	        backgroundlabel.setIcon(background);
 
-	        ImageIcon pin = new ImageIcon("src/Resources/pinTransparent.jpg");
-	        //Image pinimage = pin.getImage();
-	       
-	        //Image temppin = pinimage.getScaledInstance(-1,160,Image.SCALE_SMOOTH);
-	        pin = new ImageIcon(getScaledImage(pin.getImage(), 90, 160));
+	        ImageIcon pin = new ImageIcon("src/Resources/Drop.png");
+	        Image pinimage = pin.getImage();
+	        Image temppin = pinimage;
+	        pin = new ImageIcon(temppin);
 	        startPinLabel = new JLabel();
 	        startPinLabel.setOpaque(true);
 	        //startPinLabel.setSize(45,80);
