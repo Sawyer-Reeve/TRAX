@@ -4,7 +4,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.ST;
 
 public class ImagePanel extends JPanel {
 
@@ -15,6 +19,9 @@ public class ImagePanel extends JPanel {
 	private String endPinImg = "/Resources/PinDropBlue.png";
 	private String transfer1PinImg = "/Resources/PinDropPurple.png";
 	private String transfer2PinImg = "/Resources/PinDropOrange.png";
+	private int count = 0;
+//	private ImageIcon[] paths = new ImageIcon[2];
+	private Path[] paths = new Path[20];
 
 	private int[] x = new int[5];
 	private int[] y = new int[5];
@@ -26,7 +33,7 @@ public class ImagePanel extends JPanel {
 	 * Create the panel.
 	 */
 	public ImagePanel() {
-
+		
 	}
 
 	@Override
@@ -35,8 +42,15 @@ public class ImagePanel extends JPanel {
 		ImageIcon background = new ImageIcon(ImagePanel.class.getResource(backgroundImg));
 		background.paintIcon(this, g, 0, 0);
 		
-		ImageIcon testPath = new ImageIcon(ImagePanel.class.getResource("/Resources/Path/FR1.png"));
-		testPath.paintIcon(this, g, 0, 0);
+		paintPath(g);
+//		paths[0] = new ImageIcon(ImagePanel.class.getResource("/Resources/Path/FR1.png"));
+//		paths[1] = new ImageIcon(ImagePanel.class.getResource("/Resources/Path/FR2.png"));
+//		paths[0] = new Path("FR1", "/Resources/Path/FR1.png");
+//		paths[1] = new Path("FR2", "/Resources/Path/FR2.png");
+//		if (count++ %2 == 0)
+//			paths[0].icon.paintIcon(this, g, 0, 0);
+//		else
+//			paths[1].icon.paintIcon(this, g, 0, 0);
 
 		ImageIcon startPin = new ImageIcon(scaledImage(startPinImg, scaleFactor, -1));
 		if (pinEnabled[1])
@@ -53,8 +67,29 @@ public class ImagePanel extends JPanel {
 		ImageIcon transferPin2 = new ImageIcon(scaledImage(transfer2PinImg, scaleFactor, -1));
 		if (pinEnabled[4])
 			transferPin2.paintIcon(this, g, x[4], y[4]);
+	}
 
-
+	public void paintPath(Graphics g) {
+		Queue<String> edges = MainGUIframe.getCurrentPathList();
+		ST<String, String> lookup = MainGUIframe.getPathOverlays();
+//		for (String s : edges) {
+//			String testFile = lookup.get(s);
+//			String fPath = "/Resources/Path/" + lookup.get(s);
+//			if (testFile != null) {
+//				ImageIcon testPath = new ImageIcon(ImagePanel.class.getResource(fPath));
+//				testPath.paintIcon(this, g, 0, 0);
+//			}
+//		}
+		for (Path p : paths)
+			if (p != null) p = null;
+		for (int i = 0; i < edges.size(); i++) {
+			String edge = edges.dequeue();
+			String fName = lookup.get(edge);
+			if (fName != null) {
+				paths[i] = new Path(edge, fName);
+				paths[i].icon.paintIcon(this, g, 0, 0);
+			}
+		}
 	}
 
 	/**
@@ -85,5 +120,29 @@ public class ImagePanel extends JPanel {
 		Image image = temp.getImage();
 		return image.getScaledInstance(x, y, Image.SCALE_SMOOTH);
 	}
-
+	
+	private static class Path {
+		private final String edge;
+		private final String fPath;
+		private ImageIcon icon;
+		
+		public Path(String edge, String fPath) {
+			this.edge = edge; 
+			this.fPath = "/Resources/Path/" + fPath;
+			this.icon = new ImageIcon(ImagePanel.class.getResource(this.fPath));
+		}
+		
+		public String getEdge() {
+			return this.edge;
+		}
+		
+		public ImageIcon getIcon() {
+			return this.icon;
+		}
+		
+		public void clearIcon() {
+			this.icon = null;
+		}
+		
+	}
 }

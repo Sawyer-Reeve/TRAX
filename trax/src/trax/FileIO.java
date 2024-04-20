@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.ST;
 
 /**
  * Methods for reading text files with configuration data
@@ -13,6 +14,7 @@ import edu.princeton.cs.algs4.Queue;
 public class FileIO {
 	private static In stationList = new In("src/Resources/stationList.txt");
 	private static In stationCoordList = new In("src/Resources/pointLocations.txt");
+	private static In pathOverlayList = new In("src/Resources/pathOverlays.txt");
 
 	/**
 	 * Creates a Queue with string names from the stationList.txt text file
@@ -57,4 +59,26 @@ public class FileIO {
 		}
 		return coordinates;
 	}
+	
+	public static ST<String, String> getPathList() {
+		ST<String, String> st = new ST<>();
+		while (pathOverlayList.hasNextLine()) {
+			String nextLine[] = pathOverlayList.readLine().split(",");
+			st.put(nextLine[0], nextLine[1]);
+		}
+		return st;
+	}
+	
+	/**
+	 * Test client for unit testing
+	 * @param args
+	 */
+//	public static void main(String[] args) {
+//		ST<String, String> temp = getPathList();
+////		System.out.println(temp.keys());
+//		for (String k : temp.keys()) {
+//			System.out.print(k + ": ");
+//			System.out.println(temp.get(k));
+//		}
+//	}
 }

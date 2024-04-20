@@ -23,13 +23,14 @@ import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.ST;
 
 /**
  * this might not have needed to be its own class, but I did have a couple of other classes previously for separate panels
  * before I condensed them
  */
-@SuppressWarnings({ "serial" })
 public class MainGUIframe extends JFrame implements ActionListener, ItemListener {
+	private static final long serialVersionUID = 1L;
 	JPanel panel;
 	JButton submitButton;
 	JComboBox<String> startDropDownMenu;
@@ -49,6 +50,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	Queue<Station> transferStations;
 	Queue<RailLine> transfers;
 	Station[] transferStationArray;
+	private static ST<String, String> pathOverlayList = FileIO.getPathList();
+	private static Queue<String> currentPathList = new Queue<>();
 
 	MainGUIframe() {
 		panel = new JPanel();
@@ -109,7 +112,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		imagePanel = new ImagePanel();
 		panel.add(imagePanel);
 		imagePanel.setPreferredSize(new Dimension(900, 800));
-
 	}
 
 	public void itemStateChanged(ItemEvent e) {
@@ -129,21 +131,17 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		try {
+			try {
 
-			if (e.getSource() == submitButton) {
+				if (e.getSource() == submitButton) {
 
 			}
-			
-			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
 
+			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
 			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
-			
+
 			RailLine startline = start.getRailLine();
-			
-			
-			
-			
+
 			In in = new In(new File("src/Resources/Graph.txt/"));
 
 			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
@@ -174,6 +172,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				String s = a.toString();
 				String[] separation = s.split(" ");
 				//XXX seperation[0] gives you each edge as xx-yy
+				currentPathList.enqueue(separation[0]);
 				String[] vertices = separation[0].split("-");
 				if (Integer.parseInt(vertices[0])==lastvert) {
 					pathway.enqueue(Integer.parseInt(vertices[1]));
@@ -184,9 +183,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 					path.add(Integer.parseInt(vertices[0]));
 				}
 				lastvert=path.getLast();
-				
-				
-				
 				
 				// this checks for transfers in the pathing algorithm
 				if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
@@ -235,6 +231,14 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			directions.setText("Please Enter a Destination that is not the same as the start");
 		}
 
+	}
+	
+	public static Queue<String> getCurrentPathList() {
+		return currentPathList;
+	}
+	
+	public static ST<String, String> getPathOverlays() {
+		return pathOverlayList;
 	}
 
 	private void transferPinPainting() {
