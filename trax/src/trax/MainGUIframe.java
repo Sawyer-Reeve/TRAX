@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -133,10 +134,16 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			if (e.getSource() == submitButton) {
 
 			}
+			
 			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
 
 			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
-
+			
+			RailLine startline = start.getRailLine();
+			
+			
+			
+			
 			In in = new In(new File("src/Resources/Graph.txt/"));
 
 			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
@@ -145,19 +152,42 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			transfers = new Queue<RailLine>();
 			transferStations = new Queue<Station>();
 			Queue<Edge> transferEdges = new Queue<Edge>();
-
+			Queue<Integer> pathway = new Queue<Integer>();
+			ArrayList<Integer> path = new ArrayList<Integer>();
+			
 			System.out.println(MainApp.route(start, destination, g).toString());
-			System.out.println(MainApp.total_time);
+			//System.out.println(MainApp.total_time);
 			transfers.enqueue(start.getRailLine());
 			Integer count = 0;
 			Integer numEdges = 0;
+			Integer startID = start.getID();
+			path.add(startID);
+			Integer lastvert = startID;
 			for (Edge a : MainApp.route(start, destination, g)) {
 				numEdges++;
 			}
+			
+			
 			for (Edge a : MainApp.route(start, destination, g)) {
 				// calls the routing method from the main
 				// which uses Dijkstras algorithm to find the shortest path
-
+				String s = a.toString();
+				String[] separation = s.split(" ");
+				//XXX seperation[0] gives you each edge as xx-yy
+				String[] vertices = separation[0].split("-");
+				if (Integer.parseInt(vertices[0])==lastvert) {
+					pathway.enqueue(Integer.parseInt(vertices[1]));
+					path.add(Integer.parseInt(vertices[1]));
+				}
+				else {
+					pathway.enqueue(Integer.parseInt(vertices[0]));
+					path.add(Integer.parseInt(vertices[0]));
+				}
+				lastvert=path.getLast();
+				
+				
+				
+				
 				// this checks for transfers in the pathing algorithm
 				if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
 					transferEdges.enqueue(a);
@@ -166,7 +196,9 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				// System.out.println(a);
 				count++;
 			}
-
+		for (Integer i : path) {
+			System.out.println(i + " ");
+		}
 			RailLine current = start.getRailLine();
 			while (transferEdges.size() != 0) {
 				Edge currentEdge = transferEdges.dequeue();
@@ -188,9 +220,14 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				}
 			}
 
-			// System.out.println(transferStationArray.length);
+			for (Station s : startline.getStations()) {
+				//System.out.println(s.getStationName());
+				if (destination.getStationName().equals(s.getStationName())) {
+					transferStationArray = new Station[0];
+				}
+			}
 
-			provideDirections(start, destination, transfers, transferStations);
+			provideDirections(start, destination, transferStationArray);
 
 			transferPinPainting();
 
@@ -227,53 +264,40 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	 * 
 	 * @param transfer_station
 	 */
-	private void provideDirections(Station start, Station destination, Queue<RailLine> transfers,
-			Queue<Station> transferStations) {
+	private void provideDirections(Station start, Station destination,
+			Station[] transferStationArray) {
+			
 
 		StringBuilder sb = new StringBuilder();
 
 		if (start.getStationName().equals(destination.getStationName())) {
 			sb.append("Please Enter a Destination that is not the same as the start");
-		} else if (start.getRailLine() == MainApp.getGreenLine() && start.getRailLine() != destination.getRailLine()
-				&& transferStationArray.length == 0) {
-
-			sb.append("Starting at " + start.getStationName() + ", you will want to take the "
-					+ destination.getRailLine().getName());
-			sb.append(" all the way to " + destination.getStationName());
-
+		} 
+		else if (start.getRailLine().equals(destination.getRailLine())) {
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " all the way to " 
+		+ destination.getStationName());
 		}
-
-		else if (transferStationArray.length == 0) {
-			sb.append("Starting at " + start.getStationName() + ", you will want to take the "
-					+ start.getRailLine().getName());
-			sb.append(" all the way to " + destination.getStationName());
+		else if (transferStationArray.length==1) {
+			
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to " + transferStationArray[0].getStationName()
+			+ " then transfer onto " + destination.getRailLine().getName() + " to " + destination.getStationName());
 		}
-		// case 1: start.getStationName().equals(destination.getStationName()))
-
-		// case 2 transfer_station != -1 && second_transfer_station == -1
-		else if (transferStationArray.length == 1) {
-			sb.append("Starting at " + start.getStationName() + ", you will want to take the "
-					+ start.getRailLine().getName());
-			sb.append(" all the way to " + transferStationArray[0].getStationName()
-					+ ". Then you will transfer and take the " + destination.getRailLine().getName() + " to "
-					+ destination.getStationName());
+		else if (transferStationArray.length==2) {
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine() + " to " + transferStationArray[0].getStationName()
+			+ " then transfer onto " + transferStationArray[1].getStationName() + " and take the " + transferStationArray[1].getRailLine() + " to " + destination.getStationName());
 		}
-
-		else if (transferStationArray.length == 2) {
-			sb.append("Starting at " + start.getStationName() + ", you will want to take the "
-					+ start.getRailLine().getName());
-			sb.append(" all the way to " + transferStationArray[0].getStationName()
-					+ ". Then you will transfer and take the FrontRunner" + " to "
-					+ transferStationArray[1].getStationName() + ". Finally " + " you will take the "
-					+ destination.getRailLine().getName() + " to " + destination.getStationName());
-		}
-		// extra case that checks to see if both values are not in frontrunner
-
+			else {
+				sb.append("fuck");
+			}
+			
+		
 		total_time = Math.floor(MainApp.getTotal_Time());
+		System.out.println(sb.toString());
 		directions.setText(sb.toString());
 		timelabel.setText("Estimated Time: " + total_time + " minutes.");
 		total_time = 0.0;
 
+		
 	}
 
 

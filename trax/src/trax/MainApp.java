@@ -65,6 +65,7 @@ public class MainApp {
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
     				station.setPoint(BlueStationCoords.dequeue());
+    				station.setblueLineTrue();
     				
     				count++;
     			}
@@ -81,6 +82,7 @@ public class MainApp {
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
     				station.setPoint(RedStationCoords.dequeue());
+    				station.setredLineTrue();
     				count++;
     			}
 
@@ -97,7 +99,9 @@ public class MainApp {
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
     				station.setPoint(GreenStationCoords.dequeue());
+    				station.setgreenLineTrue();
     				count++;
+    				
     			}
 
     			
@@ -113,6 +117,7 @@ public class MainApp {
     				Name_Station_ST.put(s,station);
     				ID_Station_ST.put(count,station);
     				station.setPoint(FrontRunnerCoords.dequeue());
+    				station.setFrontRunnerTrue();
     				count++;	
     			}
     			//here we're just adding the list of stations to each RailLine object
@@ -121,11 +126,12 @@ public class MainApp {
     			GreenLine.add(GreenLineStations);
     			RedLine.add(RedLineStations);
     			
+    			
 
     			//end of initialization for the Stations and rails
 
     			//--------------------------------------PRINT STATEMENTS--------------------------------------------------------
-    /*			
+    			
     			System.out.println(BlueLine);
     			System.out.println(RedLine);
     			System.out.println(GreenLine);
@@ -134,27 +140,15 @@ public class MainApp {
 
     			//System.out.println(railIDs.keys());
     			System.out.println();
-
-    			for (String s : allStationsStrings()) {
-    				System.out.println(s);
+    			
+    			for (int i=3;i<12;i++) {
+        			ID_Station_ST.get(i).setgreenLineTrue();
     			}
-    			System.out.println();
+    			for (int i=7; i<=16;i++) {
+    				ID_Station_ST.get(i).setredLineTrue();
+    			}
 
-    			//for printing to txt file
-    			BlueLine.printLinearRailGraphs();
-    			System.out.println();
-
-    			//for printing to txt file
-    			RedLine.printLinearRailGraphs();
-    			System.out.println();
-
-    			//for printing to txt file
-    			GreenLine.printLinearRailGraphs();
-    			System.out.println();
-
-    			//for printing to txt file
-    			FrontRunner.printLinearRailGraphs();
-    		*/
+    		
     }
 
     
@@ -262,7 +256,9 @@ public class MainApp {
 	 */
 	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G ) {
 		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
+		
 		total_time = (int) graph.distTo(destination.getID());
+		
 		return graph.pathTo(destination.getID());
 	}
 }

@@ -15,6 +15,10 @@ public class Station implements Comparable<Station>{
 	Point coordinates;
 	int x_coord;
 	int y_coord;
+	boolean greenLine;
+	boolean redLine;
+	boolean blueLine;
+	boolean frontRunner;
 	
 	public Station(int id, String name, RailLine line) {
 		this.ID=id;
@@ -47,6 +51,18 @@ public class Station implements Comparable<Station>{
 	}
 	public int getYcoord() {
 		return y_coord;
+	}
+	public void setblueLineTrue() {
+		blueLine=true;
+	}
+	public void setredLineTrue() {
+		redLine=true;
+	}
+	public void setgreenLineTrue() {
+		greenLine=true;
+	}
+	public void setFrontRunnerTrue() {
+		frontRunner=true;
 	}
 
 	@Override
