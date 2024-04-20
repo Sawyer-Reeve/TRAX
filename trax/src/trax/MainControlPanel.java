@@ -1,31 +1,12 @@
 package trax;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-
-import edu.princeton.cs.algs4.Edge;
-import edu.princeton.cs.algs4.EdgeWeightedGraph;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Queue;
 
 /**
  * MainControlPanel is the left side of the GUI that controls the drop down menu's and displays
  * @author sawyerreeve + Chris Darnell
  */
-@SuppressWarnings("serial")
+
 public class MainControlPanel extends JPanel /*implements ActionListener, ItemListener*/{
 /*
 	JButton submitButton;
@@ -38,6 +19,8 @@ public class MainControlPanel extends JPanel /*implements ActionListener, ItemLi
 	
 	*/
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * panel constructor
 	 */

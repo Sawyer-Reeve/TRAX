@@ -1,8 +1,14 @@
 package trax;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +31,7 @@ public class ImagePanel extends JPanel {
 	private boolean[] pinEnabled = new boolean[5];
 
 	private int scaleFactor = 60;
+	
 
 	/**
 	 * Create the panel.
@@ -36,10 +43,25 @@ public class ImagePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
 		ImageIcon background = new ImageIcon(ImagePanel.class.getResource(backgroundImg));
 		background.paintIcon(this, g, 0, 0);
 		
-		paintPath(g);
+//		paintPath(g);
+//		paintBuffered(g);
+		
+//		clearPaths(g);
+		
+		Queue<String> edges = MainGUIframe.getCurrentPathList();
+		ST<String, String> lookup = MainGUIframe.getPathOverlays();
+		for (String s : edges) {
+			String fName = lookup.get(s);
+			String fPath = "/Resources/Path/" + lookup.get(s);
+			if (fName != null) {
+				ImageIcon path = new ImageIcon(ImagePanel.class.getResource(fPath));
+				path.paintIcon(this, g, 0, 0);
+			}
+		}	
 
 		ImageIcon startPin = new ImageIcon(scaledImage(startPinImg, scaleFactor, -1));
 		if (pinEnabled[1])
@@ -56,6 +78,16 @@ public class ImagePanel extends JPanel {
 		ImageIcon transferPin2 = new ImageIcon(scaledImage(transfer2PinImg, scaleFactor, -1));
 		if (pinEnabled[4])
 			transferPin2.paintIcon(this, g, x[4], y[4]);
+		
+	}
+	
+	private void clearPaths(Graphics g) {
+		ImageIcon background = new ImageIcon(ImagePanel.class.getResource(backgroundImg));
+		background.paintIcon(this, g, 0, 0);
+//		while (!paths.isEmpty()) {
+//			ImageIcon tmp = paths.dequeue();
+//			
+//		}
 	}
 
 	public void paintPath(Graphics g) {
@@ -69,6 +101,27 @@ public class ImagePanel extends JPanel {
 				testPath.paintIcon(this, g, 0, 0);
 			}
 		}
+	}
+	
+	public void paintBuffered(Graphics g) {
+		try {
+			Queue<String> edges = MainGUIframe.getCurrentPathList();
+			ST<String, String> lookup = MainGUIframe.getPathOverlays();
+			
+			for (String s : edges) {
+				String fName = lookup.get(s);
+				if (fName != null) {
+					URL url = this.getClass().getResource("/Resources/Path/" + fName);
+					BufferedImage img = ImageIO.read(url);
+					Graphics2D g2d = (Graphics2D)g;
+					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+					g.drawImage(img, 0, 0, null);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+//		Graphics2D g2d = 
 	}
 
 	/**

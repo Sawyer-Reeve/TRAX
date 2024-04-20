@@ -110,8 +110,16 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		directions.setLineWrap(true);
 
 		imagePanel = new ImagePanel();
+		buildImagePanel();
+	}
+	
+	public void buildImagePanel() {
+//		imagePanel = new ImagePanel();
 		panel.add(imagePanel);
 		imagePanel.setPreferredSize(new Dimension(900, 800));
+		panel.repaint();
+		panel.revalidate();
+		imagePanel.repaint();
 	}
 
 	public void itemStateChanged(ItemEvent e) {
@@ -133,10 +141,10 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		
 		try {
 
-			if (e.getSource() == submitButton) {
-
-		}
-
+//			if (e.getSource() == submitButton) {
+//
+//		}
+		
 		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
 		Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
 
@@ -222,11 +230,12 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 					transferStationArray = new Station[0];
 				}
 			}
-
+			
 			provideDirections(start, destination, transferStationArray);
-
+ 
 			transferPinPainting();
 
+			
 		} catch (IllegalArgumentException n) {
 			directions.setText("Please Enter a Destination that is not the same as the start");
 		}
@@ -291,7 +300,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			+ " then transfer onto " + transferStationArray[1].getStationName() + " and take the " + transferStationArray[1].getRailLine() + " to " + destination.getStationName());
 		}
 			else {
-				sb.append("fuck");
+				sb.append("fuck"); // TODO
 			}
 			
 		
