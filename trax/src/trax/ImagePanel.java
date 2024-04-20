@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.princeton.cs.algs4.Draw;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.ST;
 
@@ -32,6 +33,7 @@ public class ImagePanel extends JPanel {
 
 	private int scaleFactor = 60;
 	
+	private int count = 0;
 
 	/**
 	 * Create the panel.
@@ -51,18 +53,20 @@ public class ImagePanel extends JPanel {
 //		paintBuffered(g);
 		
 //		clearPaths(g);
-		
-		Queue<String> edges = MainGUIframe.getCurrentPathList();
-		ST<String, String> lookup = MainGUIframe.getPathOverlays();
-		for (String s : edges) {
-			String fName = lookup.get(s);
-			String fPath = "/Resources/Path/" + lookup.get(s);
-			if (fName != null) {
-				ImageIcon path = new ImageIcon(ImagePanel.class.getResource(fPath));
-				path.paintIcon(this, g, 0, 0);
-			}
-		}	
 
+//		Queue<String> edges = MainGUIframe.getCurrentPathList();
+//		ST<String, String> lookup = MainGUIframe.getPathOverlays();
+//		for (String s : edges) {
+//			String fName = lookup.get(s);
+//			String fPath = "/Resources/Path/" + lookup.get(s);
+//			if (fName != null) {
+//				ImageIcon path = new ImageIcon(ImagePanel.class.getResource(fPath));
+//				path.paintIcon(this, g, 0, 0);
+//			}
+//		}
+		
+		paintPathsTest(g);
+		
 		ImageIcon startPin = new ImageIcon(scaledImage(startPinImg, scaleFactor, -1));
 		if (pinEnabled[1])
 			startPin.paintIcon(this, g, x[1], y[1]);
@@ -88,6 +92,52 @@ public class ImagePanel extends JPanel {
 //			ImageIcon tmp = paths.dequeue();
 //			
 //		}
+	}
+	
+	public void paintPathsTest(Graphics g) {
+		ST<String, String> lookup = MainGUIframe.getPathOverlays();
+		ST<String, ImageIcon> paths = new ST<>();
+		Queue<String> edges = MainGUIframe.getCurrentPathList();
+		
+		for (String s : lookup) {
+			paths.put(s, new ImageIcon(ImagePanel.class.getResource("/Resources/Path/" + lookup.get(s))));
+		}
+//		for (String s : edges) {
+//			System.out.println(s);
+//			if (paths.get(s) != null)
+//				paths.get(s).paintIcon(this, g, 0, 0);
+//		}
+
+//		Queue<String> edges = new Queue<>();
+//		if (count == 1) {
+//			edges.enqueue("0-1");
+//			edges.enqueue("1-2");
+//		}
+//		if (count == 2) {
+//			edges.enqueue("1-2");
+//			edges.enqueue("2-3");
+//		}
+		
+		for (String s : edges) {
+			paths.get(s).paintIcon(this, g, 0, 0);
+//			switch (i) {
+//	//			case 1: fr1.paintIcon(this, g, 0, 0); break;
+//	//			case 2: fr2.paintIcon(this, g, 0, 0); break; 
+//	//			case 3: fr3.paintIcon(this, g, 0, 0); break;
+//	//			case 1: paths.get("70-71").paintIcon(this, g, 0, 0); break;
+//	//			case 2: paths.get("71-72").paintIcon(this, g, 0, 0); break;
+//	//			case 3: paths.get("72-73").paintIcon(this, g, 0, 0); break;
+//			case 1: 			
+//				bu1.paintIcon(this, g, 0, 0); break;
+//			case 2: 			
+//				bu2.paintIcon(this, g, 0, 0); break;
+//			case 3: 
+//				bu3.paintIcon(this, g, 0, 0); break;
+//			default: break;
+//			}
+		}
+		count++;
+		if (count > 3) count = 0;
 	}
 
 	public void paintPath(Graphics g) {

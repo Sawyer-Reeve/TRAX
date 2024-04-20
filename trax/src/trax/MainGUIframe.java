@@ -2,12 +2,12 @@ package trax;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -114,18 +114,30 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	}
 	
 	public void buildImagePanel() {
+//		panel.remove(imagePanel);
 //		imagePanel = new ImagePanel();
 		panel.add(imagePanel);
 		imagePanel.setPreferredSize(new Dimension(900, 800));
 		panel.repaint();
-		panel.revalidate();
+//		panel.revalidate();
 		imagePanel.repaint();
+//		System.out.println("ImagePanel component count: " + imagePanel.getComponentCount());
+		
+	}
+	
+	public void clearImagePanel() {
+		panel.remove(imagePanel);
+//		if (imagePanel.getGraphics() != null) imagePanel.getGraphics().dispose();
+//		imagePanel = new ImagePanel();
+		panel.add(imagePanel);
+//		imagePanel.getGraphics().create();
 	}
 
 	public void itemStateChanged(ItemEvent e) {
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
 			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
-
+			
+			clearImagePanel();
 			imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
 			imagePanel.togglePin(1, true);
 			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());
@@ -144,6 +156,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 //			if (e.getSource() == submitButton) {
 //
 //		}
+		
+		
 		
 		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
 		Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
@@ -234,7 +248,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			provideDirections(start, destination, transferStationArray);
  
 			transferPinPainting();
-
+			
 			
 		} catch (IllegalArgumentException n) {
 			directions.setText("Please Enter a Destination that is not the same as the start");
