@@ -1,19 +1,11 @@
 package trax;
 
-import java.awt.AlphaComposite;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.princeton.cs.algs4.Draw;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.ST;
 
@@ -66,57 +58,26 @@ public class ImagePanel extends JPanel {
 			transferPin2.paintIcon(this, g, x[4], y[4]);
 		
 	}
-	
-	
+
+	/**
+	 * @param g
+	 */
 	public void paintPathHighlight(Graphics g) {
 		ST<String, String> lookup = MainGUIframe.getPathOverlays();
 		ST<String, ImageIcon> paths = new ST<>();
 		Queue<String> temp = MainGUIframe.getCurrentPathList();
 		Queue<String> edges = new Queue<>();
-		
+
 		for (String s : lookup) {
 			paths.put(s, new ImageIcon(ImagePanel.class.getResource("/Resources/Path/" + lookup.get(s))));
-		}		
-		
-		while(!temp.isEmpty()) {
-			edges.enqueue(temp.dequeue());	
 		}
-		
+
+		while (!temp.isEmpty()) {
+			edges.enqueue(temp.dequeue());
+		}
+
 		for (String s : edges) {
 			paths.get(s).paintIcon(this, g, 0, 0);
-		}
-	}
-
-//	public void paintPath(Graphics g) {
-//		Queue<String> edges = MainGUIframe.getCurrentPathList();
-//		ST<String, String> lookup = MainGUIframe.getPathOverlays();
-//		for (String s : edges) {
-//			String testFile = lookup.get(s);
-//			String fPath = "/Resources/Path/" + lookup.get(s);
-//			if (testFile != null) {
-//				ImageIcon testPath = new ImageIcon(ImagePanel.class.getResource(fPath));
-//				testPath.paintIcon(this, g, 0, 0);
-//			}
-//		}
-//	}
-	
-	public void paintBuffered(Graphics g) {
-		try {
-			Queue<String> edges = MainGUIframe.getCurrentPathList();
-			ST<String, String> lookup = MainGUIframe.getPathOverlays();
-			
-			for (String s : edges) {
-				String fName = lookup.get(s);
-				if (fName != null) {
-					URL url = this.getClass().getResource("/Resources/Path/" + fName);
-					BufferedImage img = ImageIO.read(url);
-					Graphics2D g2d = (Graphics2D)g;
-					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
-					g.drawImage(img, 0, 0, null);
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 

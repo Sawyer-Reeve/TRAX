@@ -9,69 +9,78 @@ import java.awt.Point;
  */
 public class Station implements Comparable<Station>{
 	
-	int ID;
-	String stationName;
-	RailLine line;
-	Point coordinates;
-	int x_coord;
-	int y_coord;
-	boolean greenLine;
-	boolean redLine;
-	boolean blueLine;
-	boolean frontRunner;
-	boolean sLine;
+	private int ID;
+	private String stationName;
+	private RailLine line;
+	private Point coordinates;
+	private int x_coord;
+	private int y_coord;
 	
+	/**
+	 * @param id
+	 * @param name
+	 * @param line
+	 */
 	public Station(int id, String name, RailLine line) {
-		this.ID=id;
-		this.stationName=name;
-		this.line=line;
+		this.ID = id;
+		this.stationName = name;
+		this.line = line;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public int getID() {
 		return ID;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public String getStationName() {
 		return stationName;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public RailLine getRailLine() {
 		return line;
 	}
+
+	/**
+	 * @param coord
+	 */
 	public void setPoint(Point coord) {
 		coordinates = coord;
 		this.x_coord = (int) coord.getX();
 		this.y_coord = (int) coord.getY();
-		
 	}
+
+	/**
+	 * @return
+	 */
 	public Point getPoint() {
 		return coordinates;
 	}
+
+	/**
+	 * @return
+	 */
 	public int getXcoord() {
 		return x_coord;
 	}
+
+	/**
+	 * @return
+	 */
 	public int getYcoord() {
 		return y_coord;
-	}
-	public void setblueLineTrue() {
-		blueLine=true;
-	}
-	public void setredLineTrue() {
-		redLine=true;
-	}
-	public void setgreenLineTrue() {
-		greenLine=true;
-	}
-	public void setFrontRunnerTrue() {
-		frontRunner=true;
-	}
-	public void setSLineTrue() {
-		sLine=true;
 	}
 
 	@Override
 	public String toString() {
-		return "ID:" + getID() + " | Line: " + line.getName() + " | " + stationName ;
+		return "ID:" + getID() + " | Line: " + line.getName() + " | " + stationName;
 	}
 
 	@Override

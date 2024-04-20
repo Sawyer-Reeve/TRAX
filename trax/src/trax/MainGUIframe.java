@@ -2,16 +2,12 @@ package trax;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
-import java.util.ArrayList;
+import java.util.stream.StreamSupport;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -30,69 +26,60 @@ import edu.princeton.cs.algs4.ST;
  * before I condensed them
  */
 public class MainGUIframe extends JFrame implements ActionListener, ItemListener {
+	
 	private static final long serialVersionUID = 1L;
-	JPanel panel;
-	JButton submitButton;
+	private JPanel panel;
+	private JButton submitButton;
 	private static JComboBox<String> startDropDownMenu;
 	private static JComboBox<String> destinationDropDownMenu;
-	JTextArea directions;
-	JLabel startPinLabel;
-	JLabel endPinLabel;
-	JLabel trasnferPinLabel;
-	JLabel timelabel;
-	JLabel directionsLabel;
-	Double total_time = 0.0;
-	JLabel start;
-	JLabel destination;
+	private JTextArea directions;
+	private JLabel startPinLabel;  		// TODO
+	private JLabel endPinLabel; 		// TODO
+	private JLabel trasnferPinLabel;	// TODO
+	private JLabel timelabel;
+	private JLabel directionsLabel;
+	private Double total_time = 0.0;
+	private JLabel start;
+	private JLabel destination;
 	private static JPanel main;
-	ImageIcon pin = new ImageIcon("src/resources/pinDrop.png");
-	ImagePanel imagePanel;
-	Queue<Station> transferStations;
-	Queue<RailLine> transfers;
-	Station[] transferStationArray;
+//	private ImageIcon pin = new ImageIcon("src/resources/pinDrop.png");
+	private ImagePanel imagePanel;
+	private Queue<Station> transferStations;
+	private Queue<RailLine> transfers;
+	private Station[] transferStationArray;
 	private static ST<String, String> pathOverlayList = FileIO.getPathList();
 	private static Queue<String> currentPathList = new Queue<>();
 	
-	private static boolean testModeActive = true;
-	private static int count1 = 0, count2 = 0;
+	private static boolean demoModeActive = true;
+	private static int demoStart = 1, demoDest = 0;
 	
-	public static void main(String[] args) {
-		In in = new In(new File("src/Resources/Graph.txt/"));
-		EdgeWeightedGraph g = new EdgeWeightedGraph(in);
-		
-//		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
-		Station start = MainApp.getName_Station_ST().get("Ballpark Station");
-		Station dest = MainApp.getName_Station_ST().get("Sugarmont Station");
-		System.out.println(MainApp.route(start, dest, g));
-	}
-	
+	/**
+	 * 
+	 */
 	public static void testMode() {
-		In in = new In(new File("src/Resources/Graph.txt/"));
-		EdgeWeightedGraph g = new EdgeWeightedGraph(in);
-		ST<Integer, Station> stations = MainApp.getID_Station_ST();
-		
 		JButton testButton = new JButton("Next");
 		testButton.setBounds(55, 160, 100, 30);
 		main.add(testButton);
 		
 		testButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Test Button Pressed");
-				
-				startDropDownMenu.setSelectedIndex(count1++);
-				destinationDropDownMenu.setSelectedIndex(count2);
-				if (count1 >= MainApp.allStationsStrings().length) {
-					count1 = 0; count2++;
+//				System.out.println("Test Button Pressed");
+				if (demoStart >= MainApp.allStationsStrings().length -1) {
+					demoStart = -1; 
+					demoDest++;
 				}
+				if (demoDest >= MainApp.allStationsStrings().length) {
+					demoDest = 0;
+				}
+				startDropDownMenu.setSelectedIndex(++demoStart);
+				destinationDropDownMenu.setSelectedIndex(demoDest);
 			}
 		});
-
-		
-//		for (Station s : MainApp.getAllStations()) {
-//			
-//		}
 	}
 
+	/**
+	 * 
+	 */
 	MainGUIframe() {
 		panel = new JPanel();
 		panel.setBounds(0, 0, 1200, 800);
@@ -123,7 +110,19 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		startDropDownMenu = new JComboBox<String>(all);
 		startDropDownMenu.addItemListener(this);
 		destinationDropDownMenu = new JComboBox<String>(all);
-		destinationDropDownMenu.addItemListener(this);
+		destinationDropDownMenu.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				Station destination = MainApp.getName_Station_ST().get((String) 
+						destinationDropDownMenu.getSelectedItem());
+				demoDest = destinationDropDownMenu.getSelectedIndex();
+				imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
+				imagePanel.togglePin(2, true);
+				imagePanel.repaint();
+			}
+			
+		});
 
 		main.add(start);
 		main.add(destination);
@@ -133,7 +132,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		main.add(directionsLabel);
 		main.add(directions);
 		main.add(timelabel);
-		if (testModeActive) testMode();
+		if (demoModeActive) testMode();
 
 		panel.add(main, BorderLayout.WEST);
 
@@ -155,37 +154,15 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		panel.add(imagePanel);
 
 	}
-//	
-//	public void buildImagePanel() {
-////		panel.remove(imagePanel);
-////		imagePanel = new ImagePanel();
-//		panel.add(imagePanel);
-//		imagePanel.setPreferredSize(new Dimension(900, 800));
-//		panel.repaint();
-////		panel.revalidate();
-//		imagePanel.repaint();
-////		System.out.println("ImagePanel component count: " + imagePanel.getComponentCount());
-//		
-//	}
-	
-	public void clearImagePanel() {
-		panel.remove(imagePanel);
-//		if (imagePanel.getGraphics() != null) imagePanel.getGraphics().dispose();
-//		imagePanel = new ImagePanel();
-		panel.add(imagePanel);
-//		imagePanel.getGraphics().create();
-	}
 
 	public void itemStateChanged(ItemEvent e) {
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
-			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
 			
-			clearImagePanel();
+			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
+			demoStart = startDropDownMenu.getSelectedIndex();
 			imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
 			imagePanel.togglePin(1, true);
-			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());
-			imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
-			imagePanel.togglePin(2, true);
+			
 			imagePanel.repaint();
 		}
 	}
@@ -196,68 +173,65 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		
 		try {
 
-//			if (e.getSource() == submitButton) {
-//
-//		}
-		
-		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
-		Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
+			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
+			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
 
-		RailLine startline = start.getRailLine();
+			RailLine startline = start.getRailLine();
 
-		In in = new In(new File("src/Resources/Graph.txt/"));
+			In in = new In("src/Resources/Graph.txt/");
 
-		EdgeWeightedGraph g = new EdgeWeightedGraph(in);
+			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
 
-		// ----------------------------
-		transfers = new Queue<RailLine>();
-		transferStations = new Queue<Station>();
-		Queue<Edge> transferEdges = new Queue<Edge>();
-		Queue<Integer> pathway = new Queue<Integer>();
-		ArrayList<Integer> path = new ArrayList<Integer>();
-		
-		System.out.println(MainApp.route(start, destination, g).toString());
-		//System.out.println(MainApp.total_time);
-		transfers.enqueue(start.getRailLine());
-		Integer count = 0;
-		Integer numEdges = 0;
-		Integer startID = start.getID();
-		path.add(startID);
-		Integer lastvert = startID;
-		for (Edge a : MainApp.route(start, destination, g)) {
-			numEdges++;
-		}
-		
-		
-		for (Edge a : MainApp.route(start, destination, g)) {
-			// calls the routing method from the main
-			// which uses Dijkstras algorithm to find the shortest path
-			String s = a.toString();
-			String[] separation = s.split(" ");
-			//XXX seperation[0] gives you each edge as xx-yy
-			currentPathList.enqueue(separation[0]);
-			String[] vertices = separation[0].split("-");
-			if (Integer.parseInt(vertices[0])==lastvert) {
-				pathway.enqueue(Integer.parseInt(vertices[1]));
-				path.add(Integer.parseInt(vertices[1]));
-			}
-			else {
-				pathway.enqueue(Integer.parseInt(vertices[0]));
-				path.add(Integer.parseInt(vertices[0]));
-			}
-			lastvert=path.getLast();
+			// ----------------------------
+			transfers = new Queue<RailLine>();
+			transferStations = new Queue<Station>();
+			Queue<Edge> transferEdges = new Queue<Edge>();
+			Queue<Integer> pathway = new Queue<Integer>();
+			Queue<Integer> path = new Queue<>();
+
+			System.out.println(MainApp.route(start, destination, g).toString());
+			transfers.enqueue(start.getRailLine());
+			Integer count = 0;
+			Integer numEdges = 0;
+			Integer startID = start.getID();
+			path.enqueue(startID);
+			Integer lastVert = startID;
 			
-			// this checks for transfers in the pathing algorithm
-			if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
-				transferEdges.enqueue(a);
-			}
+			Iterable<Edge> route = MainApp.route(start, destination, g);	
+			numEdges = (int)StreamSupport.stream(route.spliterator(), false).count();
+		
+			for (Edge a : route) {
+				// calls the routing method from the main
+				// which uses Dijkstras algorithm to find the shortest path
+				String s = a.toString();
+				String[] separation = s.split(" ");
+				// XXX seperation[0] gives you each edge as xx-yy
+				currentPathList.enqueue(separation[0]);
+				String[] vertices = separation[0].split("-");
+				if (Integer.parseInt(vertices[0]) == lastVert) {
+					pathway.enqueue(Integer.parseInt(vertices[1]));
+					path.enqueue(Integer.parseInt(vertices[1]));
+				} else {
+					pathway.enqueue(Integer.parseInt(vertices[0]));
+					path.enqueue(Integer.parseInt(vertices[0]));
+				}
+				for (Integer i : path)
+					lastVert = i;
+					
+				
 
-			// System.out.println(a);
-			count++;
-		}
-		for (Integer i : path) {
-			System.out.println(i + " ");
-		}
+				// this checks for transfers in the pathing algorithm
+				if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
+					transferEdges.enqueue(a);
+				}
+
+				// System.out.println(a);
+				count++;
+			}
+			
+			for (Integer i : path) {
+				System.out.println(i + " ");
+			}
 			RailLine current = start.getRailLine();
 			while (transferEdges.size() != 0) {
 				Edge currentEdge = transferEdges.dequeue();
@@ -280,21 +254,19 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			}
 
 			for (Station s : startline.getStations()) {
-				//System.out.println(s.getStationName());
+				// System.out.println(s.getStationName());
 				if (destination.getStationName().equals(s.getStationName())) {
 					transferStationArray = new Station[0];
 				}
 			}
-			
+
 			provideDirections(start, destination, transferStationArray);
- 
+
 			transferPinPainting();
-			
-			
+
 		} catch (IllegalArgumentException n) {
 			directions.setText("Please Enter a Destination that is not the same as the start");
 		}
-
 	}
 	
 	public static Queue<String> getCurrentPathList() {
@@ -334,40 +306,34 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	 */
 	private void provideDirections(Station start, Station destination,
 			Station[] transferStationArray) {
-			
 
 		StringBuilder sb = new StringBuilder();
 
 		if (start.getStationName().equals(destination.getStationName())) {
 			sb.append("Please Enter a Destination that is not the same as the start");
-		} 
-		else if (start.getRailLine().equals(destination.getRailLine())) {
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " all the way to " 
-		+ destination.getStationName());
+		} else if (start.getRailLine().equals(destination.getRailLine())) {
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
+					+ " all the way to " + destination.getStationName());
+		} else if (transferStationArray.length == 1) {
+
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+					+ transferStationArray[0].getStationName() + " then transfer onto "
+					+ destination.getRailLine().getName() + " to " + destination.getStationName());
+		} else if (transferStationArray.length == 2) {
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine() + " to "
+					+ transferStationArray[0].getStationName() + " then transfer onto "
+					+ transferStationArray[1].getStationName() + " and take the "
+					+ transferStationArray[1].getRailLine() + " to " + destination.getStationName());
+		} else {
+			sb.append("fuck"); // TODO
 		}
-		else if (transferStationArray.length==1) {
-			
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to " + transferStationArray[0].getStationName()
-			+ " then transfer onto " + destination.getRailLine().getName() + " to " + destination.getStationName());
-		}
-		else if (transferStationArray.length==2) {
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine() + " to " + transferStationArray[0].getStationName()
-			+ " then transfer onto " + transferStationArray[1].getStationName() + " and take the " + transferStationArray[1].getRailLine() + " to " + destination.getStationName());
-		}
-			else {
-				sb.append("fuck"); // TODO
-			}
-			
-		
+
 		total_time = Math.floor(MainApp.getTotal_Time());
 		System.out.println(sb.toString());
 		directions.setText(sb.toString());
 		timelabel.setText("Estimated Time: " + total_time + " minutes.");
 		total_time = 0.0;
 
-		
 	}
-
-
 
 }

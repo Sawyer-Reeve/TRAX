@@ -3,12 +3,12 @@ package trax;
 
 import java.awt.Point;
 import java.io.IOException;
-import java.util.Arrays; //used to sort an array in alphabetical order
 
 import edu.princeton.cs.algs4.DijkstraUndirectedSP;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.Quick;
 import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.ST;
 
@@ -26,173 +26,166 @@ public class MainApp {
 	private static RailLine FrontRunner;
 	private static RailLine SLine;
 	private static Station[] allStations;
-	static Integer total_time;
+	private static Integer total_time;
 	
     public static void main(String[] args) throws IOException {
     	RailInitialization(); //below method, initializes all of the rail lines
     	new MainGUIframe(); 
-//    	MainGUIframe.main(args);
     }
     
     
+    /**
+     * 
+     */
     public static void RailInitialization() {
-    	//initialization of railLines and stations with ID's
+		// initialization of railLines and stations with ID's
+
+		// RailLines are initialized here(without the lists) in order to allow me to
+		// assign each of them to the stations
+		// when they are created
+		ID_StationName_ST = new ST<Integer, String>();
+		ID_Station_ST = new ST<Integer, Station>();
+		Name_Station_ST = new ST<String, Station>();
+
+		GreenLine = new RailLine(RailLines.GREEN_LINE);
+		BlueLine = new RailLine(RailLines.BLUE_LINE);
+		RedLine = new RailLine(RailLines.RED_LINE);
+		FrontRunner = new RailLine(RailLines.FRONTRUNNER);
+		SLine = new RailLine(RailLines.S_LINE);
+
+		ID_StationName_ST.put(-1, null);
+		ID_Station_ST.put(-1, null);
+
+		// Blue Line Stations
+		// iterates through and assigns an ID number for each Station and adds it to the
+		// the list
+		// as well as adding them to a hash map
+
+		Queue<String> BlueStationsStrings = FileIO.getStationList(RailLines.BLUE_LINE);
+		Queue<Point> BlueStationCoords = FileIO.getCoordList(RailLines.BLUE_LINE);
+		Queue<Station> BlueLineStations = new Queue<>();
+		int count = 0;
+		for (String s : BlueStationsStrings) {
+			Station station = new Station(count, s, BlueLine);
+			BlueLineStations.enqueue(station);
+			ID_StationName_ST.put(count, s);
+			Name_Station_ST.put(s, station);
+			ID_Station_ST.put(count, station);
+			station.setPoint(BlueStationCoords.dequeue());
+			count++;
+		}
+
+		// Red Line Stations
+		Queue<String> RedStationsStrings = FileIO.getStationList(RailLines.RED_LINE);
+		Queue<Point> RedStationCoords = FileIO.getCoordList(RailLines.RED_LINE);
+		Queue<Station> RedLineStations = new Queue<>();
+		for (String s : RedStationsStrings) {
+			Station station = new Station(count, s, RedLine);
+			RedLineStations.enqueue(station);
+			ID_StationName_ST.put(count, s);
+			Name_Station_ST.put(s, station);
+			ID_Station_ST.put(count, station);
+			station.setPoint(RedStationCoords.dequeue());
+			count++;
+		}
+
+
+		// Green Line Stations
+		Queue<String> GreenStationsStrings = FileIO.getStationList(RailLines.GREEN_LINE);
+		Queue<Point> GreenStationCoords = FileIO.getCoordList(RailLines.GREEN_LINE);
+		Queue<Station> GreenLineStations = new Queue<>();
+
+		for (String s : GreenStationsStrings) {
+			Station station = new Station(count, s, GreenLine);
+			GreenLineStations.enqueue(station);
+			ID_StationName_ST.put(count, s);
+			Name_Station_ST.put(s, station);
+			ID_Station_ST.put(count, station);
+			station.setPoint(GreenStationCoords.dequeue());
+			count++;
+		}
+    			
+		// FrontRunner Stations
+		Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);
+		Queue<Point> FrontRunnerCoords = FileIO.getCoordList(RailLines.FRONTRUNNER);
+		Queue<Station> FrontRunnerStations = new Queue<>();
+
+		for (String s : FrontRunnerStrings) {
+			Station station = new Station(count, s, FrontRunner);
+			FrontRunnerStations.enqueue(station);
+			ID_StationName_ST.put(count, s);
+			Name_Station_ST.put(s, station);
+			ID_Station_ST.put(count, station);
+			station.setPoint(FrontRunnerCoords.dequeue());
+			count++;
+		}
+
+		// S Line stations
+		Queue<String> SLineStrings = FileIO.getStationList(RailLines.S_LINE);
+		Queue<Point> SLineCoords = FileIO.getCoordList(RailLines.S_LINE);
+		Queue<Station> SLineStations = new Queue<>();
+
+		for (String s : SLineStrings) {
+			Station station = new Station(count, s, SLine);
+			SLineStations.enqueue(station);
+			ID_StationName_ST.put(count, s);
+			Name_Station_ST.put(s, station);
+			ID_Station_ST.put(count, station);
+			station.setPoint(SLineCoords.dequeue());
+			count++;
+		}
+    			
+		// here we're just adding the list of stations to each RailLine object
+		FrontRunner.add(FrontRunnerStations);
+		BlueLine.add(BlueLineStations);
+		GreenLine.add(GreenLineStations);
+		RedLine.add(RedLineStations);
+		SLine.add(SLineStations);
+
+		//end of initialization for the Stations and rails
+
+		//--------------------------------PRINT STATEMENTS---------------------------------------
 		
-    			//RailLines are initialized here(without the lists) in order to allow me to assign each of them to the stations 
-    			//when they are created
-    			ID_StationName_ST = new ST<Integer,String>();
-    			ID_Station_ST = new ST<Integer,Station>();
-    			Name_Station_ST = new ST<String,Station>();
-    			
-    			GreenLine = new RailLine(RailLines.GREEN_LINE);
-    			BlueLine = new RailLine(RailLines.BLUE_LINE);
-    			RedLine = new RailLine(RailLines.RED_LINE);
-    			FrontRunner = new RailLine(RailLines.FRONTRUNNER);
-    			SLine = new RailLine(RailLines.S_LINE);
-    			
-    			ID_StationName_ST.put(-1, null);
-    			ID_Station_ST.put(-1, null);
-    			
+		System.out.println(BlueLine);
+		System.out.println(RedLine);
+		System.out.println(GreenLine);
+		System.out.println(FrontRunner);
+		System.out.println(SLine);
+		System.out.println();
 
-    			// Blue Line Stations
-    			// iterates through and assigns an ID number for each Station and adds it to the the list
-    			// as well as adding them to a hashmap
-    			
-    			Queue<String> BlueStationsStrings = FileIO.getStationList(RailLines.BLUE_LINE);
-    			Queue<Point> BlueStationCoords = FileIO.getCoordList(RailLines.BLUE_LINE);
-    			Queue<Station> BlueLineStations = new Queue<>();
-    			int count = 0;
-    			for (String s : BlueStationsStrings) {
-    				Station station = new Station(count, s, BlueLine);
-    				BlueLineStations.enqueue(station);
-    				ID_StationName_ST.put(count, s);
-    				Name_Station_ST.put(s,station);
-    				ID_Station_ST.put(count,station);
-    				station.setPoint(BlueStationCoords.dequeue());
-    				station.setblueLineTrue();
-    				count++;
-    			}
+	}
 
-
-    			// Red Line Stations
-    			Queue<String> RedStationsStrings = FileIO.getStationList(RailLines.RED_LINE);
-    			Queue<Point> RedStationCoords = FileIO.getCoordList(RailLines.RED_LINE);
-    			Queue<Station> RedLineStations = new Queue<>();
-    			for (String s : RedStationsStrings) {
-    				Station station = new Station(count, s, RedLine);
-    				RedLineStations.enqueue(station);
-    				ID_StationName_ST.put(count, s);
-    				Name_Station_ST.put(s,station);
-    				ID_Station_ST.put(count,station);
-    				station.setPoint(RedStationCoords.dequeue());
-    				station.setredLineTrue();
-    				count++;
-    			}
-
-
-    			// Green Line Stations
-    			Queue<String> GreenStationsStrings = FileIO.getStationList(RailLines.GREEN_LINE);
-    			Queue<Point> GreenStationCoords = FileIO.getCoordList(RailLines.GREEN_LINE);
-    			Queue<Station> GreenLineStations = new Queue<>();
-    			
-    			for (String s : GreenStationsStrings) {
-    				Station station = new Station(count, s, GreenLine);
-    				GreenLineStations.enqueue(station);
-    				ID_StationName_ST.put(count, s);
-    				Name_Station_ST.put(s,station);
-    				ID_Station_ST.put(count,station);
-    				station.setPoint(GreenStationCoords.dequeue());
-    				station.setgreenLineTrue();
-    				count++;
-    				
-    			}
-
-    			
-				// FrontRunner Stations
-    			Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);
-    			Queue<Point> FrontRunnerCoords = FileIO.getCoordList(RailLines.FRONTRUNNER);
-    			Queue<Station> FrontRunnerStations = new Queue<>();
-    			
-    			for (String s : FrontRunnerStrings) {
-    				Station station = new Station(count, s, FrontRunner);
-    				FrontRunnerStations.enqueue(station);
-    				ID_StationName_ST.put(count, s);
-    				Name_Station_ST.put(s,station);
-    				ID_Station_ST.put(count,station);
-    				station.setPoint(FrontRunnerCoords.dequeue());
-    				station.setFrontRunnerTrue();
-    				count++;	
-    			}
-    			
-    			
-    			// S Line stations
-    			Queue<String> SLineStrings = FileIO.getStationList(RailLines.S_LINE);
-    			Queue<Point> SLineCoords = FileIO.getCoordList(RailLines.S_LINE);
-    			Queue<Station> SLineStations = new Queue<>();
-    			
-    			for (String s : SLineStrings) {
-    				Station station = new Station(count, s, SLine);
-    				SLineStations.enqueue(station);
-    				ID_StationName_ST.put(count, s);
-    				Name_Station_ST.put(s, station);
-    				ID_Station_ST.put(count, station);
-    				station.setPoint(SLineCoords.dequeue());
-    				station.setSLineTrue();
-    				count++;
-    			}
-    			
-    			//here we're just adding the list of stations to each RailLine object
-    			FrontRunner.add(FrontRunnerStations);
-    			BlueLine.add(BlueLineStations);
-    			GreenLine.add(GreenLineStations);
-    			RedLine.add(RedLineStations);
-    			SLine.add(SLineStations);
-    			
-    			
-
-    			//end of initialization for the Stations and rails
-
-    			//--------------------------------------PRINT STATEMENTS--------------------------------------------------------
-    			
-    			System.out.println(BlueLine);
-    			System.out.println(RedLine);
-    			System.out.println(GreenLine);
-    			System.out.println(FrontRunner);
-    			System.out.println(SLine);
-
-
-    			//System.out.println(railIDs.keys());
-    			System.out.println();
-    			
-    			for (int i=3;i<12;i++) {
-        			ID_Station_ST.get(i).setgreenLineTrue();
-    			}
-    			for (int i=7; i<=16;i++) {
-    				ID_Station_ST.get(i).setredLineTrue();
-    			}
-
-    		
-    }
-
-    
-    
-	
+	/**
+	 * @return
+	 */
 	public static RailLine getBlueLine() {
 		return BlueLine;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public static RailLine getRedLine() {
 		return RedLine;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public static RailLine getGreenLine() {
 		return GreenLine;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public static RailLine getFrontRunner() {
 		return FrontRunner;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public static RailLine getSLine() {
 		return SLine;
 	}
@@ -203,7 +196,7 @@ public class MainApp {
 	 */
 	public static String[] allStationsStrings() {
 		
-		//joins all Station strings into single arraylist
+		//joins all Station strings into single queue
 		Queue<String> strings = new Queue<String>();
 		
 		for (String s : BlueLine.getStationArray()) {
@@ -237,7 +230,7 @@ public class MainApp {
 			stationsArray[i] = s;
 			i++;
 		}
-		Arrays.sort(stationsArray);
+		Quick.sort(stationsArray);
 		return stationsArray;
 		
 	}
@@ -256,7 +249,6 @@ public class MainApp {
 		return ID_StationName_ST;
 	}
 	
-	
 	/**
 	 * @return the ID-Station Symbol Table
 	 */
@@ -274,7 +266,6 @@ public class MainApp {
 	public static Integer getTotal_Time() {
 		return total_time;
 	}
-
 	
 	/**
 	 * route uses Dijkstras algorithm to find the shortest path between two points on a weighted graph,
@@ -284,11 +275,11 @@ public class MainApp {
 	 * @param G provided edge weighted graph
 	 * @return iterable Edge objects that represent the lowest weighted path
 	 */
-	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G ) {
+	public static Iterable<Edge> route(Station start, Station destination, EdgeWeightedGraph G) {
 		DijkstraUndirectedSP graph = new DijkstraUndirectedSP(G, start.getID());
-		
+
 		total_time = (int) graph.distTo(destination.getID());
-		
+
 		return graph.pathTo(destination.getID());
 	}
 }

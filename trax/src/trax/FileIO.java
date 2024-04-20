@@ -38,6 +38,10 @@ public class FileIO {
 		return stations;
 	}
 
+	/**
+	 * @param railLine
+	 * @return
+	 */
 	public static Queue<Point> getCoordList(RailLines railLine) {
 		int x;
 		int y;
@@ -60,6 +64,9 @@ public class FileIO {
 		return coordinates;
 	}
 	
+	/**
+	 * @return
+	 */
 	public static ST<String, String> getPathList() {
 		ST<String, String> st = new ST<>();
 		while (pathOverlayList.hasNextLine()) {
@@ -69,16 +76,4 @@ public class FileIO {
 		return st;
 	}
 	
-	/**
-	 * Test client for unit testing
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		ST<String, String> temp = getPathList();
-////		System.out.println(temp.keys());
-//		for (String k : temp.keys()) {
-//			System.out.print(k + ": ");
-//			System.out.println(temp.get(k));
-//		}
-//	}
 }
