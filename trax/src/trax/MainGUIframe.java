@@ -33,8 +33,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private static final long serialVersionUID = 1L;
 	JPanel panel;
 	JButton submitButton;
-	JComboBox<String> startDropDownMenu;
-	JComboBox<String> destinationDropDownMenu;
+	private static JComboBox<String> startDropDownMenu;
+	private static JComboBox<String> destinationDropDownMenu;
 	JTextArea directions;
 	JLabel startPinLabel;
 	JLabel endPinLabel;
@@ -44,7 +44,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	Double total_time = 0.0;
 	JLabel start;
 	JLabel destination;
-	JPanel main;
+	private static JPanel main;
 	ImageIcon pin = new ImageIcon("src/resources/pinDrop.png");
 	ImagePanel imagePanel;
 	Queue<Station> transferStations;
@@ -52,6 +52,9 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	Station[] transferStationArray;
 	private static ST<String, String> pathOverlayList = FileIO.getPathList();
 	private static Queue<String> currentPathList = new Queue<>();
+	
+	private static boolean testModeActive = true;
+	private static int count1 = 0, count2 = 0;
 	
 	public static void main(String[] args) {
 		In in = new In(new File("src/Resources/Graph.txt/"));
@@ -61,6 +64,33 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		Station start = MainApp.getName_Station_ST().get("Ballpark Station");
 		Station dest = MainApp.getName_Station_ST().get("Sugarmont Station");
 		System.out.println(MainApp.route(start, dest, g));
+	}
+	
+	public static void testMode() {
+		In in = new In(new File("src/Resources/Graph.txt/"));
+		EdgeWeightedGraph g = new EdgeWeightedGraph(in);
+		ST<Integer, Station> stations = MainApp.getID_Station_ST();
+		
+		JButton testButton = new JButton("Next");
+		testButton.setBounds(55, 160, 100, 30);
+		main.add(testButton);
+		
+		testButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Test Button Pressed");
+				
+				startDropDownMenu.setSelectedIndex(count1++);
+				destinationDropDownMenu.setSelectedIndex(count2);
+				if (count1 >= MainApp.allStationsStrings().length) {
+					count1 = 0; count2++;
+				}
+			}
+		});
+
+		
+//		for (Station s : MainApp.getAllStations()) {
+//			
+//		}
 	}
 
 	MainGUIframe() {
@@ -103,6 +133,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		main.add(directionsLabel);
 		main.add(directions);
 		main.add(timelabel);
+		if (testModeActive) testMode();
 
 		panel.add(main, BorderLayout.WEST);
 
