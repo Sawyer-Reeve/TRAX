@@ -97,9 +97,9 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		panel.add(main, BorderLayout.WEST);
 
 		start.setBounds(20, 0, 100, 30);
-		startDropDownMenu.setBounds(20, 30, 200, 30);
+		startDropDownMenu.setBounds(20, 30, 280, 30);
 		destination.setBounds(20, 90, 100, 30);
-		destinationDropDownMenu.setBounds(20, 120, 200, 30);
+		destinationDropDownMenu.setBounds(20, 120, 280, 30);
 		submitButton.setBounds(160, 160, 100, 30);
 		directionsLabel.setBounds(20, 370, 100, 30);
 		timelabel.setBounds(20, 600, 200, 30);
@@ -130,68 +130,68 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	// is is the action performed when the submit button is clicked
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		try {
 
-			try {
+			if (e.getSource() == submitButton) {
 
-				if (e.getSource() == submitButton) {
+		}
 
+		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
+		Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
+
+		RailLine startline = start.getRailLine();
+
+		In in = new In(new File("src/Resources/Graph.txt/"));
+
+		EdgeWeightedGraph g = new EdgeWeightedGraph(in);
+
+		// ----------------------------
+		transfers = new Queue<RailLine>();
+		transferStations = new Queue<Station>();
+		Queue<Edge> transferEdges = new Queue<Edge>();
+		Queue<Integer> pathway = new Queue<Integer>();
+		ArrayList<Integer> path = new ArrayList<Integer>();
+		
+		System.out.println(MainApp.route(start, destination, g).toString());
+		//System.out.println(MainApp.total_time);
+		transfers.enqueue(start.getRailLine());
+		Integer count = 0;
+		Integer numEdges = 0;
+		Integer startID = start.getID();
+		path.add(startID);
+		Integer lastvert = startID;
+		for (Edge a : MainApp.route(start, destination, g)) {
+			numEdges++;
+		}
+		
+		
+		for (Edge a : MainApp.route(start, destination, g)) {
+			// calls the routing method from the main
+			// which uses Dijkstras algorithm to find the shortest path
+			String s = a.toString();
+			String[] separation = s.split(" ");
+			//XXX seperation[0] gives you each edge as xx-yy
+			currentPathList.enqueue(separation[0]);
+			String[] vertices = separation[0].split("-");
+			if (Integer.parseInt(vertices[0])==lastvert) {
+				pathway.enqueue(Integer.parseInt(vertices[1]));
+				path.add(Integer.parseInt(vertices[1]));
+			}
+			else {
+				pathway.enqueue(Integer.parseInt(vertices[0]));
+				path.add(Integer.parseInt(vertices[0]));
+			}
+			lastvert=path.getLast();
+			
+			// this checks for transfers in the pathing algorithm
+			if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
+				transferEdges.enqueue(a);
 			}
 
-			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
-			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
-
-			RailLine startline = start.getRailLine();
-
-			In in = new In(new File("src/Resources/Graph.txt/"));
-
-			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
-
-			// ----------------------------
-			transfers = new Queue<RailLine>();
-			transferStations = new Queue<Station>();
-			Queue<Edge> transferEdges = new Queue<Edge>();
-			Queue<Integer> pathway = new Queue<Integer>();
-			ArrayList<Integer> path = new ArrayList<Integer>();
-			
-			System.out.println(MainApp.route(start, destination, g).toString());
-			//System.out.println(MainApp.total_time);
-			transfers.enqueue(start.getRailLine());
-			Integer count = 0;
-			Integer numEdges = 0;
-			Integer startID = start.getID();
-			path.add(startID);
-			Integer lastvert = startID;
-			for (Edge a : MainApp.route(start, destination, g)) {
-				numEdges++;
-			}
-			
-			
-			for (Edge a : MainApp.route(start, destination, g)) {
-				// calls the routing method from the main
-				// which uses Dijkstras algorithm to find the shortest path
-				String s = a.toString();
-				String[] separation = s.split(" ");
-				//XXX seperation[0] gives you each edge as xx-yy
-				currentPathList.enqueue(separation[0]);
-				String[] vertices = separation[0].split("-");
-				if (Integer.parseInt(vertices[0])==lastvert) {
-					pathway.enqueue(Integer.parseInt(vertices[1]));
-					path.add(Integer.parseInt(vertices[1]));
-				}
-				else {
-					pathway.enqueue(Integer.parseInt(vertices[0]));
-					path.add(Integer.parseInt(vertices[0]));
-				}
-				lastvert=path.getLast();
-				
-				// this checks for transfers in the pathing algorithm
-				if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
-					transferEdges.enqueue(a);
-				}
-
-				// System.out.println(a);
-				count++;
-			}
+			// System.out.println(a);
+			count++;
+		}
 		for (Integer i : path) {
 			System.out.println(i + " ");
 		}
