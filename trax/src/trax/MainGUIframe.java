@@ -52,6 +52,16 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	Station[] transferStationArray;
 	private static ST<String, String> pathOverlayList = FileIO.getPathList();
 	private static Queue<String> currentPathList = new Queue<>();
+	
+	public static void main(String[] args) {
+		In in = new In(new File("src/Resources/Graph.txt/"));
+		EdgeWeightedGraph g = new EdgeWeightedGraph(in);
+		
+//		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
+		Station start = MainApp.getName_Station_ST().get("Ballpark Station");
+		Station dest = MainApp.getName_Station_ST().get("Sugarmont Station");
+		System.out.println(MainApp.route(start, dest, g));
+	}
 
 	MainGUIframe() {
 		panel = new JPanel();
@@ -110,20 +120,22 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		directions.setLineWrap(true);
 
 		imagePanel = new ImagePanel();
-		buildImagePanel();
-	}
-	
-	public void buildImagePanel() {
-//		panel.remove(imagePanel);
-//		imagePanel = new ImagePanel();
-		panel.add(imagePanel);
 		imagePanel.setPreferredSize(new Dimension(900, 800));
-		panel.repaint();
-//		panel.revalidate();
-		imagePanel.repaint();
-//		System.out.println("ImagePanel component count: " + imagePanel.getComponentCount());
-		
+		panel.add(imagePanel);
+
 	}
+//	
+//	public void buildImagePanel() {
+////		panel.remove(imagePanel);
+////		imagePanel = new ImagePanel();
+//		panel.add(imagePanel);
+//		imagePanel.setPreferredSize(new Dimension(900, 800));
+//		panel.repaint();
+////		panel.revalidate();
+//		imagePanel.repaint();
+////		System.out.println("ImagePanel component count: " + imagePanel.getComponentCount());
+//		
+//	}
 	
 	public void clearImagePanel() {
 		panel.remove(imagePanel);
@@ -156,8 +168,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 //			if (e.getSource() == submitButton) {
 //
 //		}
-		
-		
 		
 		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem()); // starting
 		Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending

@@ -87,3 +87,13 @@ Lehi Station
 American Fork Station
 Vineyard Station
 ###
+
+S_LINE
+Central Pointe Station
+South Salt Lake City Station
+300 East Station
+500 East Station
+700 East Station
+Sugarmont Station
+Fairmont Station
+###

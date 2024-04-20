@@ -24,12 +24,14 @@ public class MainApp {
 	private static RailLine BlueLine;
 	private static RailLine RedLine;
 	private static RailLine FrontRunner;
+	private static RailLine SLine;
 	private static Station[] allStations;
 	static Integer total_time;
 	
     public static void main(String[] args) throws IOException {
     	RailInitialization(); //below method, initializes all of the rail lines
-    	new MainGUIframe();  
+    	new MainGUIframe(); 
+//    	MainGUIframe.main(args);
     }
     
     
@@ -46,13 +48,15 @@ public class MainApp {
     			BlueLine = new RailLine(RailLines.BLUE_LINE);
     			RedLine = new RailLine(RailLines.RED_LINE);
     			FrontRunner = new RailLine(RailLines.FRONTRUNNER);
+    			SLine = new RailLine(RailLines.S_LINE);
+    			
     			ID_StationName_ST.put(-1, null);
     			ID_Station_ST.put(-1, null);
     			
 
-    			//Blue Line Stations
-    			//iterates through and assigns an ID number for each Station and adds it to the the list
-    			//as well as adding them to a hashmap
+    			// Blue Line Stations
+    			// iterates through and assigns an ID number for each Station and adds it to the the list
+    			// as well as adding them to a hashmap
     			
     			Queue<String> BlueStationsStrings = FileIO.getStationList(RailLines.BLUE_LINE);
     			Queue<Point> BlueStationCoords = FileIO.getCoordList(RailLines.BLUE_LINE);
@@ -66,7 +70,6 @@ public class MainApp {
     				ID_Station_ST.put(count,station);
     				station.setPoint(BlueStationCoords.dequeue());
     				station.setblueLineTrue();
-    				
     				count++;
     			}
 
@@ -105,7 +108,7 @@ public class MainApp {
     			}
 
     			
-    			//FrontRunner Stations
+				// FrontRunner Stations
     			Queue<String> FrontRunnerStrings = FileIO.getStationList(RailLines.FRONTRUNNER);
     			Queue<Point> FrontRunnerCoords = FileIO.getCoordList(RailLines.FRONTRUNNER);
     			Queue<Station> FrontRunnerStations = new Queue<>();
@@ -120,11 +123,30 @@ public class MainApp {
     				station.setFrontRunnerTrue();
     				count++;	
     			}
+    			
+    			
+    			// S Line stations
+    			Queue<String> SLineStrings = FileIO.getStationList(RailLines.S_LINE);
+    			Queue<Point> SLineCoords = FileIO.getCoordList(RailLines.S_LINE);
+    			Queue<Station> SLineStations = new Queue<>();
+    			
+    			for (String s : SLineStrings) {
+    				Station station = new Station(count, s, SLine);
+    				SLineStations.enqueue(station);
+    				ID_StationName_ST.put(count, s);
+    				Name_Station_ST.put(s, station);
+    				ID_Station_ST.put(count, station);
+    				station.setPoint(SLineCoords.dequeue());
+    				station.setSLineTrue();
+    				count++;
+    			}
+    			
     			//here we're just adding the list of stations to each RailLine object
     			FrontRunner.add(FrontRunnerStations);
     			BlueLine.add(BlueLineStations);
     			GreenLine.add(GreenLineStations);
     			RedLine.add(RedLineStations);
+    			SLine.add(SLineStations);
     			
     			
 
@@ -136,6 +158,7 @@ public class MainApp {
     			System.out.println(RedLine);
     			System.out.println(GreenLine);
     			System.out.println(FrontRunner);
+    			System.out.println(SLine);
 
 
     			//System.out.println(railIDs.keys());
@@ -170,6 +193,10 @@ public class MainApp {
 		return FrontRunner;
 	}
 	
+	public static RailLine getSLine() {
+		return SLine;
+	}
+	
 	/**
 	 * used to return an array of unique strings for the drop down menu displays
 	 * @return array of unique strings
@@ -189,6 +216,9 @@ public class MainApp {
 			strings.enqueue(s);
 		}
 		for (String s : FrontRunner.getStationArray()) {
+			strings.enqueue(s);
+		}
+		for (String s : SLine.getStationArray()) {
 			strings.enqueue(s);
 		}
 

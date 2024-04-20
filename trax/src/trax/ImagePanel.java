@@ -33,7 +33,6 @@ public class ImagePanel extends JPanel {
 
 	private int scaleFactor = 60;
 	
-
 	/**
 	 * Create the panel.
 	 */

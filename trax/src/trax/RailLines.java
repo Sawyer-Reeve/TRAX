@@ -8,7 +8,8 @@ public enum RailLines {
 	BLUE_LINE ("Blue Line"), 
 	RED_LINE ("Red Line"), 
 	GREEN_LINE ("Green Line"), 
-	FRONTRUNNER ("Front Runner");
+	FRONTRUNNER ("Front Runner"),
+	S_LINE ("S Line");
 
 	private final String name;
 	

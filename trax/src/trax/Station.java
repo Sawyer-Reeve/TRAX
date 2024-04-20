@@ -19,6 +19,7 @@ public class Station implements Comparable<Station>{
 	boolean redLine;
 	boolean blueLine;
 	boolean frontRunner;
+	boolean sLine;
 	
 	public Station(int id, String name, RailLine line) {
 		this.ID=id;
@@ -63,6 +64,9 @@ public class Station implements Comparable<Station>{
 	}
 	public void setFrontRunnerTrue() {
 		frontRunner=true;
+	}
+	public void setSLineTrue() {
+		sLine=true;
 	}
 
 	@Override
