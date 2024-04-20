@@ -42,14 +42,13 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private JLabel start;
 	private JLabel destination;
 	private static JPanel main;
-//	private ImageIcon pin = new ImageIcon("src/resources/pinDrop.png");
 	private ImagePanel imagePanel;
 	private Queue<Station> transferStations;
 	private Queue<RailLine> transfers;
 	private Station[] transferStationArray;
 	private static ST<String, String> pathOverlayList = FileIO.getPathList();
 	private static Queue<String> currentPathList = new Queue<>();
-	
+
 	private static boolean demoModeActive = true;
 	private static int demoStart = 1, demoDest = 0;
 	
@@ -324,8 +323,11 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 					+ transferStationArray[0].getStationName() + " then transfer onto "
 					+ transferStationArray[1].getStationName() + " and take the "
 					+ transferStationArray[1].getRailLine() + " to " + destination.getStationName());
-		} else {
-			sb.append("fuck"); // TODO
+		}
+
+		else {
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
+					+ " all the way to " + destination.getStationName());
 		}
 
 		total_time = Math.floor(MainApp.getTotal_Time());
