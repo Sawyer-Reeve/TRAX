@@ -56,7 +56,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private static boolean testModeActive = true;
 	private static int count1 = 0, count2 = 0;
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		In in = new In(new File("src/Resources/Graph.txt/"));
 		EdgeWeightedGraph g = new EdgeWeightedGraph(in);
 		
@@ -64,7 +64,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		Station start = MainApp.getName_Station_ST().get("Ballpark Station");
 		Station dest = MainApp.getName_Station_ST().get("Sugarmont Station");
 		System.out.println(MainApp.route(start, dest, g));
-	}
+	}*/
 	
 	public static void testMode() {
 		In in = new In(new File("src/Resources/Graph.txt/"));
@@ -351,11 +351,12 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			+ " then transfer onto " + destination.getRailLine().getName() + " to " + destination.getStationName());
 		}
 		else if (transferStationArray.length==2) {
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine() + " to " + transferStationArray[0].getStationName()
-			+ " then transfer onto " + transferStationArray[1].getStationName() + " and take the " + transferStationArray[1].getRailLine() + " to " + destination.getStationName());
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to " + transferStationArray[0].getStationName()
+			+ " then transfer onto " + transferStationArray[1].getStationName() + " and take the " + transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
 		}
 			else {
-				sb.append("fuck"); // TODO
+				sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " all the way to " 
+						+ destination.getStationName());
 			}
 			
 		
