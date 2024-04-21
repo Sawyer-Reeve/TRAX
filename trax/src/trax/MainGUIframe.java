@@ -48,7 +48,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private static Queue<String> currentPathList = new Queue<>();
 	// Test Mode
 	private static int demoStart = 1, demoDest = 0;
-	private static boolean demoModeActive = true;
+	private static boolean demoModeActive = false;
 	
 	
 	/**
@@ -393,7 +393,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		total_time = Math.floor(MainApp.getTotal_Time());
 		System.out.println(sb.toString());
 		directions.setText(sb.toString());
-		timelabel.setText("<HTML><b>Estimated Time:</b></HTML> " + total_time + " minutes.");
+		System.out.println(total_time);
+		timelabel.setText("<HTML><b>Estimated Time:</b> " + total_time + " minutes.</HTML>");
 		total_time = 0.0;
 
 	}
