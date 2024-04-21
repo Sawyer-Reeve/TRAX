@@ -373,25 +373,25 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				sb.append("Please Enter a Destination that is not the same as the start");
 
 			} else if (startOnDestinationRail == true) {
-				sb.append("From " + start.getStationName() + " you will take the " + destination.getRailLine().getName()
+				sb.append("1. From " + start.getStationName() + " you will take the " + destination.getRailLine().getName()
 						+ " all the way to " + destination.getStationName());
 			} else {
-				sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
+				sb.append("1. From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
 						+ " all the way to " + destination.getStationName());
 			}
 		}
 		else if (transferStationArray.length == 1) {
 			System.out.println("Directions case 3");
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
-					+ transferStationArray[0].getStationName() + ", then transfer onto "
+			sb.append("1. From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+					+ transferStationArray[0].getStationName() + "\n\n 2. Then transfer onto "
 					+ destination.getRailLine().getName() + " to " + destination.getStationName());
 		} else if (transferStationArray.length == 2) {
 			System.out.println("Directions case 4");
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+			sb.append("1. From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
 
-					+ transferStationArray[0].getStationName() + ", then transfer onto the "
+					+ transferStationArray[0].getStationName() + "\n\n 2. Then transfer onto the "
 					+ transferStationArray[0].getRailLine().getName() + " to "
-					+ transferStationArray[1].getStationName() + ", then take the "
+					+ transferStationArray[1].getStationName() + "\n\n 3. Then take the "
 					+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
 		} else {
 
