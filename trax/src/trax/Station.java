@@ -6,6 +6,7 @@ import java.awt.Point;
  * Station is a class that is used to hold the data for each rail station along the Trax lines, it implements comparable
  * ..in order to see if two stations on different lines with the same name are indeed the same station(i.e. 600 S on green
  * .. line is the same as 600 S on red line)
+ * @author chrisdarnell Sawyer Reeve + Chris Darnell
  */
 public class Station implements Comparable<Station>{
 	

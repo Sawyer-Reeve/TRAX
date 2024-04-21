@@ -2,7 +2,7 @@ package trax;
 
 /**
  * Represents the names of the common TRAX rail lines
- * @author sawyerreeve + chrisdarnell
+ * @author Chris Darnell + Sawyer Reeve
  */
 public enum RailLines {
 	BLUE_LINE ("Blue Line"), 

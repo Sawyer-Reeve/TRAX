@@ -1,6 +1,5 @@
 package trax;
 
-
 import java.awt.Point;
 import java.io.IOException;
 
@@ -14,7 +13,7 @@ import edu.princeton.cs.algs4.ST;
 
 /**
  * Main running application that initializes the rails, and calles the GUI methods
- * @author sawyerreeve + chrisdarnell
+ * @author Sawyer Reeve + Chris Darnell
  */
 public class MainApp {
 	private static ST<Integer,String> ID_StationName_ST; 
@@ -33,9 +32,8 @@ public class MainApp {
     	new MainGUIframe(); //creates GUI
     }
     
-    
     /**
-     * 
+     * Initalize all the rail line objects and populate the stations that they contain
      */
     public static void RailInitialization() {
 		// initialization of railLines and stations with ID's
@@ -156,6 +154,7 @@ public class MainApp {
 	}
 
 	/**
+	 * Returns the Blue line object
 	 * @return BlueLine RailLine item
 	 */
 	public static RailLine getBlueLine() {
@@ -163,6 +162,7 @@ public class MainApp {
 	}
 
 	/**
+	 * Returns the Red line object
 	 * @return RedLine RailLine item
 	 */
 	public static RailLine getRedLine() {
@@ -170,6 +170,7 @@ public class MainApp {
 	}
 
 	/**
+	 * Returns the Green line object
 	 * @return GreenLine RailLine item
 	 */
 	public static RailLine getGreenLine() {
@@ -177,6 +178,7 @@ public class MainApp {
 	}
 
 	/**
+	 * Returns the FrontRunner object
 	 * @return FrontRunner RailLine item
 	 */
 	public static RailLine getFrontRunner() {
@@ -184,7 +186,8 @@ public class MainApp {
 	}
 
 	/**
-	 * @return
+	 * Returns the S line object
+	 * @return SLine RailLine item
 	 */
 	public static RailLine getSLine() {
 		return SLine;
@@ -215,7 +218,6 @@ public class MainApp {
 			strings.enqueue(s);
 		}
 
-		
 		//removes duplicates
 		SET<String> allStationsSet = new SET<String>();
 		for (String s : strings) {
@@ -268,7 +270,7 @@ public class MainApp {
 	}
 	
 	/**
-	 * route uses Dijkstras algorithm to find the shortest path between two points on a weighted graph,
+	 * route uses Dijkstra's algorithm to find the shortest path between two points on a weighted graph,
 	 * in this case the weight graph is the trax map with the weights representing the times between points
 	 * @param start starting point
 	 * @param destination ending point

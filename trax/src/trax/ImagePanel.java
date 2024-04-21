@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.ST;
 
+/**
+ * Creates a custom JPanel that overrides the paintComponent method to provide custom object
+ * painting in the GUI. 
+ * @author Chris Darnell + Sawyer Reeve
+ */
 public class ImagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -106,6 +111,9 @@ public class ImagePanel extends JPanel {
 		pinEnabled[pin] = val;
 	}
 
+	/*
+	 * Re-factored method for quickly scaling an image object
+	 */
 	private Image scaledImage(String path, int x, int y) {
 		ImageIcon temp = new ImageIcon(ImagePanel.class.getResource(path));
 		Image image = temp.getImage();

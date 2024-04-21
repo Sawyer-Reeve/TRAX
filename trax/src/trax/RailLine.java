@@ -1,6 +1,10 @@
 package trax;
 import edu.princeton.cs.algs4.Queue;
 
+/**
+ * Represents a Rail Line item (e.g. Blue Line, Red Line, etc.)
+ * @author Chris Darnell + Sawyer Reeve
+ */
 public class RailLine {
 
 	private String name;

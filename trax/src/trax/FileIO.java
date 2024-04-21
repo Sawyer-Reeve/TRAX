@@ -9,7 +9,7 @@ import edu.princeton.cs.algs4.ST;
 /**
  * Methods for reading text files with configuration data
  * 
- * @author sawyerreeve + Chris Darnell
+ * @author Sawyer Reeve + Chris Darnell
  */
 public class FileIO {
 	private static In stationList = new In("src/Resources/stationList.txt");
@@ -39,8 +39,11 @@ public class FileIO {
 	}
 
 	/**
+	 * Returns a Queue with coordinate values from the pointLocations.txt text 
+	 * file that define where each station is in the GUI. Used for positioning 
+	 * map pins in the user interface.
 	 * @param railLine
-	 * @return
+	 * @return The Queue of coordinate values
 	 */
 	public static Queue<Point> getCoordList(RailLines railLine) {
 		int x;
@@ -65,7 +68,8 @@ public class FileIO {
 	}
 	
 	/**
-	 * @return
+	 * Returns a symbol table for looking up graphics objects for path highlighting in the GUI.
+	 * @return the Symbol Table
 	 */
 	public static ST<String, String> getPathList() {
 		ST<String, String> st = new ST<>();

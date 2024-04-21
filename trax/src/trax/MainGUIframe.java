@@ -22,9 +22,9 @@ import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.ST;
 
 /**
- * MainGUIframe is the main frame object that contains the control panel and the imagePanels, it si responsible for
- * painting the pins and providing directions
- * @author sawyerreeve + Chris Darnell
+ * MainGUIframe is the main frame object that contains the control panel and the imagePanels, 
+ * it is responsible for painting the pins and providing directions
+ * @author Sawyer Reeve + Chris Darnell
  */
 public class MainGUIframe extends JFrame implements ActionListener, ItemListener {
 	
@@ -46,17 +46,18 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private Station[] transferStationArray;
 	private static ST<String, String> pathOverlayList = FileIO.getPathList();
 	private static Queue<String> currentPathList = new Queue<>();
-
-	private static boolean demoModeActive = true;
+	// Test Mode
 	private static int demoStart = 1, demoDest = 0;
+	private static boolean demoModeActive = true;
+	
 	
 	/**
-	 * test Mode adds a next button that allows us to quickly iterate through all routes to find potential bugs in the routing
-	 * mechanism
+	 * Adds a next button that allows us to quickly iterate through all routes to 
+	 * find potential bugs in the routing mechanism
 	 */
 	public static void testMode() {
 		JButton testButton = new JButton("Next");
-		testButton.setBounds(55, 160, 100, 30);
+		testButton.setBounds(55, 200, 100, 30);
 		main.add(testButton);
 		
 		testButton.addActionListener(new ActionListener() {
@@ -76,7 +77,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	}
 
 	/**
-	 * constructor for GUI frame
+	 * Constructor - creates a GUI frame
 	 */
 	MainGUIframe() {
 		panel = new JPanel();
@@ -96,12 +97,12 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		// main.setLayout(new FlowLayout());
 		main.setLayout(null);
 
-		String[] all = MainApp.allStationsStrings();// this takes the Strings from the hashmap to ensure no duplicates
-		start = new JLabel("Start:");
-		destination = new JLabel("Destination:");
-		directionsLabel = new JLabel("Directions: ");
-		timelabel = new JLabel("Estimated Time: ");
-		submitButton = new JButton("Submit");
+		String[] all = MainApp.allStationsStrings(); // this takes the Strings from the hashmap to ensure no duplicates
+		start = new JLabel("<HTML><b>Start:</b></HTML>");
+		destination = new JLabel("<HTML><b>Destination:</b></HTML>");
+		directionsLabel = new JLabel("<HTML><b>Directions:</b></HTML>");
+		timelabel = new JLabel("<HTML><b>Estimated Time:</b></HTML>");
+		submitButton = new JButton("Get Route");
 		submitButton.addActionListener(this);
 		directions = new JTextArea();
 
@@ -112,22 +113,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		// set to the second item so it doesn't default to the same location as the start
 		destinationDropDownMenu.setSelectedIndex(1);
 		destinationDropDownMenu.addItemListener(this);
-//		destinationDropDownMenu.addItemListener(new ItemListener() {
-//
-//			@Override
-//			public void itemStateChanged(ItemEvent e) {
-//				Station destination = MainApp.getName_Station_ST().get((String) 
-//						destinationDropDownMenu.getSelectedItem());
-//				demoDest = destinationDropDownMenu.getSelectedIndex();
-//				imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
-//				imagePanel.togglePin(2, true);
-//				
-//				hideTransferPins();
-//				
-//				imagePanel.repaint();
-//			}
-//			
-//		});
 
 		main.add(start);
 		main.add(destination);
@@ -141,15 +126,16 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 
 		panel.add(main, BorderLayout.WEST);
 
-		start.setBounds(20, 0, 100, 30);
-		startDropDownMenu.setBounds(20, 30, 280, 30);
-		destination.setBounds(20, 90, 100, 30);
-		destinationDropDownMenu.setBounds(20, 120, 280, 30);
-		submitButton.setBounds(160, 160, 100, 30);
-		directionsLabel.setBounds(20, 370, 100, 30);
-		timelabel.setBounds(20, 600, 200, 30);
-
-		directions.setBounds(20, 400, 250, 200);
+		start.setBounds(50, 20, 100, 30);
+		startDropDownMenu.setBounds(45, 50, 280, 30);
+		destination.setBounds(50, 110, 100, 30);
+		destinationDropDownMenu.setBounds(45, 140, 280, 30);
+		submitButton.setBounds(200, 200, 100, 30);
+		directionsLabel.setBounds(50, 380, 100, 30);
+		
+		timelabel.setBounds(50, 620, 200, 30);
+		
+		directions.setBounds(50, 420, 250, 200);
 		directions.setBackground(getBackground());
 		directions.setWrapStyleWord(true);
 		directions.setLineWrap(true);
@@ -209,7 +195,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	}
 
 	/**
-	 *repaints the Pins when the dropdown menu is selected
+	 *repaints the Pins when the drop down menu is selected
 	 */
 	public void itemStateChanged(ItemEvent e) {
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
@@ -259,12 +245,12 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			//iterates through the path and gets weights, and builds a path, due to the unreliability of either and other methods
 			for (Edge a : route) {
 				// calls the routing method from the main
-				// which uses Dijkstras algorithm to find the shortest path
+				// which uses Dijkstra's algorithm to find the shortest path
 				String s = a.toString();
 				String[] separation = s.split(" ");
 				currentPathList.enqueue(separation[0]);
 				String[] vertices = separation[0].split("-");
-				//String.split method is used to seperate each vertex within the edge returned by the algorithm
+				//String.split method is used to separate each vertex within the edge returned by the algorithm
 				if (Integer.parseInt(vertices[0]) == lastVert) {
 					pathway.enqueue(Integer.parseInt(vertices[1]));
 					path.enqueue(Integer.parseInt(vertices[1]));
@@ -375,21 +361,21 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				sb.append("Please Enter a Destination that is not the same as the start");
 
 			} else if (startOnDestinationRail == true) {
-				sb.append("1. From " + start.getStationName() + " you will take the " + destination.getRailLine().getName()
+				sb.append("1. From " + start.getStationName() + " take the " + destination.getRailLine().getName()
 						+ " all the way to " + destination.getStationName());
 			} else {
-				sb.append("1. From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
+				sb.append("1. From " + start.getStationName() + " take the " + start.getRailLine().getName()
 						+ " all the way to " + destination.getStationName());
 			}
 		}
 		else if (transferStationArray.length == 1) {
 			System.out.println("Directions case 3");
-			sb.append("1. From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+			sb.append("1. From " + start.getStationName() + " take the " + start.getRailLine().getName() + " to "
 					+ transferStationArray[0].getStationName() + "\n\n 2. Then transfer onto "
 					+ destination.getRailLine().getName() + " to " + destination.getStationName());
 		} else if (transferStationArray.length == 2) {
 			System.out.println("Directions case 4");
-			sb.append("1. From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+			sb.append("1. From " + start.getStationName() + " take the " + start.getRailLine().getName() + " to "
 
 					+ transferStationArray[0].getStationName() + "\n\n 2. Then transfer onto the "
 					+ transferStationArray[0].getRailLine().getName() + " to "
@@ -407,7 +393,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		total_time = Math.floor(MainApp.getTotal_Time());
 		System.out.println(sb.toString());
 		directions.setText(sb.toString());
-		timelabel.setText("Estimated Time: " + total_time + " minutes.");
+		timelabel.setText("<HTML><b>Estimated Time:</b></HTML> " + total_time + " minutes.");
 		total_time = 0.0;
 
 	}
