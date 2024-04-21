@@ -1,14 +1,15 @@
 package trax;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Arrays;
 import java.util.stream.StreamSupport;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -73,7 +74,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				}
 				startDropDownMenu.setSelectedIndex(++demoStart);
 				destinationDropDownMenu.setSelectedIndex(demoDest);
-				
 			}
 		});
 	}
@@ -107,6 +107,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		directions = new JTextArea();
+		startPinLabel = new JLabel();
+		startPinLabel.setBounds(0, 0, 200, 20);
 
 		startDropDownMenu = new JComboBox<String>(all);
 		startDropDownMenu.addItemListener(this);
@@ -336,10 +338,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 					+ destination.getRailLine().getName() + " to " + destination.getStationName());
 		} else if (transferStationArray.length == 2) {
 			System.out.println("Directions case 4");
-			System.out.println(Arrays.toString(transferStationArray));
 			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
 					+ transferStationArray[0].getStationName() + " then transfer onto "
-					+ transferStationArray[0].getRailLine().getName() + " to "
 					+ transferStationArray[1].getStationName() + " and take the "
 					+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
 		}
