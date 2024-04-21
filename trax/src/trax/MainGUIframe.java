@@ -1,7 +1,6 @@
 package trax;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +8,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.stream.StreamSupport;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -24,8 +22,9 @@ import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.ST;
 
 /**
- * this might not have needed to be its own class, but I did have a couple of other classes previously for separate panels
- * before I condensed them
+ * MainGUIframe is the main frame object that contains the control panel and the imagePanels, it si responsible for
+ * painting the pins and providing directions
+ * @author sawyerreeve + Chris Darnell
  */
 public class MainGUIframe extends JFrame implements ActionListener, ItemListener {
 	
@@ -207,6 +206,9 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		imagePanel.repaint();
 	}
 
+	/**
+	 *repaints the Pins when the dropdown menu is selected
+	 */
 	public void itemStateChanged(ItemEvent e) {
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
 
@@ -258,7 +260,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				// which uses Dijkstras algorithm to find the shortest path
 				String s = a.toString();
 				String[] separation = s.split(" ");
-				// XXX seperation[0] gives you each edge as xx-yy
 				currentPathList.enqueue(separation[0]);
 				String[] vertices = separation[0].split("-");
 				//String.split method is used to seperate each vertex within the edge returned by the algorithm
@@ -343,11 +344,11 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	 * provideDirections displays a a text box of various text, depending on if
 	 * there are transfers within the route that need to be taken
 	 * 
-	 * @param start
+	 * @param start starting station
 	 * 
-	 * @param destination
+	 * @param destination destination station
 	 * 
-	 * @param transfer_station
+	 * @param transferSTationArray, array of transfer Stations
 	 */
 	private void provideDirections(Station start, Station destination, Station[] transferStationArray) {
 
@@ -378,11 +379,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
 						+ " all the way to " + destination.getStationName());
 			}
-
 		}
-
 		else if (transferStationArray.length == 1) {
-
 			System.out.println("Directions case 3");
 			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
 					+ transferStationArray[0].getStationName() + ", then transfer onto "
@@ -390,6 +388,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		} else if (transferStationArray.length == 2) {
 			System.out.println("Directions case 4");
 			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+
 					+ transferStationArray[0].getStationName() + ", then transfer onto the "
 					+ transferStationArray[0].getRailLine().getName() + " to "
 					+ transferStationArray[1].getStationName() + ", then take the "
@@ -401,7 +400,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 						 * destination.getRailLine().getName() + " all the way to " +
 						 * destination.getStationName()
 						 */"if youre seeing this the code is broken");
-
 		}
 
 		total_time = Math.floor(MainApp.getTotal_Time());
