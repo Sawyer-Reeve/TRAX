@@ -108,19 +108,26 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		startDropDownMenu = new JComboBox<String>(all);
 		startDropDownMenu.addItemListener(this);
 		destinationDropDownMenu = new JComboBox<String>(all);
-		destinationDropDownMenu.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				Station destination = MainApp.getName_Station_ST().get((String) 
-						destinationDropDownMenu.getSelectedItem());
-				demoDest = destinationDropDownMenu.getSelectedIndex();
-				imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
-				imagePanel.togglePin(2, true);
-				imagePanel.repaint();
-			}
-			
-		});
+		
+		// set to the second item so it doesn't default to the same location as the start
+		destinationDropDownMenu.setSelectedIndex(1);
+		destinationDropDownMenu.addItemListener(this);
+//		destinationDropDownMenu.addItemListener(new ItemListener() {
+//
+//			@Override
+//			public void itemStateChanged(ItemEvent e) {
+//				Station destination = MainApp.getName_Station_ST().get((String) 
+//						destinationDropDownMenu.getSelectedItem());
+//				demoDest = destinationDropDownMenu.getSelectedIndex();
+//				imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
+//				imagePanel.togglePin(2, true);
+//				
+//				hideTransferPins();
+//				
+//				imagePanel.repaint();
+//			}
+//			
+//		});
 
 		main.add(start);
 		main.add(destination);
@@ -153,29 +160,64 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 
 	}
 
+	/*
+	 * Configures and displays the starting position map pin
+	 */
+	private void showStartPin() {
+		Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
+		demoStart = startDropDownMenu.getSelectedIndex();
+		imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
+		imagePanel.togglePin(1, true);
+	}
+
+	/*
+	 * Configures and displays the destination position map pin
+	 */
+	private void showDestPin() {
+		Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());
+		demoDest = destinationDropDownMenu.getSelectedIndex();
+		imagePanel.setPinXY(2, destination.getXcoord(), destination.getYcoord());
+		imagePanel.togglePin(2, true);
+	}
+
+	/*
+	 * Hides the additional map pins denoting transfers between rail lines
+	 */
+	private void hideTransferPins() {
+		imagePanel.togglePin(3, false);
+		imagePanel.togglePin(4, false);
+	}
+	
+	/*
+	 * Configures the transfer between rail lines map pins according to the number of transfers needed
+	 */
+	private void showTransferPins() {
+		if (transferStationArray.length > 0) {
+			imagePanel.setPinXY(3, transferStationArray[0].getXcoord(), transferStationArray[0].getYcoord());
+			imagePanel.togglePin(3, true);
+		} else {
+			imagePanel.togglePin(3, false);
+		}
+		if (transferStationArray.length > 1) {
+			imagePanel.setPinXY(4, transferStationArray[1].getXcoord(), transferStationArray[1].getYcoord());
+			imagePanel.togglePin(4, true);
+		} else {
+			imagePanel.togglePin(4, false);
+		}
+		imagePanel.repaint();
+	}
+
 	public void itemStateChanged(ItemEvent e) {
 		if ((e.getStateChange() == ItemEvent.SELECTED)) {
-			
-			Station start = MainApp.getName_Station_ST().get((String) startDropDownMenu.getSelectedItem());
-			demoStart = startDropDownMenu.getSelectedIndex();
-			imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
-			imagePanel.togglePin(1, true);
 
+			// Set the pin elements on the GUI
+			showStartPin();
+			showDestPin();
+			hideTransferPins();
 
-//			startPinLabel.setText(start.getStationName());
-			
-//			System.out.println("Start pin location: " + start.getXcoord() + ", " + start.getYcoord());
-//			startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
-//			startPinLabel.setBackground(Color.orange);
-//			startPinLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-//			startPinLabel.setOpaque(true);
-//			imagePanel.add(startPinLabel);
-			
-			
 			imagePanel.repaint();
 		}
 	}
-	
 
 	// is is the action performed when the submit button is clicked
 	@Override
@@ -229,10 +271,9 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				}
 				for (Integer i : path)
 					lastVert = i;
-					
-				
 
-				// this checks for transfers in the pathing algorithm and ensures theyre not happening on the start or end
+				// this checks for transfers in the pathing algorithm and ensures theyre not
+				// happening on the start or end
 				if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
 					transferEdges.enqueue(a);
 				}
@@ -274,7 +315,9 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 
 			provideDirections(start, destination, transferStationArray);
 
-			transferPinPainting();
+			showStartPin();
+			showDestPin();
+			showTransferPins();
 
 		} catch (IllegalArgumentException n) {
 			directions.setText("Please Enter a Destination that is not the same as the start");
@@ -294,23 +337,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	 */
 	public static ST<String, String> getPathOverlays() {
 		return pathOverlayList;
-	}
-
-	private void transferPinPainting() {
-		if (transferStationArray.length > 0) {
-			imagePanel.setPinXY(3, transferStationArray[0].getXcoord(), transferStationArray[0].getYcoord());
-			imagePanel.togglePin(3, true);
-
-		} else {
-			imagePanel.togglePin(3, false);
-		}
-		if (transferStationArray.length > 1) {
-			imagePanel.setPinXY(4, transferStationArray[1].getXcoord(), transferStationArray[1].getYcoord());
-			imagePanel.togglePin(4, true);
-		} else {
-			imagePanel.togglePin(4, false);
-		}
-		imagePanel.repaint();
 	}
 
 	/*
@@ -357,24 +383,25 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 
 		else if (transferStationArray.length == 1) {
 
-				System.out.println("Directions case 3");
-				sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
-						+ " to " + transferStationArray[0].getStationName() + " then transfer onto "
-						+ destination.getRailLine().getName() + " to " + destination.getStationName());
-			} else if (transferStationArray.length == 2) {
-				System.out.println("Directions case 4");
-				sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
-						+ " to " + transferStationArray[0].getStationName() + " then transfer onto the " + transferStationArray[0].getRailLine().getName() + " to "
-						+ transferStationArray[1].getStationName() + " and take the "
-						+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
-			} else {
+			System.out.println("Directions case 3");
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+					+ transferStationArray[0].getStationName() + ", then transfer onto "
+					+ destination.getRailLine().getName() + " to " + destination.getStationName());
+		} else if (transferStationArray.length == 2) {
+			System.out.println("Directions case 4");
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
+					+ transferStationArray[0].getStationName() + ", then transfer onto the "
+					+ transferStationArray[0].getRailLine().getName() + " to "
+					+ transferStationArray[1].getStationName() + ", then take the "
+					+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
+		} else {
 
 			sb.append(/*
 						 * "From " + start.getStationName() + " you will take the " +
 						 * destination.getRailLine().getName() + " all the way to " +
 						 * destination.getStationName()
 						 */"if youre seeing this the code is broken");
-		
+
 		}
 
 		total_time = Math.floor(MainApp.getTotal_Time());
