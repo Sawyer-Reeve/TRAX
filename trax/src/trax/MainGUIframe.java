@@ -35,9 +35,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private static JComboBox<String> startDropDownMenu;
 	private static JComboBox<String> destinationDropDownMenu;
 	private JTextArea directions;
-	private JLabel startPinLabel;  		// TODO
-	private JLabel endPinLabel; 		// TODO
-	private JLabel trasnferPinLabel;	// TODO
 	private JLabel timelabel;
 	private JLabel directionsLabel;
 	private Double total_time = 0.0;
@@ -107,8 +104,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		directions = new JTextArea();
-		startPinLabel = new JLabel();
-		startPinLabel.setBounds(0, 0, 200, 20);
 
 		startDropDownMenu = new JComboBox<String>(all);
 		startDropDownMenu.addItemListener(this);
@@ -215,6 +210,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			Iterable<Edge> route = MainApp.route(start, destination, g);	
 			numEdges = (int)StreamSupport.stream(route.spliterator(), false).count();
 		
+			//iterates through the path and gets weights, and builds a path, due to the unreliability of either and other methods
 			for (Edge a : route) {
 				// calls the routing method from the main
 				// which uses Dijkstras algorithm to find the shortest path
@@ -223,6 +219,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				// XXX seperation[0] gives you each edge as xx-yy
 				currentPathList.enqueue(separation[0]);
 				String[] vertices = separation[0].split("-");
+				//String.split method is used to seperate each vertex within the edge returned by the algorithm
 				if (Integer.parseInt(vertices[0]) == lastVert) {
 					pathway.enqueue(Integer.parseInt(vertices[1]));
 					path.enqueue(Integer.parseInt(vertices[1]));
@@ -235,7 +232,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 					
 				
 
-				// this checks for transfers in the pathing algorithm
+				// this checks for transfers in the pathing algorithm and ensures theyre not happening on the start or end
 				if (a.weight() == 1.1 && count != 0 && count != numEdges - 1) {
 					transferEdges.enqueue(a);
 				}
@@ -284,10 +281,17 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		}
 	}
 	
+	/**
+	 * getCurrentPathList
+	 * @return returns a queue of the current paths
+	 */
 	public static Queue<String> getCurrentPathList() {
 		return currentPathList;
 	}
 	
+	/**
+	 * @return returns a symbol table of edges and their respective edge highlights
+	 */
 	public static ST<String, String> getPathOverlays() {
 		return pathOverlayList;
 	}
@@ -360,7 +364,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			} else if (transferStationArray.length == 2) {
 				System.out.println("Directions case 4");
 				sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
-						+ " to " + transferStationArray[0].getStationName() + " then transfer onto "
+						+ " to " + transferStationArray[0].getStationName() + " then transfer onto the " + transferStationArray[0].getRailLine().getName() + " to "
 						+ transferStationArray[1].getStationName() + " and take the "
 						+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
 			}
