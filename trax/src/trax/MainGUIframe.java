@@ -1,6 +1,7 @@
 package trax;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.stream.StreamSupport;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -105,6 +107,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		directions = new JTextArea();
+		startPinLabel = new JLabel();
+		startPinLabel.setBounds(0, 0, 200, 20);
 
 		startDropDownMenu = new JComboBox<String>(all);
 		startDropDownMenu.addItemListener(this);
@@ -161,10 +165,22 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			demoStart = startDropDownMenu.getSelectedIndex();
 			imagePanel.setPinXY(1, start.getXcoord(), start.getYcoord());
 			imagePanel.togglePin(1, true);
+
+
+//			startPinLabel.setText(start.getStationName());
+			
+//			System.out.println("Start pin location: " + start.getXcoord() + ", " + start.getYcoord());
+//			startPinLabel.setLocation(start.getXcoord(), start.getYcoord());
+//			startPinLabel.setBackground(Color.orange);
+//			startPinLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+//			startPinLabel.setOpaque(true);
+//			imagePanel.add(startPinLabel);
+			
 			
 			imagePanel.repaint();
 		}
 	}
+	
 
 	// is is the action performed when the submit button is clicked
 	@Override
@@ -176,7 +192,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			Station destination = MainApp.getName_Station_ST().get((String) destinationDropDownMenu.getSelectedItem());// ending
 
 			RailLine startline = start.getRailLine();
-
+			
 			In in = new In("src/Resources/Graph.txt/");
 
 			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
@@ -309,24 +325,28 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		StringBuilder sb = new StringBuilder();
 
 		if (start.getStationName().equals(destination.getStationName())) {
+			System.out.println("Directions case 1");
 			sb.append("Please Enter a Destination that is not the same as the start");
 		} else if (start.getRailLine().equals(destination.getRailLine())) {
+			System.out.println("Directions case 2");
 			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
 					+ " all the way to " + destination.getStationName());
 		} else if (transferStationArray.length == 1) {
-
+			System.out.println("Directions case 3");
 			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
 					+ transferStationArray[0].getStationName() + " then transfer onto "
 					+ destination.getRailLine().getName() + " to " + destination.getStationName());
 		} else if (transferStationArray.length == 2) {
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine() + " to "
+			System.out.println("Directions case 4");
+			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName() + " to "
 					+ transferStationArray[0].getStationName() + " then transfer onto "
 					+ transferStationArray[1].getStationName() + " and take the "
-					+ transferStationArray[1].getRailLine() + " to " + destination.getStationName());
+					+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
 		}
 
 		else {
-			sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
+			System.out.println("Directions case 5");
+			sb.append("From " + start.getStationName() + " you will take the " + destination.getRailLine().getName()
 					+ " all the way to " + destination.getStationName());
 		}
 
