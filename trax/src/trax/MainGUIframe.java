@@ -51,7 +51,8 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private static int demoStart = 1, demoDest = 0;
 	
 	/**
-	 * 
+	 * test Mode adds a next button that allows us to quickly iterate through all routes to find potential bugs in the routing
+	 * mechanism
 	 */
 	public static void testMode() {
 		JButton testButton = new JButton("Next");
@@ -75,7 +76,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	}
 
 	/**
-	 * 
+	 * constructor for GUI frame
 	 */
 	MainGUIframe() {
 		panel = new JPanel();
@@ -155,6 +156,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 
 		imagePanel = new ImagePanel();
 		imagePanel.setPreferredSize(new Dimension(900, 800));
+		
 		panel.add(imagePanel);
 
 	}
@@ -353,13 +355,13 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	private void provideDirections(Station start, Station destination, Station[] transferStationArray) {
 
 		boolean startOnDestinationRail = false;
-		boolean destinationOnStartRail = false;
+		/*boolean destinationOnStartRail = false;
 		for (Station s : start.getRailLine().getStations()) {
 			if (destination.getStationName().equals(s.getStationName())) {
 				destinationOnStartRail = true;
 			}
 
-		}
+		}*/
 		for (Station s : destination.getRailLine().getStations()) {
 			if (start.getStationName().equals(s.getStationName())) {
 				startOnDestinationRail = true;
