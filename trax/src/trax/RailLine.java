@@ -34,6 +34,7 @@ public class RailLine {
 	}
 
 	/**
+	 * getSTationArray returns a String array of all the stations on this rail line
 	 * @return
 	 */
 	public String[] getStationArray() {
@@ -62,7 +63,7 @@ public class RailLine {
 	}
 
 	/**
-	 * @return
+	 * @return returns railLines name
 	 */
 	public String getName() {
 		return name;

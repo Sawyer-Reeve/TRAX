@@ -60,6 +60,7 @@ public class ImagePanel extends JPanel {
 	}
 
 	/**
+	 * paintPathHighlights paints over the path to be taken based upon the edges found in the generated Path
 	 * @param g
 	 */
 	public void paintPathHighlight(Graphics g) {
@@ -83,10 +84,10 @@ public class ImagePanel extends JPanel {
 
 	/**
 	 * 1 = start pin 2 = end pin 3 = transfer pin
-	 * 
+	 * setPinXY sets the locations of the pins to be painted based off the coordinates of the Selected stations
 	 * @param pin
-	 * @param x
-	 * @param y
+	 * @param x x coord of pin
+	 * @param y y coord of pin
 	 */
 	public void setPinXY(int pin, int x, int y) {
 		x = x - scaleFactor + 30;
@@ -97,7 +98,8 @@ public class ImagePanel extends JPanel {
 
 	/**
 	 * 1 = start pin 2 = end pin 3 = transfer pin
-	 * 
+	 * togglePin activates the pins on or off based on the number of transfers
+	 * and the selected start and stop points
 	 * @param pin
 	 */
 	public void togglePin(int pin, boolean val) {

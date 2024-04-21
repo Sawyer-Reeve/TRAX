@@ -30,7 +30,7 @@ public class MainApp {
 	
     public static void main(String[] args) throws IOException {
     	RailInitialization(); //below method, initializes all of the rail lines
-    	new MainGUIframe(); 
+    	new MainGUIframe(); //creates GUI
     }
     
     
@@ -156,28 +156,28 @@ public class MainApp {
 	}
 
 	/**
-	 * @return
+	 * @return BlueLine RailLine item
 	 */
 	public static RailLine getBlueLine() {
 		return BlueLine;
 	}
 
 	/**
-	 * @return
+	 * @return RedLine RailLine item
 	 */
 	public static RailLine getRedLine() {
 		return RedLine;
 	}
 
 	/**
-	 * @return
+	 * @return GreenLine RailLine item
 	 */
 	public static RailLine getGreenLine() {
 		return GreenLine;
 	}
 
 	/**
-	 * @return
+	 * @return FrontRunner RailLine item
 	 */
 	public static RailLine getFrontRunner() {
 		return FrontRunner;
