@@ -12,9 +12,9 @@ import edu.princeton.cs.algs4.ST;
  * @author Sawyer Reeve + Chris Darnell
  */
 public class FileIO {
-	private static In stationList = new In("src/Resources/stationList.txt");
-	private static In stationCoordList = new In("src/Resources/pointLocations.txt");
-	private static In pathOverlayList = new In("src/Resources/pathOverlays.txt");
+	private static In stationList = new In("Resources/stationList.txt");
+	private static In stationCoordList = new In("Resources/pointLocations.txt");
+	private static In pathOverlayList = new In("Resources/pathOverlays.txt");
 
 	/**
 	 * Creates a Queue with string names from the stationList.txt text file

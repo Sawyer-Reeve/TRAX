@@ -122,6 +122,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		main.add(directionsLabel);
 		main.add(directions);
 		main.add(timelabel);
+		
 		if (demoModeActive) testMode();
 
 		panel.add(main, BorderLayout.WEST);
@@ -139,7 +140,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		directions.setBackground(getBackground());
 		directions.setWrapStyleWord(true);
 		directions.setLineWrap(true);
-
+		
 		imagePanel = new ImagePanel();
 		imagePanel.setPreferredSize(new Dimension(900, 800));
 		
@@ -220,7 +221,7 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 
 			RailLine startline = start.getRailLine();
 			
-			In in = new In("src/Resources/Graph.txt/");
+			In in = new In("Resources/Graph.txt/");
 
 			EdgeWeightedGraph g = new EdgeWeightedGraph(in);
 
@@ -271,9 +272,6 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 				count++;
 			}
 			
-			for (Integer i : path) {
-				System.out.println(i + " ");
-			}
 			RailLine current = start.getRailLine();
 			while (transferEdges.size() != 0) {
 				Edge currentEdge = transferEdges.dequeue();
@@ -369,17 +367,15 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 			}
 		}
 		else if (transferStationArray.length == 1) {
-			System.out.println("Directions case 3");
 			sb.append("1. From " + start.getStationName() + " take the " + start.getRailLine().getName() + " to "
-					+ transferStationArray[0].getStationName() + "\n\n 2. Then transfer onto "
+					+ transferStationArray[0].getStationName() + "\n\n2. Then transfer onto "
 					+ destination.getRailLine().getName() + " to " + destination.getStationName());
 		} else if (transferStationArray.length == 2) {
-			System.out.println("Directions case 4");
 			sb.append("1. From " + start.getStationName() + " take the " + start.getRailLine().getName() + " to "
 
-					+ transferStationArray[0].getStationName() + "\n\n 2. Then transfer onto the "
+					+ transferStationArray[0].getStationName() + "\n\n2. Then transfer onto the "
 					+ transferStationArray[0].getRailLine().getName() + " to "
-					+ transferStationArray[1].getStationName() + "\n\n 3. Then take the "
+					+ transferStationArray[1].getStationName() + "\n\n3. Then take the "
 					+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
 		} else {
 
@@ -391,9 +387,10 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 		}
 
 		total_time = Math.floor(MainApp.getTotal_Time());
+		System.out.println("\nDirections:");
 		System.out.println(sb.toString());
 		directions.setText(sb.toString());
-		System.out.println(total_time);
+		System.out.println("\nEstimated time: " + total_time);
 		timelabel.setText("<HTML><b>Estimated Time:</b> " + total_time + " minutes.</HTML>");
 		total_time = 0.0;
 
