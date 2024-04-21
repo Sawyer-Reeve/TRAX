@@ -319,8 +319,42 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 	 */
 	private void provideDirections(Station start, Station destination,
 			Station[] transferStationArray) {
+		boolean startOnDestinationRail = false;
+		boolean destinationOnStartRail = false;
+		for (Station s : start.getRailLine().getStations()) {
+			if (destination.getStationName().equals(s.getStationName())) {
+				destinationOnStartRail=true;
+			}
+			
+		}
+		for (Station s : destination.getRailLine().getStations()) {
+			if (start.getStationName().equals(s.getStationName())) {
+				startOnDestinationRail = true;
+			}
+			
+		}
+		
 
 		StringBuilder sb = new StringBuilder();
+		if (transferStationArray.length==0) {
+			if (start.getStationName().equals(destination.getStationName())) {
+				sb.append("Please Enter a Destination that is not the same as the start");
+			
+			} else if (startOnDestinationRail == true) {
+				sb.append("From " + start.getStationName() + " you will take the " + destination.getRailLine().getName()
+						+ " all the way to " + destination.getStationName());
+			}
+			else {
+				sb.append("From " + start.getStationName() + " you will take the " + start.getRailLine().getName()
+						+ " all the way to " + destination.getStationName());
+			}
+			
+		}
+		
+		
+		else if (transferStationArray.length == 1) {
+
+
 
 		if (start.getStationName().equals(destination.getStationName())) {
 			System.out.println("Directions case 1");
@@ -343,19 +377,27 @@ public class MainGUIframe extends JFrame implements ActionListener, ItemListener
 					+ transferStationArray[1].getStationName() + " and take the "
 					+ transferStationArray[1].getRailLine().getName() + " to " + destination.getStationName());
 		}
+		
+		
+		
 
 		else {
+
+			sb.append(/*"From " + start.getStationName() + " you will take the " + destination.getRailLine().getName()
+					+ " all the way to " + destination.getStationName()*/"if youre seeing this the code is broken");
+
 			System.out.println("Directions case 5");
 			sb.append("From " + start.getStationName() + " you will take the " + destination.getRailLine().getName()
 					+ " all the way to " + destination.getStationName());
+
 		}
 
 		total_time = Math.floor(MainApp.getTotal_Time());
-		System.out.println(sb.toString());
+		//System.out.println(sb.toString());
 		directions.setText(sb.toString());
 		timelabel.setText("Estimated Time: " + total_time + " minutes.");
 		total_time = 0.0;
-
+		}
 	}
 
 }
